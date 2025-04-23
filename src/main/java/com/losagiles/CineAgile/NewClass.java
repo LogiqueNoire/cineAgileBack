@@ -8,6 +8,6 @@ package com.losagiles.CineAgile;
  *
  * @author USUARIO
  */
-interface Dimensionable {
+public class NewClass {
     
 }
