@@ -9,5 +9,6 @@ package com.losagiles.CineAgile;
  * @author USUARIO
  */
 class Sala {
-    
+    private int j;
+    private int i;
 }
