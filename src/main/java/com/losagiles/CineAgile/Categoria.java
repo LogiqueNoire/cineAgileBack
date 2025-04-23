@@ -11,4 +11,5 @@ package com.losagiles.CineAgile;
 class Categoria {
     int idCat;
     String nombre;
+    String apellido;
 }

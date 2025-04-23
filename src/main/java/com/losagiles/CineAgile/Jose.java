@@ -6,10 +6,8 @@ package com.losagiles.CineAgile;
 
 /**
  *
- * @author USUARIO
+ * @author JOSE
  */
-class Sala {
-    private int j;
-    private int i;
-    private int a;
+public class Jose {
+    
 }
