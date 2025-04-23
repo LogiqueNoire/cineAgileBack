@@ -6,8 +6,11 @@ package com.losagiles.CineAgile;
 
 /**
  *
- * @author CARDENAS IGLESIAS HUGO AUGUSTO
+ * @author USUARIO
  */
-public class NewClass1 {
-    
+public class CategoriaPrime implements Categorizable {
+    @Override
+    public float precio(float precioBase){
+        return (float) (precioBase*0.5);
+    }
 }

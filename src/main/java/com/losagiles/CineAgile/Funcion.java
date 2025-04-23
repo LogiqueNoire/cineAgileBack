@@ -4,32 +4,40 @@
  */
 package com.losagiles.CineAgile;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import java.util.Date;
 
 /**
  *
  * @author USUARIO
  */
+@Entity
 public class Funcion {
     
     int idFuncion;
+    @Column
     Date horaInicio;
+    @Column
     Date horaFin;
     
+    @Column
     String dimension;
+    @Column
     float precioBase;
+    @Column
     Sala sala;
-
+        
+    Categorizable categorizable;
     Dimensionable dimensionable;
     Personeable personeable;
-    Categoria categorizable;
     
-    public double precios(){
-	return getPrecioBase();
-/*
-        +personable.precio()
-	+categorizable.precio()
-        +sala.getSala()*/
+    
+    public float precios(){
+	return getPrecioBase()
+	+categorizable.precio(precioBase)
+        +dimensionable.precio()
+        +personeable.precio(precioBase);
     }
 
     public int getIdFuncion() {
@@ -64,12 +72,9 @@ public class Funcion {
         return personeable;
     }
 
-    public Categoria getCategorizable() {
+    public Categorizable getCategorizable() {
         return categorizable;
     }
-    
-    
-    
-    
-    
+  
+
 }

@@ -8,8 +8,10 @@ package com.losagiles.CineAgile;
  *
  * @author USUARIO
  */
-public class Regular implements Categorizable {
-    public float precio(float precioBase){
-        return precioBase;
+public class PersonaNiño implements Personeable{
+    @Override
+    public float precio(float precioBase) { 
+        return (float) -0.5*precioBase;
     }
+    
 }

@@ -6,8 +6,12 @@ package com.losagiles.CineAgile;
 
 /**
  *
- * @author JOSE
+ * @author USUARIO
  */
-public class Jose {
+public class DimensionDosD implements Dimensionable{
+    @Override
+    public float precio() {
+        return 0;
+    }
     
 }
