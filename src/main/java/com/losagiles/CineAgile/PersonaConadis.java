@@ -8,10 +8,10 @@ package com.losagiles.CineAgile;
  *
  * @author USUARIO
  */
-public class PersonaNiño implements Personeable{
+public class PersonaConadis implements Personeable{
     @Override
     public float precio(float precioAnterior) { 
-        return (float) 0.5*precioAnterior;
+        return (float) 0.7*precioAnterior;
     }
     
 }

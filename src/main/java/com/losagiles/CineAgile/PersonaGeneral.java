@@ -10,8 +10,8 @@ package com.losagiles.CineAgile;
  */
 public class PersonaGeneral implements Personeable{
     @Override
-    public float precio(float precioBase) {
-        return 0;
+    public float precio(float precioAnterior) {
+        return precioAnterior;
     }
     
 }

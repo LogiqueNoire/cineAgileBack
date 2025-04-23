@@ -17,9 +17,9 @@ public class Funcion {
     
     int idFuncion;
     @Column
-    Date horaInicio;
+    Date fechaHoraInicio;
     @Column
-    Date horaFin;
+    Date fechaHoraFin;
     
     @Column
     String dimension;
@@ -30,26 +30,27 @@ public class Funcion {
         
     Categorizable categorizable;
     Dimensionable dimensionable;
-    Personeable personeable;
+
+    public Funcion(int idFuncion, Date fechaHoraInicio, Date fechaHoraFin, String dimension, float precioBase,
+            Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
+        this.idFuncion = idFuncion;
+        this.fechaHoraInicio = fechaHoraInicio;
+        this.fechaHoraFin = fechaHoraFin;
+        this.dimension = dimension;
+        this.precioBase = precioBase;
+        this.sala = sala;
+        this.categorizable = categorizable;
+        this.dimensionable = dimensionable;
+    }
     
-    
-    public float precios(){
-	return getPrecioBase()
+    public float precio(Personeable personeable){
+	return personeable.precio(getPrecioBase()
 	+categorizable.precio(precioBase)
-        +dimensionable.precio()
-        +personeable.precio(precioBase);
+        +dimensionable.precio());
     }
 
     public int getIdFuncion() {
         return idFuncion;
-    }
-
-    public Date getHoraInicio() {
-        return horaInicio;
-    }
-
-    public Date getHoraFin() {
-        return horaFin;
     }
 
     public String getDimension() {
@@ -68,13 +69,16 @@ public class Funcion {
         return dimensionable;
     }
 
-    public Personeable getPersoneable() {
-        return personeable;
-    }
-
     public Categorizable getCategorizable() {
         return categorizable;
     }
-  
+    
+    public Date getFechaHoraFin() {
+        return fechaHoraFin;
+    }
+
+    public Date getFechaHoraInicio() {
+        return fechaHoraInicio;
+    }  
 
 }

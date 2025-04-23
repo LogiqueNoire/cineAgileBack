@@ -9,5 +9,5 @@ package com.losagiles.CineAgile;
  * @author USUARIO
  */
 interface Personeable {
-    public float precio(float precioBase);
+    public float precio(float precioAnterior);
 }

@@ -8,6 +8,6 @@ package com.losagiles.CineAgile;
  *
  * @author USUARIO
  */
-class Sala {
+public class Sala {
 
 }
