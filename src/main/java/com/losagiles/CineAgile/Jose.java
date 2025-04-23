@@ -6,10 +6,8 @@ package com.losagiles.CineAgile;
 
 /**
  *
- * @author USUARIO
+ * @author JOSE
  */
-class Categoria {
-    int idCat;
-    String nombre;
-    String apellido;
+public class Jose {
+    
 }
