@@ -8,6 +8,7 @@ public class CineAgileApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CineAgileApplication.class, args);
+                System.out.println("Hola mundo");
 	}
 
 }
