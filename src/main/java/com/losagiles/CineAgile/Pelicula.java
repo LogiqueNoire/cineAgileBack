@@ -8,7 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -34,13 +34,15 @@ public class Pelicula {
     @Column
     String actores;
     @Column
-    Date   fechaInicioPreventa;
+    LocalDate   fechaInicioPreventa;
     @Column
-    Date   fechaInicioEstreno;
+    LocalDate   fechaInicioEstreno;
     @Column
     String estado;
 
-    public Pelicula(int idPelicula, String nombre, int duracion, String sinopsis, String genero, String director, String clasificacion, String actores, Date fechaInicioPreventa, Date fechaInicioEstreno, String estado) {
+    public Pelicula(int idPelicula, String nombre, int duracion, String sinopsis, 
+                    String genero, String director, String clasificacion, String actores, 
+                    LocalDate fechaInicioPreventa, LocalDate fechaInicioEstreno, String estado) {
         this.idPelicula = idPelicula;
         this.nombre = nombre;
         this.duracion = duracion;
@@ -56,6 +58,22 @@ public class Pelicula {
 
     public int getDuracion() {
         return duracion;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Titulo: ").append(nombre).append("\n");
+        sb.append("Duracion: ").append(duracion).append("\n");
+        sb.append("Sinopsis: ").append(sinopsis).append("\n");
+        sb.append("Genero: ").append(genero).append("\n");
+        sb.append("Director: ").append(director).append("\n");
+        sb.append("Clasificacion: ").append(clasificacion).append("\n");
+        sb.append("Actores: ").append(actores).append("\n");
+        sb.append("Inicio de Preventa: ").append(fechaInicioPreventa).append("\n");
+        sb.append("Estreno: ").append(fechaInicioEstreno).append("\n");
+        sb.append("Estado: ").append(estado).append("\n");
+        return sb.toString();
     }
     
     
