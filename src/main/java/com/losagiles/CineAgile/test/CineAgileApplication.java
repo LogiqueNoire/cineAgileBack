@@ -8,7 +8,6 @@ import com.losagiles.CineAgile.PersonaConadis;
 import com.losagiles.CineAgile.PersonaGeneral;
 import com.losagiles.CineAgile.PersonaNiño;
 import com.losagiles.CineAgile.Sala;
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
