@@ -11,4 +11,5 @@ package com.losagiles.CineAgile;
 class Sala {
     private int j;
     private int i;
+    private int a;
 }
