@@ -44,9 +44,11 @@ public class Funcion {
     }
     
     public float precio(Personeable personeable){
-	return personeable.precio(getPrecioBase()
-	+categorizable.precio(precioBase)
-        +dimensionable.precio());
+	return personeable.precio(
+                getPrecioBase()
+                +categorizable.precio(precioBase)
+                +dimensionable.precio()
+        );
     }
 
     public int getIdFuncion() {
