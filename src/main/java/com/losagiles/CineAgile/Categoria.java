@@ -9,5 +9,6 @@ package com.losagiles.CineAgile;
  * @author USUARIO
  */
 class Categoria {
-    
+    int idCat;
+    String nombre;
 }
