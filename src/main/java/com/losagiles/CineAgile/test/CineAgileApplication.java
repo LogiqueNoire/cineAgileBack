@@ -10,6 +10,7 @@ import com.losagiles.CineAgile.PersonaNiño;
 import com.losagiles.CineAgile.Sala;
 import java.util.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -17,12 +18,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CineAgileApplication {
 
     public static void main(String[] args) {
+        
+        /*
         Funcion f = new Funcion(0, new Date(2025,04,23), new Date(2025,04,23), "Prime",
                 20f, new Sala(), new CategoriaPrime(), new DimensionTresD());
         System.out.println("Holaa");
         System.out.println(f.precio(new PersonaGeneral()));
         System.out.println(f.precio(new PersonaNiño()));
         System.out.println(f.precio(new PersonaConadis()));
+        */
         
         /* Creo que es mejor usar LocalDate , debido a que bueno cuando ejecuté el print con el date para la peli
         salia esto: 
@@ -36,6 +40,16 @@ public class CineAgileApplication {
                                         , "+14" , "Hayden Christensen , Ewan McGregor , etc..." 
                                         , LocalDate.of(2025,04,23) , LocalDate.of(2025,04,27) , "Preventa");
         System.out.println(StarWars);
+        
+        
+        Funcion f = new Funcion(0, LocalDateTime.of(2025, 04, 28, 20, 10), StarWars, "3D",
+                20f, new Sala(), new CategoriaPrime(), new DimensionTresD());
+        System.out.println("Holaa");
+        System.out.println(f.precio(new PersonaGeneral()));
+        System.out.println(f.precio(new PersonaNiño()));
+        System.out.println(f.precio(new PersonaConadis()));
+        
+        System.out.println(f);
     }
 
 

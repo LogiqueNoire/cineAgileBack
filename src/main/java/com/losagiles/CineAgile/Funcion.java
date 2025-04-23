@@ -6,6 +6,8 @@ package com.losagiles.CineAgile;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Date;
 
 /**
@@ -17,10 +19,12 @@ public class Funcion {
     
     int idFuncion;
     @Column
-    Date fechaHoraInicio;
+    LocalDateTime fechaHoraInicio;
     @Column
-    Date fechaHoraFin;
+    LocalDateTime fechaHoraFin;
     
+    Pelicula Pelicula;
+    /*Puse atributo pelicula para lo del autocalculado de la fechaHoraFin*/
     @Column
     String dimension;
     @Column
@@ -30,12 +34,16 @@ public class Funcion {
         
     Categorizable categorizable;
     Dimensionable dimensionable;
-
-    public Funcion(int idFuncion, Date fechaHoraInicio, Date fechaHoraFin, String dimension, float precioBase,
+    
+    public Funcion(int idFuncion, LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
             Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
         this.idFuncion = idFuncion;
         this.fechaHoraInicio = fechaHoraInicio;
-        this.fechaHoraFin = fechaHoraFin;
+        this.Pelicula = Pelicula;
+        /*Hago un plusMinutes a la fechaHoraInicio y le sumo los minutos que dura la pelicula , luego podemos añadirle mas
+        si queremos contar los trailers , etc... 
+        El casteo a long es porque el metodo usa un long asi que ps porsiaca lo puse*/
+        this.fechaHoraFin = fechaHoraInicio.plusMinutes( (long) Pelicula.getDuracion());
         this.dimension = dimension;
         this.precioBase = precioBase;
         this.sala = sala;
@@ -75,12 +83,26 @@ public class Funcion {
         return categorizable;
     }
     
-    public Date getFechaHoraFin() {
+    public LocalDateTime getFechaHoraFin() {
         return fechaHoraFin;
     }
 
-    public Date getFechaHoraInicio() {
+    public LocalDateTime getFechaHoraInicio() {
         return fechaHoraInicio;
     }  
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("idFuncion: ").append(idFuncion).append("\n");
+        sb.append("FechaHoraInicio: ").append(" "+fechaHoraInicio.getDayOfMonth())
+                .append("-"+fechaHoraInicio.getMonthValue()).append("-"+fechaHoraInicio.getYear())
+                .append(" "+fechaHoraInicio.getHour()).append(":"+fechaHoraInicio.getMinute()).append("\n");
+        sb.append("FechaHoraFin: ").append(" "+fechaHoraFin.getDayOfMonth())
+                .append("-"+fechaHoraFin.getMonthValue()).append("-"+fechaHoraFin.getYear())
+                .append(" "+fechaHoraFin.getHour()).append(":"+fechaHoraFin.getMinute()).append("\n");
+        sb.append("Pelicula: ").append(Pelicula.nombre).append("\n");
+        return sb.toString();
+    }
 
 }
