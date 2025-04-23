@@ -8,7 +8,8 @@ public class CineAgileApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CineAgileApplication.class, args);
-                System.out.println("Hola mundo");
+                System.out.println("Hola mundoxd");
+                System.out.println("Mi segundo commit:v");
 	}
 
 }
