@@ -4,14 +4,12 @@
  */
 package com.losagiles.CineAgile;
 
-import jakarta.persistence.Entity;
 import java.util.Date;
 
 /**
  *
  * @author USUARIO
  */
-@Entity
 public class Funcion {
     
     int idFuncion;
