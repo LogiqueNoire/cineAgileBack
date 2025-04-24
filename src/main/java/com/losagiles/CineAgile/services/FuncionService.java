@@ -63,7 +63,7 @@ public class FuncionService implements FuncionRespository{
 
     @Override
     public Funcion getById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return funcionRespository.getById(id);
     }
 
     @Override
@@ -108,17 +108,17 @@ public class FuncionService implements FuncionRespository{
 
     @Override
     public boolean existsById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return funcionRespository.existsById(id);
     }
 
     @Override
     public long count() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return funcionRespository.count();
     }
 
     @Override
     public void deleteById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        funcionRespository.deleteById(id);
     }
 
     @Override
