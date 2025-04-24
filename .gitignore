@@ -1,4 +1,6 @@
 application-secrets.properties
+nb-configuration.xml
+nbactions.xml
 
 ####
 HELP.md
