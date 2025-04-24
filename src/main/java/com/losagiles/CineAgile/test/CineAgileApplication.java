@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CineAgileApplication {
 
     public static void main(String[] args) {
-        
+        SpringApplication.run(CineAgileApplication.class, args);
         /*
         Funcion f = new Funcion(0, new Date(2025,04,23), new Date(2025,04,23), "Prime",
                 20f, new Sala(), new CategoriaPrime(), new DimensionTresD());
