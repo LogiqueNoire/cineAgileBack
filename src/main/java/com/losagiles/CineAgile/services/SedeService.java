@@ -179,6 +179,7 @@ public class SedeService implements SedeRepository{
     
 }
 =======
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -359,4 +360,3 @@ public class SedeService implements SedeRepository{
     }
     
 }
->>>>>>> 82aea6a (ya se crean todas las tablas)

@@ -5,6 +5,12 @@
 package com.losagiles.CineAgile;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 /**
@@ -40,10 +46,9 @@ public class Pelicula {
     @Column
     String estado;
 
-    public Pelicula(Long idPelicula, String nombre, int duracion, String sinopsis, 
+    public Pelicula(String nombre, int duracion, String sinopsis, 
                     String genero, String director, String clasificacion, String actores, 
                     LocalDate fechaInicioPreventa, LocalDate fechaInicioEstreno, String estado) {
-        this.idPelicula = idPelicula;
         this.nombre = nombre;
         this.duracion = duracion;
         this.sinopsis = sinopsis;

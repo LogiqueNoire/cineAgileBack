@@ -47,9 +47,11 @@ public class Funcion {
     Categorizable categorizable;
     Dimensionable dimensionable;
 
-    public Funcion(Long idFuncion, LocalDateTime fechaHoraInicio, Pelicula pelicula, String dimension, float precioBase,
+
+   
+    /*Borré el id del constructor pq ya tiene el generatedValue*/
+    public Funcion(LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
             Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
-        this.idFuncion = idFuncion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.pelicula = pelicula;
         /*Hago un plusMinutes a la fechaHoraInicio y le sumo los minutos que dura la pelicula , luego podemos añadirle mas
