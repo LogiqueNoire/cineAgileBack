@@ -22,7 +22,7 @@ import java.time.LocalDate;
 public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long idPelicula;
+    long idPelicula;
     @Column
     String nombre;
     @Column
@@ -68,6 +68,7 @@ public class Pelicula {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append("idPelicula:").append(idPelicula).append("\n");
         sb.append("Titulo: ").append(nombre).append("\n");
         sb.append("Duracion: ").append(duracion).append("\n");
         sb.append("Sinopsis: ").append(sinopsis).append("\n");

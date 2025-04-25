@@ -24,7 +24,9 @@ public class Funcion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long idFuncion;
+            
+    long idFuncion;
+    
     @Column
     LocalDateTime fechaHoraInicio;
     @Column
@@ -65,7 +67,7 @@ public class Funcion {
         this.dimensionable = dimensionable;
     }
 
-    public Long getIdFuncion() {
+    public long getIdFuncion() {
         return idFuncion;
     }
 
