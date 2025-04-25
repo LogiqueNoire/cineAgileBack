@@ -4,6 +4,9 @@
  */
 package com.losagiles.CineAgile;
 
+import com.losagiles.CineAgile.services.Personeable;
+import com.losagiles.CineAgile.services.Categorizable;
+import com.losagiles.CineAgile.services.Dimensionable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
