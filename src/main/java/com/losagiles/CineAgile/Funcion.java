@@ -60,14 +60,6 @@ public class Funcion {
         this.dimensionable = dimensionable;
     }
     
-    public float precio(Personeable personeable){
-	return personeable.precio(
-                getPrecioBase()
-                +categorizable.precio(precioBase)
-                +dimensionable.precio()
-        );
-    }
-
     public int getIdFuncion() {
         return idFuncion;
     }
