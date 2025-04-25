@@ -18,8 +18,7 @@ public class MedioPago {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idMedioPago;
-    
+    private Long idMedioPago;
     private String nombre;
     private String logoURL;
 
@@ -35,7 +34,7 @@ public class MedioPago {
         return "Medio de Pago: " + nombre + " | Logo: " + logoURL;
     }
 
-    public int getIdMedioPago() {
+    public Long getIdMedioPago() {
         return idMedioPago;
     }
 
