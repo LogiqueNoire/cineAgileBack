@@ -28,6 +28,8 @@ public class Butaca {
     @JoinColumn (name="idSala")
     private Sala sala;
 
+    public Butaca() {}
+
     public Butaca(int fila, int columna, boolean discapacitado, Sala sala) {
         this.fila = fila;
         this.columna = columna;

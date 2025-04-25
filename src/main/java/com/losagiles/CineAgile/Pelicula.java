@@ -46,6 +46,8 @@ public class Pelicula {
     @Column
     String estado;
 
+    public Pelicula() {}
+
     public Pelicula(String nombre, int duracion, String sinopsis, 
                     String genero, String director, String clasificacion, String actores, 
                     LocalDate fechaInicioPreventa, LocalDate fechaInicioEstreno, String estado) {

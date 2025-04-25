@@ -29,6 +29,8 @@ public class Sala {
     @JoinColumn(name = "sedeId") // este nombre puede variar según tu tabla
     private Sede sede;
 
+    public Sala() {}
+
     public Sala(int numeroSala, int capacidad, String categoria) {
         this.numeroSala = numeroSala;
         this.capacidad = capacidad;

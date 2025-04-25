@@ -22,6 +22,8 @@ public class MedioPago {
     private String nombre;
     private String logoURL;
 
+    public MedioPago() {}
+
     public MedioPago(String nombre, String logoURL) {
         this.nombre = nombre;
         this.logoURL = logoURL;

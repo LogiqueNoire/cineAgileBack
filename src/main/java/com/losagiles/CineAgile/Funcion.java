@@ -49,7 +49,7 @@ public class Funcion {
     Categorizable categorizable;
     Dimensionable dimensionable;
 
-
+    public Funcion() {}
    
     /*Borré el id del constructor pq ya tiene el generatedValue*/
     public Funcion(LocalDateTime fechaHoraInicio, Pelicula pelicula, String dimension, float precioBase,
