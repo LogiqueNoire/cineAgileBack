@@ -1,20 +1,20 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 
 /**
  *
- * @author USUARIO
+ * @author mvela
  */
 
 package com.losagiles.CineAgile.repository;
 
-import com.losagiles.CineAgile.Funcion;
+import com.losagiles.CineAgile.Butaca;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FuncionRespository extends JpaRepository<Funcion, Long>{
+public interface ButacaRepository extends JpaRepository<Butaca, Long> {
     
 }

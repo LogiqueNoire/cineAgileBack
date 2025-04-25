@@ -4,36 +4,22 @@
  */
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.Funcion;
+import com.losagiles.CineAgile.Entrada;
+import com.losagiles.CineAgile.repository.EntradaRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.stereotype.Service;
-import com.losagiles.CineAgile.repository.FuncionRepository;
-
 /**
  *
- * @author USUARIO
+ * @author JOSE
  */
-@Service
-public class FuncionService implements FuncionRepository{
-    @Autowired
-    private FuncionRepository funcionRespository;
-    
-    public static float precio(Funcion funcion, Personeable personeable){
-	return personeable.precio(
-                funcion.getPrecioBase()
-                +funcion.getCategorizable().precio(funcion.getPrecioBase())
-                +funcion.getDimensionable().precio()
-        );
-    }
-    
+public class EntradaService implements EntradaRepository {
+    private EntradaRepository entradaRepository; 
 
     @Override
     public void flush() {
@@ -41,17 +27,17 @@ public class FuncionService implements FuncionRepository{
     }
 
     @Override
-    public <S extends Funcion> S saveAndFlush(S entity) {
+    public <S extends Entrada> S saveAndFlush(S entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> List<S> saveAllAndFlush(Iterable<S> entities) {
+    public <S extends Entrada> List<S> saveAllAndFlush(Iterable<S> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void deleteAllInBatch(Iterable<Funcion> entities) {
+    public void deleteAllInBatch(Iterable<Entrada> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -66,72 +52,72 @@ public class FuncionService implements FuncionRepository{
     }
 
     @Override
-    public Funcion getOne(Long id) {
+    public Entrada getOne(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Funcion getById(Long id) {
-        return funcionRespository.getById(id);
-    }
-
-    @Override
-    public Funcion getReferenceById(Long id) {
+    public Entrada getById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> List<S> findAll(Example<S> example) {
+    public Entrada getReferenceById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> List<S> findAll(Example<S> example, Sort sort) {
+    public <S extends Entrada> List<S> findAll(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> List<S> saveAll(Iterable<S> entities) {
+    public <S extends Entrada> List<S> findAll(Example<S> example, Sort sort) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Funcion> findAll() {
+    public <S extends Entrada> List<S> saveAll(Iterable<S> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public List<Funcion> findAllById(Iterable<Long> ids) {
+    public List<Entrada> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> S save(S entity) {
+    public List<Entrada> findAllById(Iterable<Long> ids) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Optional<Funcion> findById(Long id) {
+    public <S extends Entrada> S save(S entity) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Optional<Entrada> findById(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public boolean existsById(Long id) {
-        return funcionRespository.existsById(id);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public long count() {
-        return funcionRespository.count();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void deleteById(Long id) {
-        funcionRespository.deleteById(id);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void delete(Funcion entity) {
+    public void delete(Entrada entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -141,7 +127,7 @@ public class FuncionService implements FuncionRepository{
     }
 
     @Override
-    public void deleteAll(Iterable<? extends Funcion> entities) {
+    public void deleteAll(Iterable<? extends Entrada> entities) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -151,39 +137,37 @@ public class FuncionService implements FuncionRepository{
     }
 
     @Override
-    public List<Funcion> findAll(Sort sort) {
+    public List<Entrada> findAll(Sort sort) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public Page<Funcion> findAll(Pageable pageable) {
+    public Page<Entrada> findAll(Pageable pageable) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> Optional<S> findOne(Example<S> example) {
+    public <S extends Entrada> Optional<S> findOne(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> Page<S> findAll(Example<S> example, Pageable pageable) {
+    public <S extends Entrada> Page<S> findAll(Example<S> example, Pageable pageable) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> long count(Example<S> example) {
+    public <S extends Entrada> long count(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion> boolean exists(Example<S> example) {
+    public <S extends Entrada> boolean exists(Example<S> example) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public <S extends Funcion, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+    public <S extends Entrada, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-
 }

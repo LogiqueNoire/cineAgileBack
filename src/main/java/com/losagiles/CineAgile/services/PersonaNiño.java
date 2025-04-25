@@ -2,15 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile;
+package com.losagiles.CineAgile.services;
 
 /**
  *
  * @author USUARIO
  */
-public class CategoriaPrime implements Categorizable {
+public class PersonaNiño implements Personeable{
     @Override
-    public float precio(float precioBase){
-        return (float) (precioBase*0.5);
+    public float precio(float precioAnterior) { 
+        return (float) 0.5*precioAnterior;
     }
+    
 }

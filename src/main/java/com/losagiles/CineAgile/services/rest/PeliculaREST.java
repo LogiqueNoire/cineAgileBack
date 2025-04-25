@@ -16,32 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class PeliculaREST {
     @Autowired
     PeliculaService peliculaService;
-    /*
-    
-    public List<Pelicula> getAllPeliculas(){
-        return peliculaRepository.findAll();
-    }
-
-    public Pelicula getPeliculaById(Long id) {
-        return peliculaRepository.getById(id);
-    }
-    
-    public boolean PeliculaExiste(Long id) {
-        return peliculaRepository.existsById(id);
-    }
-
-    public long contarPeliculas() {
-        return peliculaRepository.count();
-    }
-
-    public void deletePeliculaById(Long id) {
-        peliculaRepository.deleteById(id);
-    }
-    
-    public List<Pelicula> getPeliculasSort(Sort s) {
-        return peliculaRepository.findAll(s);
-    }<>
-    */
 
     @GetMapping
     private ResponseEntity <List<Pelicula>> getAllPeliculas(){

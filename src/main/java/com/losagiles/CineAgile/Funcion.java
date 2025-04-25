@@ -4,6 +4,9 @@
  */
 package com.losagiles.CineAgile;
 
+import com.losagiles.CineAgile.services.Personeable;
+import com.losagiles.CineAgile.services.Categorizable;
+import com.losagiles.CineAgile.services.Dimensionable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +25,7 @@ import java.util.Date;
 public class Funcion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int idFuncion;
+    Long idFuncion;
     @Column
     LocalDateTime fechaHoraInicio;
     @Column
@@ -43,6 +46,7 @@ public class Funcion {
     
     /*Borré el id del constructor pq ya tiene el generatedValue*/
     public Funcion(LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
+
             Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
         this.idFuncion = idFuncion;
         this.fechaHoraInicio = fechaHoraInicio;
@@ -58,15 +62,7 @@ public class Funcion {
         this.dimensionable = dimensionable;
     }
     
-    public float precio(Personeable personeable){
-	return personeable.precio(
-                getPrecioBase()
-                +categorizable.precio(precioBase)
-                +dimensionable.precio()
-        );
-    }
-
-    public int getIdFuncion() {
+    public Long getIdFuncion() {
         return idFuncion;
     }
 

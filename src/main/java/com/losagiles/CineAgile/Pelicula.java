@@ -21,7 +21,7 @@ import java.time.LocalDate;
 public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int idPelicula;
+    Long idPelicula;
     @Column
     String nombre;
     @Column

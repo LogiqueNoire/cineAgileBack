@@ -4,8 +4,8 @@
  */
 package com.losagiles.CineAgile.services.rest;
 
-import com.losagiles.CineAgile.Funcion;
-import com.losagiles.CineAgile.services.FuncionService;
+import com.losagiles.CineAgile.Entrada;
+import com.losagiles.CineAgile.services.EntradaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author USUARIO
+ * @author JOSE
  */
-
 @RestController
-@RequestMapping ("/Funcion")
-public class FuncionREST {
-    @Autowired
-    private FuncionService funcionService;
+@RequestMapping("/entrada/")
+public class EntradaREST {
     
-    @GetMapping
-    private ResponseEntity<List<Funcion>> getAllFunciones(){
-        return ResponseEntity.ok(funcionService.findAll());
+        @Autowired
+        private EntradaService entradaService;
         
-    }
+        @GetMapping
+        private ResponseEntity<List<Entrada>> getAllEntradas (){
+            return ResponseEntity.ok(entradaService.findAll());
+        }
+        
 }
