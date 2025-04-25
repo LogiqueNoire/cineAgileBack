@@ -41,7 +41,8 @@ public class Funcion {
     Categorizable categorizable;
     Dimensionable dimensionable;
     
-    public Funcion(int idFuncion, LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
+    /*Borré el id del constructor pq ya tiene el generatedValue*/
+    public Funcion(LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
             Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
         this.idFuncion = idFuncion;
         this.fechaHoraInicio = fechaHoraInicio;
