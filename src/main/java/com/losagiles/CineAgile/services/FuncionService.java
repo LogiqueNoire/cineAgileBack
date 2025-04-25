@@ -26,7 +26,7 @@ public class FuncionService implements FuncionRespository{
     @Autowired
     private FuncionRespository funcionRespository;
     
-    public float precio(Funcion funcion, Personeable personeable){
+    public static float precio(Funcion funcion, Personeable personeable){
 	return personeable.precio(
                 funcion.getPrecioBase()
                 +funcion.getCategorizable().precio(funcion.getPrecioBase())
