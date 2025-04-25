@@ -4,6 +4,7 @@
  */
 package com.losagiles.CineAgile;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,10 +15,11 @@ import jakarta.persistence.ManyToOne;
  *
  * @author USUARIO
  */
+@Entity
 public class Butaca {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private int idButaca;
+    private Long idButaca;
     private int fila;
     private int columna;
     private boolean discapacitado;
@@ -65,7 +67,7 @@ public class Butaca {
         return sala;
     }
 
-    public int getIdButaca() {
+    public Long getIdButaca() {
         return idButaca;
     }
 

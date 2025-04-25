@@ -19,18 +19,18 @@ import jakarta.persistence.Id;
 public class Entrada {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private int idEntrada;
+    private Long idEntrada;
     @Column
     private float costoFinal;
     Funcion funcion;
 
-    public Entrada(int idEntrada, float costoFinal, Funcion funcion) {
+    public Entrada(Long idEntrada, float costoFinal, Funcion funcion) {
         this.idEntrada = idEntrada;
         this.costoFinal = costoFinal;
         this.funcion = funcion;
     }
 
-    public int getIdEntrada() {
+    public Long getIdEntrada() {
         return idEntrada;
     }
 

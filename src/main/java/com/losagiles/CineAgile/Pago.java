@@ -4,10 +4,18 @@
  */
 package com.losagiles.CineAgile;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 /**
  *
  * @author mvela
  */
+@Entity
 public class Pago {
-    
+    @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    private int idPago;
 }

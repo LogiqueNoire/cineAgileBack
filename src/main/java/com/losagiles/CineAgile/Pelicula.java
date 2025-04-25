@@ -18,7 +18,7 @@ import java.time.LocalDate;
 @Table (name = "Pelicula")
 public class Pelicula {
     @Id
-    int idPelicula;
+    Long idPelicula;
     @Column
     String nombre;
     @Column
@@ -40,7 +40,7 @@ public class Pelicula {
     @Column
     String estado;
 
-    public Pelicula(int idPelicula, String nombre, int duracion, String sinopsis, 
+    public Pelicula(Long idPelicula, String nombre, int duracion, String sinopsis, 
                     String genero, String director, String clasificacion, String actores, 
                     LocalDate fechaInicioPreventa, LocalDate fechaInicioEstreno, String estado) {
         this.idPelicula = idPelicula;

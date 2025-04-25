@@ -22,7 +22,7 @@ public class CineAgileApplication {
     public static void main(String[] args) {
         Sala sala1 = new Sala(1, 100, "Prime");
         
-        Pelicula StarWars = new Pelicula(1,"Star Wars III - La Venganza de los Sith", 140 
+        Pelicula StarWars = new Pelicula((long) 1,"Star Wars III - La Venganza de los Sith", 140 
                                         , "La tercera entrega de la trilogia" , "Sci-Fi" , "George Lucas" 
                                         , "+14" , "Hayden Christensen , Ewan McGregor , etc..." 
                                         , LocalDate.of(2025,04,23) , LocalDate.of(2025,04,27) , "Preventa");
@@ -33,8 +33,8 @@ public class CineAgileApplication {
                 20f, sala1, new CategoriaPrime(), new DimensionTresD());
         System.out.println("Holaa");
         System.out.println(FuncionService.precio(f, new PersonaGeneral()));
-        System.out.println(FuncionService.precio(f,new PersonaNiño()));
-        System.out.println(FuncionService.precio(f,new PersonaConadis()));
+        System.out.println(FuncionService.precio(f, new PersonaNiño()));
+        System.out.println(FuncionService.precio(f, new PersonaConadis()));
         
         System.out.println(f);
         
