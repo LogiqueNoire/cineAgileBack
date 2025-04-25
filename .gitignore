@@ -1,4 +1,5 @@
-application-secrets.properties
+application-dev.properties
+application-prod.properties
 nb-configuration.xml
 nbactions.xml
 
