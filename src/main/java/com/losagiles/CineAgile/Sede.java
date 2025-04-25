@@ -5,6 +5,7 @@
 package com.losagiles.CineAgile;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.CascadeType;
@@ -19,11 +20,12 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "sede")
 public class Sede {
 
     @Id
     @Column(name = "idSede")
-    private Long idSede;
+    private int idSede;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
@@ -37,18 +39,18 @@ public class Sede {
     public Sede() {}
 
     // Constructor con parámetros
-    public Sede(Long idSede, String nombre) {
+    public Sede(int idSede, String nombre) {
         this.idSede = idSede;
         this.nombre = nombre;
     }
 
     // Getters y Setters
 
-    public Long getIdSede() {
+    public int getIdSede() {
         return idSede;
     }
 
-    public void setIdSede(Long idSede) {
+    public void setIdSede(int idSede) {
         this.idSede = idSede;
     }
 
