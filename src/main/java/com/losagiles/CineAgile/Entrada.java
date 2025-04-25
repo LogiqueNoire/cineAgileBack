@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 /**
@@ -25,7 +26,19 @@ public class Entrada {
     private float costoFinal;
     @ManyToOne
     private Funcion funcion;
-
+    /*
+    ¿No deberia ser asi el ManyToOne para funcion?(Es una sugerencia y duda a la vez)xd
+    @ManyToOne
+    @JoinColumn(name = "id_Funcion") 
+    private Funcion funcion;
+    */
+    
+    /*
+    Ah y tambien ponerle el de butaca obvio aun no lo colocamos pq todavia no esta todo al 100% ps xd
+    @ManyToOne
+    @JoinColumn(name = "id_Butaca") 
+    private Butaca Butaca;
+    */
     public Entrada(Long idEntrada, float costoFinal, Funcion funcion) {
         this.idEntrada = idEntrada;
         this.costoFinal = costoFinal;
