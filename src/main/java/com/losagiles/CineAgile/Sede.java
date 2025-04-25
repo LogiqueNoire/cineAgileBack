@@ -10,6 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
 import java.util.List;
 
@@ -24,7 +26,7 @@ import java.util.List;
 public class Sede {
 
     @Id
-    @Column(name = "idSede")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int idSede;
 
     @Column(name = "nombre", nullable = false)
