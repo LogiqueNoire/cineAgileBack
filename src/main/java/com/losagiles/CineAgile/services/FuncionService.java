@@ -5,7 +5,6 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.Funcion;
-import com.losagiles.CineAgile.repository.FuncionRespository;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -16,15 +15,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
+import com.losagiles.CineAgile.repository.FuncionRepository;
 
 /**
  *
  * @author USUARIO
  */
 @Service
-public class FuncionService implements FuncionRespository{
+public class FuncionService implements FuncionRepository{
     @Autowired
-    private FuncionRespository funcionRespository;
+    private FuncionRepository funcionRespository;
     
     public static float precio(Funcion funcion, Personeable personeable){
 	return personeable.precio(
