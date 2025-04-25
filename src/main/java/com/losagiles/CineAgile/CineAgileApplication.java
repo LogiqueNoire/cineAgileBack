@@ -10,6 +10,7 @@ import com.losagiles.CineAgile.services.PersonaConadis;
 import com.losagiles.CineAgile.services.PersonaGeneral;
 import com.losagiles.CineAgile.services.PersonaNiño;
 import com.losagiles.CineAgile.Sala;
+import com.losagiles.CineAgile.services.FuncionService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
@@ -31,9 +32,9 @@ public class CineAgileApplication {
         Funcion f = new Funcion(0, LocalDateTime.of(2025, 04, 28, 20, 10), StarWars, "3D",
                 20f, sala1, new CategoriaPrime(), new DimensionTresD());
         System.out.println("Holaa");
-        System.out.println(f.precio(new PersonaGeneral()));
-        System.out.println(f.precio(new PersonaNiño()));
-        System.out.println(f.precio(new PersonaConadis()));
+        System.out.println(FuncionService.precio(f, new PersonaGeneral()));
+        System.out.println(FuncionService.precio(f,new PersonaNiño()));
+        System.out.println(FuncionService.precio(f,new PersonaConadis()));
         
         System.out.println(f);
         
