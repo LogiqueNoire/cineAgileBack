@@ -4,10 +4,13 @@
  */
 package com.losagiles.CineAgile.services;
 
+import jakarta.persistence.Embeddable;
+
 /**
  *
  * @author USUARIO
  */
+@Embeddable
 public class PersonaConadis implements Personeable{
     @Override
     public float precio(float precioAnterior) { 

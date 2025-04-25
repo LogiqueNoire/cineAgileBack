@@ -4,19 +4,18 @@ package com.losagiles.CineAgile;
 
 import com.losagiles.CineAgile.services.CategoriaPrime;
 import com.losagiles.CineAgile.services.DimensionTresD;
-import com.losagiles.CineAgile.Funcion;
-import com.losagiles.CineAgile.Pelicula;
 import com.losagiles.CineAgile.services.PersonaConadis;
 import com.losagiles.CineAgile.services.PersonaGeneral;
 import com.losagiles.CineAgile.services.PersonaNiño;
-import com.losagiles.CineAgile.Sala;
 import com.losagiles.CineAgile.services.FuncionService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
+@EntityScan("com.losagiles.CineAgile")
 public class CineAgileApplication {
 
     public static void main(String[] args) {

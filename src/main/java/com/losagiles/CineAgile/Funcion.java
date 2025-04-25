@@ -4,7 +4,6 @@
  */
 package com.losagiles.CineAgile;
 
-import com.losagiles.CineAgile.services.Personeable;
 import com.losagiles.CineAgile.services.Categorizable;
 import com.losagiles.CineAgile.services.Dimensionable;
 import jakarta.persistence.Column;
@@ -12,10 +11,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.Date;
 
 /**
  *
@@ -23,6 +21,7 @@ import java.util.Date;
  */
 @Entity
 public class Funcion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long idFuncion;
@@ -30,36 +29,40 @@ public class Funcion {
     LocalDateTime fechaHoraInicio;
     @Column
     LocalDateTime fechaHoraFin;
-    
-    Pelicula Pelicula;
+
+    @ManyToOne
+    @JoinColumn(name = "id_pelicula")  // El nombre de la columna en la base de datos
+    private Pelicula pelicula;
+
     /*Puse atributo pelicula para lo del autocalculado de la fechaHoraFin*/
     @Column
     String dimension;
     @Column
     float precioBase;
-    @Column
+
     @ManyToOne
+    @JoinColumn(name = "id_Sala")
     Sala sala;
-        
+
     Categorizable categorizable;
     Dimensionable dimensionable;
-    
-    public Funcion(Long idFuncion, LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
+
+    public Funcion(Long idFuncion, LocalDateTime fechaHoraInicio, Pelicula pelicula, String dimension, float precioBase,
             Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
         this.idFuncion = idFuncion;
         this.fechaHoraInicio = fechaHoraInicio;
-        this.Pelicula = Pelicula;
+        this.pelicula = pelicula;
         /*Hago un plusMinutes a la fechaHoraInicio y le sumo los minutos que dura la pelicula , luego podemos añadirle mas
         si queremos contar los trailers , etc... 
         El casteo a long es porque el metodo usa un long asi que ps porsiaca lo puse*/
-        this.fechaHoraFin = fechaHoraInicio.plusMinutes( (long) Pelicula.getDuracion());
+        this.fechaHoraFin = fechaHoraInicio.plusMinutes((long) pelicula.getDuracion());
         this.dimension = dimension;
         this.precioBase = precioBase;
         this.sala = sala;
         this.categorizable = categorizable;
         this.dimensionable = dimensionable;
     }
-    
+
     public Long getIdFuncion() {
         return idFuncion;
     }
@@ -83,26 +86,26 @@ public class Funcion {
     public Categorizable getCategorizable() {
         return categorizable;
     }
-    
+
     public LocalDateTime getFechaHoraFin() {
         return fechaHoraFin;
     }
 
     public LocalDateTime getFechaHoraInicio() {
         return fechaHoraInicio;
-    }  
+    }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("idFuncion: ").append(idFuncion).append("\n");
-        sb.append("FechaHoraInicio: ").append(" "+fechaHoraInicio.getDayOfMonth())
-                .append("-"+fechaHoraInicio.getMonthValue()).append("-"+fechaHoraInicio.getYear())
-                .append(" "+fechaHoraInicio.getHour()).append(":"+fechaHoraInicio.getMinute()).append("\n");
-        sb.append("FechaHoraFin: ").append(" "+fechaHoraFin.getDayOfMonth())
-                .append("-"+fechaHoraFin.getMonthValue()).append("-"+fechaHoraFin.getYear())
-                .append(" "+fechaHoraFin.getHour()).append(":"+fechaHoraFin.getMinute()).append("\n");
-        sb.append("Pelicula: ").append(Pelicula.nombre).append("\n");
+        sb.append("FechaHoraInicio: ").append(" " + fechaHoraInicio.getDayOfMonth())
+                .append("-" + fechaHoraInicio.getMonthValue()).append("-" + fechaHoraInicio.getYear())
+                .append(" " + fechaHoraInicio.getHour()).append(":" + fechaHoraInicio.getMinute()).append("\n");
+        sb.append("FechaHoraFin: ").append(" " + fechaHoraFin.getDayOfMonth())
+                .append("-" + fechaHoraFin.getMonthValue()).append("-" + fechaHoraFin.getYear())
+                .append(" " + fechaHoraFin.getHour()).append(":" + fechaHoraFin.getMinute()).append("\n");
+        sb.append("Pelicula: ").append(pelicula.nombre).append("\n");
         return sb.toString();
     }
 

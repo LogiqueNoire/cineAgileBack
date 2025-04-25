@@ -4,10 +4,7 @@
  */
 package com.losagiles.CineAgile;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 /**
@@ -18,6 +15,7 @@ import java.time.LocalDate;
 @Table (name = "Pelicula")
 public class Pelicula {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     Long idPelicula;
     @Column
     String nombre;
@@ -34,8 +32,10 @@ public class Pelicula {
     @Column
     String actores;
     @Column
+    @Temporal(TemporalType.DATE)      
     LocalDate   fechaInicioPreventa;
     @Column
+    @Temporal(TemporalType.DATE)
     LocalDate   fechaInicioEstreno;
     @Column
     String estado;
