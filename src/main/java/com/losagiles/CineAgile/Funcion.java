@@ -50,7 +50,7 @@ public class Funcion {
 
    
     /*Borré el id del constructor pq ya tiene el generatedValue*/
-    public Funcion(LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
+    public Funcion(LocalDateTime fechaHoraInicio, Pelicula pelicula, String dimension, float precioBase,
             Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
         this.fechaHoraInicio = fechaHoraInicio;
         this.pelicula = pelicula;
