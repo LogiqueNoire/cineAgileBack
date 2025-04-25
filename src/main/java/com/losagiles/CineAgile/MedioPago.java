@@ -8,6 +8,6 @@ package com.losagiles.CineAgile;
  *
  * @author mvela
  */
-public class Pago {
+public class MedioPago {
     
 }
