@@ -1,12 +1,14 @@
-package com.losagiles.CineAgile.test;
+package com.losagiles.CineAgile;
 
-import com.losagiles.CineAgile.CategoriaPrime;
-import com.losagiles.CineAgile.DimensionTresD;
+
+
+import com.losagiles.CineAgile.services.CategoriaPrime;
+import com.losagiles.CineAgile.services.DimensionTresD;
 import com.losagiles.CineAgile.Funcion;
 import com.losagiles.CineAgile.Pelicula;
-import com.losagiles.CineAgile.PersonaConadis;
-import com.losagiles.CineAgile.PersonaGeneral;
-import com.losagiles.CineAgile.PersonaNiño;
+import com.losagiles.CineAgile.services.PersonaConadis;
+import com.losagiles.CineAgile.services.PersonaGeneral;
+import com.losagiles.CineAgile.services.PersonaNiño;
 import com.losagiles.CineAgile.Sala;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

@@ -4,6 +4,9 @@
  */
 package com.losagiles.CineAgile;
 
+import com.losagiles.CineAgile.services.Personeable;
+import com.losagiles.CineAgile.services.Categorizable;
+import com.losagiles.CineAgile.services.Dimensionable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -57,14 +60,6 @@ public class Funcion {
         this.dimensionable = dimensionable;
     }
     
-    public float precio(Personeable personeable){
-	return personeable.precio(
-                getPrecioBase()
-                +categorizable.precio(precioBase)
-                +dimensionable.precio()
-        );
-    }
-
     public int getIdFuncion() {
         return idFuncion;
     }

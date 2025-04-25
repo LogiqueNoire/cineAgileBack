@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping ("/pais")
+@RequestMapping ("/Funcion")
 public class FuncionREST {
     @Autowired
     private FuncionService funcionService;
