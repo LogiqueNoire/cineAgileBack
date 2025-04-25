@@ -25,7 +25,7 @@ import java.util.Date;
 public class Funcion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int idFuncion;
+    Long idFuncion;
     @Column
     LocalDateTime fechaHoraInicio;
     @Column
@@ -44,7 +44,7 @@ public class Funcion {
     Categorizable categorizable;
     Dimensionable dimensionable;
     
-    public Funcion(int idFuncion, LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
+    public Funcion(Long idFuncion, LocalDateTime fechaHoraInicio, Pelicula Pelicula, String dimension, float precioBase,
             Sala sala, Categorizable categorizable, Dimensionable dimensionable) {
         this.idFuncion = idFuncion;
         this.fechaHoraInicio = fechaHoraInicio;
@@ -60,7 +60,7 @@ public class Funcion {
         this.dimensionable = dimensionable;
     }
     
-    public int getIdFuncion() {
+    public Long getIdFuncion() {
         return idFuncion;
     }
 

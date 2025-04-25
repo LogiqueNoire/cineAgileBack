@@ -29,7 +29,7 @@ public class CineAgileApplication {
         System.out.println(StarWars);
         
         
-        Funcion f = new Funcion(0, LocalDateTime.of(2025, 04, 28, 20, 10), StarWars, "3D",
+        Funcion f = new Funcion((long) 0, LocalDateTime.of(2025, 04, 28, 20, 10), StarWars, "3D",
                 20f, sala1, new CategoriaPrime(), new DimensionTresD());
         System.out.println("Holaa");
         System.out.println(FuncionService.precio(f, new PersonaGeneral()));
