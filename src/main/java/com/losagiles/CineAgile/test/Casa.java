@@ -11,9 +11,6 @@ public class Casa {
     String nombre;
     String direccion;
 
-    @OneToMany
-    Pelicula[] peliculas;
-
     public Casa() {}
 
     public Casa(Long idCasa, String nombre, String direccion) {
