@@ -1,5 +1,6 @@
 application-dev.properties
 application-prod.properties
+application-docker.properties
 nb-configuration.xml
 nbactions.xml
 
