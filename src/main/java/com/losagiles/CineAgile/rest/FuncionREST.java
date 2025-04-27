@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile.services.rest;
+package com.losagiles.CineAgile.rest;
 
-import com.losagiles.CineAgile.Entrada;
-import com.losagiles.CineAgile.services.EntradaService;
+import com.losagiles.CineAgile.entidades.Funcion;
+import com.losagiles.CineAgile.services.FuncionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author JOSE
+ * @author USUARIO
  */
+
 @RestController
-@RequestMapping("/entrada/")
-public class EntradaREST {
+@RequestMapping ("/Funcion")
+public class FuncionREST {
+    @Autowired
+    private FuncionService funcionService;
     
-        @Autowired
-        private EntradaService entradaService;
+    @GetMapping
+    private ResponseEntity<List<Funcion>> getAllFunciones(){
+        return ResponseEntity.ok(funcionService.findAll());
         
-        @GetMapping
-        private ResponseEntity<List<Entrada>> getAllEntradas (){
-            return ResponseEntity.ok(entradaService.findAll());
-        }
-        
+    }
 }

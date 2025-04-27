@@ -10,7 +10,7 @@
 
 package com.losagiles.CineAgile.repository;
 
-import com.losagiles.CineAgile.Funcion;
+import com.losagiles.CineAgile.entidades.Funcion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

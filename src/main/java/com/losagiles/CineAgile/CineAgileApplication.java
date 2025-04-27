@@ -2,6 +2,9 @@ package com.losagiles.CineAgile;
 
 
 
+import com.losagiles.CineAgile.entidades.Funcion;
+import com.losagiles.CineAgile.entidades.Pelicula;
+import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.services.CategoriaPrime;
 import com.losagiles.CineAgile.services.DimensionTresD;
 import com.losagiles.CineAgile.services.PersonaConadis;
@@ -21,7 +24,7 @@ public class CineAgileApplication {
     public static void main(String[] args) {
         Sala sala1 = new Sala(1, 100, "Prime");
         
-        Pelicula StarWars = new Pelicula("Star Wars III - La Venganza de los Sith", 140 
+        Pelicula StarWars = new Pelicula("Star Wars III - La Venganza de los Sith", 140
                                         , "La tercera entrega de la trilogia" , "Sci-Fi" , "George Lucas" 
                                         , "+14" , "Hayden Christensen , Ewan McGregor , etc..." 
                                         , LocalDate.of(2025,04,23) , LocalDate.of(2025,04,27) , "Preventa");

@@ -1,7 +1,7 @@
 
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.Pelicula;
+import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 
 import java.util.List;

@@ -10,7 +10,7 @@
 
 package com.losagiles.CineAgile.repository;
 
-import com.losagiles.CineAgile.Sala;
+import com.losagiles.CineAgile.entidades.Sala;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

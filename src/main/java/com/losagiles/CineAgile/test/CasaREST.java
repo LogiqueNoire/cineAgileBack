@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("casa")
+@RequestMapping ("/casa")
 public class CasaREST {
     @Autowired
     CasaService casaService;
@@ -15,7 +15,6 @@ public class CasaREST {
     @GetMapping ("/{id}")
     public ResponseEntity<Casa> getCasa(@PathVariable Long id) {
         Casa casa = casaService.mostrarCasa(id);
-        System.out.println(casa);
         return ResponseEntity.ofNullable(casa);
     }
 

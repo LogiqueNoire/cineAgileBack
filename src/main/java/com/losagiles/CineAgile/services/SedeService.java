@@ -4,7 +4,7 @@
  */
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.Sede;
+import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.repository.SedeRepository;
 import java.util.List;
 import java.util.Optional;

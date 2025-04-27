@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile;
+package com.losagiles.CineAgile.entidades;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +27,10 @@ public class Butaca {
     @ManyToOne
     @JoinColumn (name="idSala")
     private Sala sala;
+
+    static public void main(String[] args) {
+
+    }
 
     public Butaca() {}
 

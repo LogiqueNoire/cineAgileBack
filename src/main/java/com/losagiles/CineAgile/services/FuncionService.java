@@ -4,7 +4,7 @@
  */
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.Funcion;
+import com.losagiles.CineAgile.entidades.Funcion;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
