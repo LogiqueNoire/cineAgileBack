@@ -11,40 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Pelicula")
+@RequestMapping("/pelicula")
 public class PeliculaREST {
     @Autowired
     PeliculaService peliculaService;
 
-    @GetMapping
+    @GetMapping ("/estreno")
     private ResponseEntity <List<Pelicula>> getAllPeliculas(){
-        return ResponseEntity.ok(peliculaService.findAll()); 
-    }
-    /*
-    @GetMapping
-    private ResponseEntity <Pelicula> getPeliculaById(Long id){
-        return ResponseEntity.ok(peliculaService.getById(id)); 
-    }
-    @GetMapping
-    private ResponseEntity<Boolean> PeliculaExiste(Long id){
-        return ResponseEntity.ok(peliculaService.existsById(id)); 
-    }
-    @GetMapping
-    private ResponseEntity <Long> contarPeliculas(){
-        return ResponseEntity.ok(peliculaService.count()); 
-    }
-    
-
-    @DeleteMapping
-    private void deletePeliculaById(Long id){
-        peliculaService.deleteById(id); 
-        
+        return ResponseEntity.ok(peliculaService.mostrarPeliculasEstreno());
     }
 
-    
-    private ResponseEntity<List<Pelicula>> getPeliculasSort(Sort sort){
-        return ResponseEntity.ok(peliculaService.findAll(sort)); 
-    }
-
-    */
 }
