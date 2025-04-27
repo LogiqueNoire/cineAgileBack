@@ -23,7 +23,8 @@ public class CineAgileApplication {
 
     public static void main(String[] args) {
         Sala sala1 = new Sala(1, 100, "Prime");
-        
+
+        /*
         Pelicula StarWars = new Pelicula("Star Wars III - La Venganza de los Sith", 140
                                         , "La tercera entrega de la trilogia" , "Sci-Fi" , "George Lucas" 
                                         , "+14" , "Hayden Christensen , Ewan McGregor , etc..." 
@@ -40,6 +41,8 @@ public class CineAgileApplication {
         System.out.println(FuncionService.precio(f, new PersonaConadis()));
         
         System.out.println(f);
+
+        */
         
         SpringApplication.run(CineAgileApplication.class, args);
         /*

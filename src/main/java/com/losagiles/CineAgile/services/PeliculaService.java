@@ -1,6 +1,7 @@
 
 package com.losagiles.CineAgile.services;
 
+import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
