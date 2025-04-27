@@ -16,4 +16,8 @@ public class PeliculaService {
     public List<Pelicula> mostrarPeliculasEstreno() {
         return peliculaRepository.getPeliculasByEstado("estreno");
     }
+
+    public List<Pelicula> mostrarPeliculasProximamente() {
+        return peliculaRepository.getPeliculasByEstado("proximamente");
+    }
 }

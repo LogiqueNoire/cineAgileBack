@@ -17,8 +17,14 @@ public class PeliculaREST {
     PeliculaService peliculaService;
 
     @GetMapping ("/estreno")
-    private ResponseEntity <List<Pelicula>> getAllPeliculas(){
+    private ResponseEntity <List<Pelicula>> getEstreno(){
         return ResponseEntity.ok(peliculaService.mostrarPeliculasEstreno());
     }
+
+    @GetMapping ("/proximamente")
+    private ResponseEntity <List<Pelicula>> getProximamente(){
+        return ResponseEntity.ok(peliculaService.mostrarPeliculasProximamente());
+    }
+
 
 }
