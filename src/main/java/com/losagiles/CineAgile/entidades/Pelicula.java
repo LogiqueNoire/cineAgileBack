@@ -23,27 +23,37 @@ public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long idPelicula;
-    @Column
+
+    @Column (nullable = false)
     String nombre;
-    @Column
-    private int duracion;
-    @Column
+
+    @Column (nullable = false)
+    private int duracion; // En minutos
+
+    @Column (nullable = false)
     String sinopsis;
-    @Column
+
+    @Column (nullable = false)
     String genero;
-    @Column
+
+    @Column (nullable = false)
     String director;
-    @Column
+
+    @Column (nullable = false)
     String clasificacion;
-    @Column
+
+    @Column (nullable = false)
     String actores;
-    @Column
-    @Temporal(TemporalType.DATE)      
-    LocalDate   fechaInicioPreventa;
-    @Column
+
+    @Column (nullable = false)
     @Temporal(TemporalType.DATE)
-    LocalDate   fechaInicioEstreno;
-    @Column
+    LocalDate fechaInicioPreventa;
+
+    @Column (nullable = false)
+    @Temporal(TemporalType.DATE)
+    LocalDate fechaInicioEstreno;
+
+    @Column (nullable = false)
     String estado;
 
     public Pelicula() {}
@@ -63,10 +73,6 @@ public class Pelicula {
         this.estado = estado;
     }
 
-    public int getDuracion() {
-        return duracion;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -83,6 +89,92 @@ public class Pelicula {
         sb.append("Estado: ").append(estado).append("\n");
         return sb.toString();
     }
-    
-    
+
+    public long getIdPelicula() {
+        return idPelicula;
+    }
+
+    public void setIdPelicula(long idPelicula) {
+        this.idPelicula = idPelicula;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(int duracion) {
+        this.duracion = duracion;
+    }
+
+    public String getSinopsis() {
+        return sinopsis;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public String getClasificacion() {
+        return clasificacion;
+    }
+
+    public void setClasificacion(String clasificacion) {
+        this.clasificacion = clasificacion;
+    }
+
+    public String getActores() {
+        return actores;
+    }
+
+    public void setActores(String actores) {
+        this.actores = actores;
+    }
+
+    public LocalDate getFechaInicioPreventa() {
+        return fechaInicioPreventa;
+    }
+
+    public void setFechaInicioPreventa(LocalDate fechaInicioPreventa) {
+        this.fechaInicioPreventa = fechaInicioPreventa;
+    }
+
+    public LocalDate getFechaInicioEstreno() {
+        return fechaInicioEstreno;
+    }
+
+    public void setFechaInicioEstreno(LocalDate fechaInicioEstreno) {
+        this.fechaInicioEstreno = fechaInicioEstreno;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }
