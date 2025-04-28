@@ -4,12 +4,15 @@
  */
 package com.losagiles.CineAgile.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author USUARIO
  */
+@Data
 @Entity
 public class Butaca {
     @Id
@@ -17,10 +20,10 @@ public class Butaca {
     private Long id;
 
     @Column(nullable = false)
-    private short fila;
+    private int fila;
 
     @Column(nullable = false)
-    private short columna;
+    private int columna;
 
     @Column(nullable = false)
     private boolean discapacitado;
@@ -30,6 +33,7 @@ public class Butaca {
     
     @ManyToOne
     @JoinColumn (name="id_sala")
+    @JsonBackReference
     private Sala sala;
 
 }

@@ -4,6 +4,7 @@
  */
 package com.losagiles.CineAgile.entidades;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
@@ -37,6 +38,7 @@ public class Sede {
 
     // Relación uno a muchos con Sala
     @OneToMany(mappedBy = "sede", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Sala> salas;
 
 }

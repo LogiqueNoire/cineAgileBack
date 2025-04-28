@@ -14,7 +14,9 @@ import com.losagiles.CineAgile.entidades.Butaca;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ButacaRepository extends JpaRepository<Butaca, Long> {
-    
+    public List<Butaca> findAllBySalaId(Long idSala);
 }

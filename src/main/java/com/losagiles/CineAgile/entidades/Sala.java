@@ -4,6 +4,8 @@
  */
 package com.losagiles.CineAgile.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -34,8 +36,10 @@ public class Sala {
 
     @ManyToOne
     @JoinColumn(name = "id_sede") // este nombre puede variar según tu tabla
+    @JsonBackReference
     private Sede sede;
 
     @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Butaca> butacas;
 }
