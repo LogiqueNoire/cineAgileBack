@@ -4,58 +4,38 @@
  */
 package com.losagiles.CineAgile.entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
 
 /**
  *
  * @author USUARIO
  */
+
+// La etiqueta @Data es proveida por lombok. Esta es útil
+// porque nos ahorra colocar los getters, setters y constructores
+@Data
 @Entity
 public class Sala {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idSala;
-    private int numeroSala;
+    private Long id;
+
+    @Column(nullable = false)
+    private String codigoSala;
+
+    @Column(nullable = false)
     private int capacidad;
+
+    @Column(nullable = false)
     private String categoria;
 
     @ManyToOne
-    @JoinColumn(name = "sedeId") // este nombre puede variar según tu tabla
+    @JoinColumn(name = "id_sede") // este nombre puede variar según tu tabla
     private Sede sede;
 
-    public Sala() {}
-
-    public Sala(int numeroSala, int capacidad, String categoria) {
-        this.numeroSala = numeroSala;
-        this.capacidad = capacidad;
-        this.categoria = categoria;
-    }
-
-    @Override
-    public String toString() {
-        return "Sala: " + getIdSala() + "\tNumero: " + getNumeroSala() + "\tCapacidad: " + getCapacidad() + "\tCategoria: " + getCategoria();
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public int getNumeroSala() {
-        return numeroSala;
-    }
-
-    public int getCapacidad() {
-        return capacidad;
-    }
-
-    public Long getIdSala() {
-        return idSala;
-    }
-
+    @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Butaca> butacas;
 }

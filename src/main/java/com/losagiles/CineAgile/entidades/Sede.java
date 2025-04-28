@@ -13,6 +13,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.OneToMany;
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -20,57 +22,22 @@ import java.util.List;
  * @author CARDENAS IGLESIAS HUGO AUGUSTO
  */
 
-
+// La etiqueta @Data es proveida por lombok. Esta es útil
+// porque nos ahorra colocar los getters, setters y constructores
+@Data
 @Entity
 @Table(name = "sede")
 public class Sede {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idSede;
+    private int id;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;
-
 
     // Relación uno a muchos con Sala
     @OneToMany(mappedBy = "sede", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Sala> salas;
 
-    // Constructor vacío requerido por JPA
-    public Sede() {}
-
-    // Constructor con parámetros
-    public Sede(int idSede, String nombre) {
-        this.idSede = idSede;
-        this.nombre = nombre;
-    }
-
-    // Getters y Setters
-
-    public int getIdSede() {
-        return idSede;
-    }
-
-    public void setIdSede(int idSede) {
-        this.idSede = idSede;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-
-    public List<Sala> getSalas() {
-        return salas;
-    }
-
-    public void setSalas(List<Sala> salas) {
-        this.salas = salas;
-    }
 }
 

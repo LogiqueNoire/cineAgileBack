@@ -4,12 +4,7 @@
  */
 package com.losagiles.CineAgile.entidades;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 /**
  *
@@ -19,66 +14,22 @@ import jakarta.persistence.ManyToOne;
 public class Butaca {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
-    private Long idButaca;
-    private int fila;
-    private int columna;
+    private Long id;
+
+    @Column(nullable = false)
+    private short fila;
+
+    @Column(nullable = false)
+    private short columna;
+
+    @Column(nullable = false)
     private boolean discapacitado;
+
+    @Column(nullable = false)
+    private boolean ocupado;
     
     @ManyToOne
-    @JoinColumn (name="idSala")
+    @JoinColumn (name="id_sala")
     private Sala sala;
-
-    static public void main(String[] args) {
-
-    }
-
-    public Butaca() {}
-
-    public Butaca(int fila, int columna, boolean discapacitado, Sala sala) {
-        this.fila = fila;
-        this.columna = columna;
-        this.discapacitado = discapacitado;
-        this.sala = sala;
-    }
-
-    @Override
-    public String toString() {
-        return "Butaca: "+idButaca+"\tfila: "+getFila()+"\tcol: "+getColumna()+"\tdiscapacitado: "+isDiscapacitado();
-    }
-
-    public void setColumna(int columna) {
-        this.columna = columna;
-    }
-
-    public void setFila(int fila) {
-        this.fila = fila;
-    }
-
-    public boolean isDiscapacitado() {
-        return discapacitado;
-    }
-
-    public void setDiscapacitado(boolean discapacitado) {
-        this.discapacitado = discapacitado;
-    }
-
-    public int getFila() {
-        return fila;
-    }
-    public int getColumna() {
-        return columna;
-    }
-    
-    public Sala getSala() {
-        return sala;
-    }
-
-    public Long getIdButaca() {
-        return idButaca;
-    }
-
-    public void setSala(Sala sala) {
-        this.sala = sala;
-    }
 
 }
