@@ -4,7 +4,6 @@ import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.services.PeliculaService;
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
