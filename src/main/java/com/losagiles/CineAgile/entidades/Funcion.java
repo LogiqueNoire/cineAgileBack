@@ -18,10 +18,6 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-/**
- *
- * @author USUARIO
- */
 @Data
 @Entity
 public class Funcion {

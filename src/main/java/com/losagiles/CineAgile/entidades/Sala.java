@@ -11,11 +11,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- *
- * @author USUARIO
- */
-
 // La etiqueta @Data es proveida por lombok. Esta es útil
 // porque nos ahorra colocar los getters, setters y constructores
 @Data
