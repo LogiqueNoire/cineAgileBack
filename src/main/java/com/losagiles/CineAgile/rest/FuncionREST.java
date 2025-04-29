@@ -4,12 +4,16 @@
  */
 package com.losagiles.CineAgile.rest;
 
-import com.losagiles.CineAgile.entidades.Funcion;
+import com.losagiles.CineAgile.dto.FuncionDTO;
+import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.services.FuncionService;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,14 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping ("/Funcion")
+@RequestMapping ("/funcion")
 public class FuncionREST {
     @Autowired
     private FuncionService funcionService;
     
-    @GetMapping
-    private ResponseEntity<List<Funcion>> getAllFunciones(){
-        return ResponseEntity.ok(funcionService.findAll());
-        
+    @GetMapping ("/sedes/{idPelicula}")
+    private ResponseEntity<List<Sede>> getAllFunciones(@PathVariable Long idPelicula){
+        return ResponseEntity.ok(new ArrayList<>());
+    }
+
+    @GetMapping ("/pelicula/{idPelicula}")
+    private ResponseEntity<List<FuncionDTO>> getFuncionesPelicula(@PathVariable Long idPelicula) {
+        return ResponseEntity.ok(funcionService.mostrarFuncionesDePelicula(idPelicula));
     }
 }

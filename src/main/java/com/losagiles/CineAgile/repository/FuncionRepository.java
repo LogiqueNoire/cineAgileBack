@@ -10,11 +10,34 @@
 
 package com.losagiles.CineAgile.repository;
 
+import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
+import com.losagiles.CineAgile.entidades.Sala;
+import com.losagiles.CineAgile.entidades.Sede;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface FuncionRepository extends JpaRepository<Funcion, Long>{
-    
+    @Query("""
+            SELECT new com.losagiles.CineAgile.dto.FuncionDTO(
+                f.id,
+                f.fechaHoraInicio,
+                f.fechaHoraFin,
+                f.dimension,
+                f.precioBase,
+                se.id,
+                se.nombre,
+                sa.categoria
+            )
+            FROM Funcion f
+            JOIN Sala sa ON sa.id = f.sala.id
+            JOIN Sede se ON se.id = sa.sede.id
+            WHERE f.pelicula.idPelicula = :idPelicula
+            """)
+    public List<FuncionDTO> getFuncionesByPeliculaId(@Param("idPelicula") Long idPelicula);
 }
