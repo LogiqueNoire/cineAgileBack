@@ -8,11 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PeliculaService {
     @Autowired
     PeliculaRepository peliculaRepository;
+
+    public Pelicula mostrarPelicula(Long idPelicula) {
+        Optional<Pelicula> pelicula = peliculaRepository.findById(idPelicula);
+        return pelicula.orElse(null);
+    }
 
     public List<Pelicula> mostrarPeliculasEstreno() {
         return peliculaRepository.getPeliculasByEstado("estreno");

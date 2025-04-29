@@ -4,6 +4,7 @@
  */
 package com.losagiles.CineAgile.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
@@ -65,6 +66,7 @@ public class Pelicula {
     String imageUrl;
 
     @OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JsonManagedReference
     private List<Funcion> funcion;
 }
