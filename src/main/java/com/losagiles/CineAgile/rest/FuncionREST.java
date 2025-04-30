@@ -34,7 +34,6 @@ public class FuncionREST {
 
     @GetMapping ("/pelicula/{idPelicula}")
     private ResponseEntity<List<FuncionDTO>> getFuncionesPelicula(@PathVariable Long idPelicula, @RequestParam (required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
-        System.out.println(fecha);
         if (fecha != null)
             return ResponseEntity.ok(funcionService.mostrarFuncionesDePeliculaDeFecha(idPelicula, fecha));
 
