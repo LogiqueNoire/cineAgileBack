@@ -5,6 +5,7 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.FuncionDTO;
+import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.losagiles.CineAgile.repository.FuncionRepository;
+import java.util.*;
 
 /**
  *
@@ -20,7 +22,7 @@ import com.losagiles.CineAgile.repository.FuncionRepository;
 @Service
 public class FuncionService {
     @Autowired
-    private FuncionRepository funcionRespository;
+    private FuncionRepository funcionRepository;
     
     public static float precio(Funcion funcion, Personeable personeable){
 	return personeable.precio(
@@ -31,11 +33,32 @@ public class FuncionService {
     }
 
     public List<FuncionDTO> mostrarFuncionesDePelicula(Long idPelicula) {
-        return funcionRespository.getFuncionesByPeliculaId(idPelicula);
+        return funcionRepository.getFuncionesByPeliculaId(idPelicula);
     }
 
     public List<FuncionDTO> mostrarFuncionesDePeliculaDeFecha(Long idPelicula, LocalDate fecha) {
-        List<FuncionDTO> funciones = funcionRespository.getFuncionesByPeliculaId(idPelicula);
+        List<FuncionDTO> funciones = funcionRepository.getFuncionesByPeliculaId(idPelicula);
         return funciones.stream().filter(funcion -> fecha.equals(funcion.getFechaHoraInicio().toLocalDate())).toList();
     }
+    
+    public List<FuncionesPorSedeDTO> mostrarFuncionesAgrupadasPorSede(Long idPelicula, LocalDate fecha) {
+    List<FuncionDTO> funciones = funcionRepository.getFuncionesByPeliculaId(idPelicula);
+    
+    List<FuncionDTO> funcionesFiltradas = funciones.stream()
+        .filter(funcion -> fecha.equals(funcion.getFechaHoraInicio().toLocalDate()))
+        .toList();
+
+    Map<Long, FuncionesPorSedeDTO> mapa = new LinkedHashMap<>();
+
+    for (FuncionDTO funcion : funcionesFiltradas) {
+        Long idSede = (long) funcion.getIdSede();
+        String nombreSede = funcion.getNombreSede();
+
+        mapa.putIfAbsent(idSede, new FuncionesPorSedeDTO(idSede, nombreSede));
+        mapa.get(idSede).agregarFuncion(funcion);
+    }
+
+    return new ArrayList<>(mapa.values());
+}
+
 }
