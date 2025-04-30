@@ -5,6 +5,7 @@
 package com.losagiles.CineAgile.rest;
 
 import com.losagiles.CineAgile.dto.FuncionDTO;
+import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.services.FuncionService;
 
@@ -31,12 +32,20 @@ public class FuncionREST {
     private ResponseEntity<List<Sede>> getAllFunciones(@PathVariable Long idPelicula){
         return ResponseEntity.ok(new ArrayList<>());
     }
-
+/*
     @GetMapping ("/pelicula/{idPelicula}")
     private ResponseEntity<List<FuncionDTO>> getFuncionesPelicula(@PathVariable Long idPelicula, @RequestParam (required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
         if (fecha != null)
             return ResponseEntity.ok(funcionService.mostrarFuncionesDePeliculaDeFecha(idPelicula, fecha));
 
         return ResponseEntity.ok(funcionService.mostrarFuncionesDePelicula(idPelicula));
+    }
+    */
+    @GetMapping ("/pelicula/{idPelicula}")
+    private ResponseEntity<List<FuncionesPorSedeDTO>> getFuncionesAgrupadasPelicula(@PathVariable Long idPelicula, @RequestParam (required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        if (fecha != null)
+            return ResponseEntity.ok(funcionService.mostrarFuncionesAgrupadasPorSede(idPelicula, fecha));
+
+        return ResponseEntity.ok(funcionService.mostrarFuncionesAgrupadasPorSede(idPelicula, fecha));
     }
 }
