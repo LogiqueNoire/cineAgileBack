@@ -8,14 +8,13 @@ import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.services.FuncionService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
@@ -34,7 +33,11 @@ public class FuncionREST {
     }
 
     @GetMapping ("/pelicula/{idPelicula}")
-    private ResponseEntity<List<FuncionDTO>> getFuncionesPelicula(@PathVariable Long idPelicula) {
+    private ResponseEntity<List<FuncionDTO>> getFuncionesPelicula(@PathVariable Long idPelicula, @RequestParam (required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha) {
+        System.out.println(fecha);
+        if (fecha != null)
+            return ResponseEntity.ok(funcionService.mostrarFuncionesDePeliculaDeFecha(idPelicula, fecha));
+
         return ResponseEntity.ok(funcionService.mostrarFuncionesDePelicula(idPelicula));
     }
 }

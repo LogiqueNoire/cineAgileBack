@@ -7,7 +7,6 @@ package com.losagiles.CineAgile.services;
 import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.losagiles.CineAgile.repository.FuncionRepository;
@@ -31,5 +30,10 @@ public class FuncionService {
 
     public List<FuncionDTO> mostrarFuncionesDePelicula(Long idPelicula) {
         return funcionRespository.getFuncionesByPeliculaId(idPelicula);
+    }
+
+    public List<FuncionDTO> mostrarFuncionesDePeliculaDeFecha(Long idPelicula, LocalDate fecha) {
+        List<FuncionDTO> funciones = funcionRespository.getFuncionesByPeliculaId(idPelicula);
+        return funciones.stream().filter(funcion -> fecha.equals(funcion.getFechaHoraInicio().toLocalDate())).toList();
     }
 }
