@@ -32,7 +32,8 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
                 se.id,
                 se.nombre,
                 sa.id,
-                sa.categoria
+                sa.categoria,
+                sa.codigoSala
             )
             FROM Funcion f
             JOIN Sala sa ON sa.id = f.sala.id
