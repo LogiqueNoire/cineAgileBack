@@ -4,27 +4,32 @@
  */
 package com.losagiles.CineAgile.entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.Data;
 
 /**
  *
  * @author JOSE
  */
 
+@Data
 @Entity
 public class Entrada {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idEntrada;
+
     @Column
     private float costoFinal;
+
     @ManyToOne
+    @JoinColumn (name = "id_funcion")
+    @JsonBackReference
     private Funcion funcion;
+
+    @OneToOne
+    private Butaca butaca;
     /*
     ¿No deberia ser asi el ManyToOne para funcion?(Es una sugerencia y duda a la vez)xd
     @ManyToOne
@@ -39,29 +44,4 @@ public class Entrada {
     private Butaca Butaca;
     */
 
-    public Entrada() {}
-
-    public Entrada(Long idEntrada, float costoFinal, Funcion funcion) {
-        this.idEntrada = idEntrada;
-        this.costoFinal = costoFinal;
-        this.funcion = funcion;
-    }
-
-    public Long getIdEntrada() {
-        return idEntrada;
-    }
-
-    public float getCostoFinal() {
-        return costoFinal;
-    }
-
-    public Funcion getFuncion() {
-        return funcion;
-    }
-
-    @Override
-    public String toString() {
-        return "Entrada: " +getIdEntrada()  +"\tCosto Final: "+getCostoFinal() + "\tFuncion: "+getFuncion();
-    }
-    
 }

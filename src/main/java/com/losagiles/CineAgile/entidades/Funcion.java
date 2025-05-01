@@ -5,18 +5,14 @@
 package com.losagiles.CineAgile.entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.losagiles.CineAgile.services.Categorizable;
 import com.losagiles.CineAgile.services.Dimensionable;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -47,6 +43,10 @@ public class Funcion {
     @JoinColumn(name = "id_pelicula")  // El nombre de la columna en la base de datos
     private Pelicula pelicula;
     /*Puse atributo pelicula para lo del autocalculado de la fechaHoraFin*/
+
+    @OneToMany (mappedBy = "funcion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Entrada> entradas;
 
     private Categorizable categorizable;
     private Dimensionable dimensionable;
