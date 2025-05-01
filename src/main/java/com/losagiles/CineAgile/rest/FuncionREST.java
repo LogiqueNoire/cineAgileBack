@@ -4,6 +4,7 @@
  */
 package com.losagiles.CineAgile.rest;
 
+import com.losagiles.CineAgile.dto.ButacaFuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
@@ -51,4 +52,8 @@ public class FuncionREST {
         return ResponseEntity.ok(funcionService.mostrarFuncionesAgrupadasPorSede(idPelicula, fecha));
     }
 
+    @GetMapping("/butacas/{idFuncion}")
+    private ResponseEntity<List<ButacaFuncionDTO>> getButacasDeFuncion(@PathVariable Long idFuncion) {
+        return ResponseEntity.ok(funcionService.mostrarButacasDeUnaFuncion(idFuncion));
+    }
 }

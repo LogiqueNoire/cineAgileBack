@@ -4,6 +4,7 @@
  */
 package com.losagiles.CineAgile.services;
 
+import com.losagiles.CineAgile.dto.ButacaFuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
@@ -67,4 +68,7 @@ public class FuncionService {
         return new ArrayList<>(mapa.values());
     }
 
+    public List<ButacaFuncionDTO> mostrarButacasDeUnaFuncion(Long idFuncion) {
+        return funcionRepository.getButacaCompuestoByFuncionId(idFuncion);
+    }
 }

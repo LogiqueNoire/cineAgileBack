@@ -10,6 +10,7 @@
 
 package com.losagiles.CineAgile.repository;
 
+import com.losagiles.CineAgile.dto.ButacaFuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -39,4 +40,14 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
             WHERE f.pelicula.idPelicula = :idPelicula
             """)
     public List<FuncionDTO> getFuncionesByPeliculaId(@Param("idPelicula") Long idPelicula);
+
+    @Query("""
+            SELECT
+                new com.losagiles.CineAgile.dto.ButacaFuncionDTO(but, ent IS NULL)
+            FROM Funcion f
+            JOIN Butaca but ON f.sala.id = but.sala.id
+            LEFT JOIN Entrada ent ON but.id = ent.butaca.id
+            WHERE f.id = :idFuncion
+            """)
+    public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion);
 }
