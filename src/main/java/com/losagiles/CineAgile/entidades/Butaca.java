@@ -28,9 +28,6 @@ public class Butaca {
     @Column(nullable = false)
     private boolean discapacitado;
 
-    @Column(nullable = false)
-    private boolean ocupado;
-    
     @ManyToOne
     @JoinColumn (name="id_sala")
     @JsonBackReference
