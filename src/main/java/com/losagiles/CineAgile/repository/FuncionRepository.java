@@ -43,7 +43,7 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
 
     @Query("""
             SELECT
-                new com.losagiles.CineAgile.dto.ButacaFuncionDTO(but, ent IS NULL)
+                new com.losagiles.CineAgile.dto.ButacaFuncionDTO(but, ent IS NOT NULL)
             FROM Funcion f
             JOIN Butaca but ON f.sala.id = but.sala.id
             LEFT JOIN Entrada ent ON but.id = ent.butaca.id
