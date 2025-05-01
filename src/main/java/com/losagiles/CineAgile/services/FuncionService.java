@@ -13,7 +13,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.losagiles.CineAgile.repository.FuncionRepository;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.*;
 
 /**
  *
@@ -21,14 +23,15 @@ import java.util.*;
  */
 @Service
 public class FuncionService {
+
     @Autowired
     private FuncionRepository funcionRepository;
-    
-    public static float precio(Funcion funcion, Personeable personeable){
-	return personeable.precio(
+
+    public static float precio(Funcion funcion, Personeable personeable) {
+        return personeable.precio(
                 funcion.getPrecioBase()
-                +funcion.getCategorizable().precio(funcion.getPrecioBase())
-                +funcion.getDimensionable().precio()
+                + funcion.getCategorizable().precio(funcion.getPrecioBase())
+                + funcion.getDimensionable().precio()
         );
     }
 
@@ -40,25 +43,28 @@ public class FuncionService {
         List<FuncionDTO> funciones = funcionRepository.getFuncionesByPeliculaId(idPelicula);
         return funciones.stream().filter(funcion -> fecha.equals(funcion.getFechaHoraInicio().toLocalDate())).toList();
     }
-    
-    public List<FuncionesPorSedeDTO> mostrarFuncionesAgrupadasPorSede(Long idPelicula, LocalDate fecha) {
-    List<FuncionDTO> funciones = funcionRepository.getFuncionesByPeliculaId(idPelicula);
-    
-    List<FuncionDTO> funcionesFiltradas = funciones.stream()
-        .filter(funcion -> fecha.equals(funcion.getFechaHoraInicio().toLocalDate()))
-        .toList();
 
-    Map<Long, FuncionesPorSedeDTO> mapa = new LinkedHashMap<>();
+    public List<FuncionesPorSedeDTO> mostrarFuncionesAgrupadasPorSede(Long idPelicula, LocalDateTime fecha) {
+        List<FuncionDTO> funciones = funcionRepository.getFuncionesByPeliculaId(idPelicula);
 
-    for (FuncionDTO funcion : funcionesFiltradas) {
-        Long idSede = (long) funcion.getIdSede();
-        String nombreSede = funcion.getNombreSede();
+        System.out.println("Solicitud recibida para la película con ID: " + idPelicula);
+        System.out.println("Solicitud recibida para la fecha: " + fecha);
 
-        mapa.putIfAbsent(idSede, new FuncionesPorSedeDTO(idSede, nombreSede));
-        mapa.get(idSede).agregarFuncion(funcion);
+        List<FuncionDTO> funcionesFiltradas = funciones.stream()
+                .filter(funcion -> funcion.getFechaHoraInicio().isAfter(fecha))
+                .collect(Collectors.toList());
+
+        Map<Long, FuncionesPorSedeDTO> mapa = new LinkedHashMap<>();
+
+        for (FuncionDTO funcion : funcionesFiltradas) {
+            Long idSede = (long) funcion.getIdSede();
+            String nombreSede = funcion.getNombreSede();
+
+            mapa.putIfAbsent(idSede, new FuncionesPorSedeDTO(idSede, nombreSede));
+            mapa.get(idSede).agregarFuncion(funcion);
+        }
+
+        return new ArrayList<>(mapa.values());
     }
-
-    return new ArrayList<>(mapa.values());
-}
 
 }
