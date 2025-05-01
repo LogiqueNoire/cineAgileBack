@@ -30,6 +30,7 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
                 f.precioBase,
                 se.id,
                 se.nombre,
+                sa.id,
                 sa.categoria
             )
             FROM Funcion f
