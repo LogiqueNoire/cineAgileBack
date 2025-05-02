@@ -21,11 +21,11 @@ public class PeliculaService {
         return pelicula.orElse(null);
     }
 
-    public List<Pelicula> mostrarPeliculasEstreno() {
+    public List<PeliculaCarteleraDTO> mostrarPeliculasEstreno() {
         return peliculaRepository.getPeliculasByEstado("estreno");
     }
 
-    public List<Pelicula> mostrarPeliculasProximamente() {
+    public List<PeliculaCarteleraDTO> mostrarPeliculasProximamente() {
         return peliculaRepository.getPeliculasByEstado("proximamente");
     }
 }

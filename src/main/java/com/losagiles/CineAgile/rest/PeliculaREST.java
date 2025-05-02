@@ -29,7 +29,7 @@ public class PeliculaREST {
 
     @GetMapping ("/estreno")
     private ResponseEntity <List<PeliculaCarteleraDTO>> getEstreno(){
-        List<Pelicula> peliculas = peliculaService.mostrarPeliculasEstreno();
+        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasEstreno();
 
         // Mapear a PeliculaCarteleraDTO, el cual solo muestra información muy básica
         List<PeliculaCarteleraDTO> peliDTO = modelMapper.map(peliculas, new TypeToken<List<PeliculaCarteleraDTO>>() {}.getType());
@@ -39,12 +39,8 @@ public class PeliculaREST {
 
     @GetMapping ("/proximamente")
     private ResponseEntity <List<PeliculaCarteleraDTO>> getProximamente(){
-        List<Pelicula> peliculas = peliculaService.mostrarPeliculasProximamente();
-
-        // Mapear a PeliculaCarteleraDTO, el cual solo muestra información muy básica
-        List<PeliculaCarteleraDTO> peliDTO = modelMapper.map(peliculas, new TypeToken<List<PeliculaCarteleraDTO>>() {}.getType());
-
-        return ResponseEntity.ok(peliDTO);
+        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasProximamente();
+        return ResponseEntity.ok(peliculas);
     }
 
 }
