@@ -71,4 +71,6 @@ public class FuncionService {
     public List<ButacaFuncionDTO> mostrarButacasDeUnaFuncion(Long idFuncion) {
         return funcionRepository.getButacaCompuestoByFuncionId(idFuncion);
     }
+    
+    
 }

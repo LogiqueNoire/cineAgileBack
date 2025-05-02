@@ -11,9 +11,15 @@ package com.losagiles.CineAgile.dto;
 public class ResumenPeliculaDTO {
     private PeliculaCarteleraDTO peliculaCarteleraDTO;
     private FuncionDTO funcionDTO;
-    
-    public ResumenPeliculaDTO(PeliculaCarteleraDTO peliculaCarteleraDTO, FuncionDTO funcionDTO) {
+    private String sinopsis;
+    private String director;
+
+    public ResumenPeliculaDTO(PeliculaCarteleraDTO peliculaCarteleraDTO, FuncionDTO funcionDTO, String sinopsis, String director) {
         this.peliculaCarteleraDTO = peliculaCarteleraDTO;
         this.funcionDTO = funcionDTO;
+        this.sinopsis = sinopsis;
+        this.director = director;
     }
+    
+    
 }
