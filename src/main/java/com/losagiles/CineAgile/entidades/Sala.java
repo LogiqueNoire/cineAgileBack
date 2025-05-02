@@ -15,6 +15,9 @@ import java.util.List;
 // porque nos ahorra colocar los getters, setters y constructores
 @Data
 @Entity
+@Table(
+    uniqueConstraints = @UniqueConstraint(name = "", columnNames = { "id_sede", "codigoSala" })
+)
 public class Sala {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,9 +25,6 @@ public class Sala {
 
     @Column(nullable = false)
     private String codigoSala;
-
-    @Column(nullable = false)
-    private int capacidad;
 
     @Column(nullable = false)
     private String categoria;
