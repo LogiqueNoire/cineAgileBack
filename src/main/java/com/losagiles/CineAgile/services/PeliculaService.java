@@ -17,6 +17,7 @@ public class PeliculaService {
 
     public Pelicula mostrarPelicula(Long idPelicula) {
         Optional<Pelicula> pelicula = peliculaRepository.findById(idPelicula);
+        
         return pelicula.orElse(null);
     }
 

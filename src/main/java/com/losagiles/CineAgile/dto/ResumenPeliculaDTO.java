@@ -16,9 +16,6 @@ public class ResumenPeliculaDTO {
 
     public ResumenPeliculaDTO(PeliculaCarteleraDTO peliculaCarteleraDTO, FuncionDTO funcionDTO, String sinopsis, String director) {
         this.peliculaCarteleraDTO = peliculaCarteleraDTO;
-        this.funcionDTO = funcionDTO;
-        this.sinopsis = sinopsis;
-        this.director = director;
     }
     
     

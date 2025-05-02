@@ -8,4 +8,5 @@ public class PeliculaCarteleraDTO {
     private String nombre;
     private String estado;
     private String imageUrl;
+    private String sinopsis;
 }
