@@ -28,4 +28,9 @@ public class PeliculaService {
     public List<PeliculaCarteleraDTO> mostrarPeliculasProximamente() {
         return peliculaRepository.getPeliculasByEstado("proximamente");
     }
+
+    public Pelicula agregarPelicula(Pelicula pelicula) {
+        return peliculaRepository.save(pelicula);
+    }
+
 }

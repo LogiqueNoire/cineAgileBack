@@ -1,18 +1,18 @@
 package com.losagiles.CineAgile.rest;
 
 import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
+import com.losagiles.CineAgile.dto.PeliculaDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.services.PeliculaService;
+
+import java.time.LocalDate;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/pelicula")
 public class PeliculaREST {
@@ -43,4 +43,29 @@ public class PeliculaREST {
         return ResponseEntity.ok(peliculas);
     }
 
+    @PostMapping ("/agregar")
+    private ResponseEntity<Pelicula> addPelicula(@RequestBody PeliculaDTO dto) {
+        Pelicula pelicula = new Pelicula();
+
+        // Mapear campos
+        pelicula.setNombre(dto.getNombre());
+        pelicula.setDirector(dto.getDirector());
+        pelicula.setActores(dto.getActores());
+        pelicula.setGenero(dto.getGenero());
+        pelicula.setClasificacion(dto.getClasificacion());
+        pelicula.setDuracion(dto.getDuracion());
+        pelicula.setEstado(dto.getEstado());
+
+        // Convertir fechas si es necesario
+        LocalDate fechaEstreno = LocalDate.parse(dto.getFechaInicioEstreno());
+        LocalDate fechaPreventa = LocalDate.parse(dto.getFechaInicioPreventa());
+        pelicula.setFechaInicioEstreno(fechaEstreno);
+        pelicula.setFechaInicioPreventa(fechaPreventa);
+
+        pelicula.setImageUrl(dto.getImageUrl());
+        pelicula.setSinopsis(dto.getSinopsis());
+
+        peliculaService.agregarPelicula(pelicula);
+        return ResponseEntity.ok(pelicula);
+    }
 }
