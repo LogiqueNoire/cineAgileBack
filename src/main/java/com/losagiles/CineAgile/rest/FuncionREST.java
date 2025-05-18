@@ -9,7 +9,13 @@ import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.services.DimensionDosD;
+import com.losagiles.CineAgile.services.DimensionTresD;
 import com.losagiles.CineAgile.services.FuncionService;
+import com.losagiles.CineAgile.services.PersonaConadis;
+import com.losagiles.CineAgile.services.PersonaGeneral;
+import com.losagiles.CineAgile.services.PersonaNiño;
+import com.losagiles.CineAgile.services.Personeable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -56,4 +62,39 @@ public class FuncionREST {
     private ResponseEntity<List<ButacaFuncionDTO>> getButacasDeFuncion(@PathVariable Long idFuncion) {
         return ResponseEntity.ok(funcionService.mostrarButacasDeUnaFuncion(idFuncion));
     }
+    
+    @GetMapping("/precios")
+    private float getPrecio(@RequestParam(required = false) Long idFuncion, @RequestParam(required = false) String persona) {
+        Funcion f = funcionService.getFuncionPorId(idFuncion);
+        Personeable p;
+        switch(persona){
+            case "General":
+                p = new PersonaGeneral();
+                break;
+            case "Conadis":
+                p = new PersonaConadis();
+                break;
+            case "Niños":
+                p = new PersonaNiño();
+                break;
+            default:
+                p = null;
+                break;
+        }
+        switch(f.getDimension()){
+            case "2D":
+                f.setDimensionable(new DimensionDosD());
+                break;
+            case "3D":
+                f.setDimensionable(new DimensionTresD());
+                break;
+            default:
+                
+                break;
+        }
+        
+        return funcionService.precio(f, p);
+    }
+    
+    
 }

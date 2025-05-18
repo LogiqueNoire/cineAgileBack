@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.losagiles.CineAgile.services.Categorizable;
 import com.losagiles.CineAgile.services.Dimensionable;
+import com.losagiles.CineAgile.services.Personeable;
 import jakarta.persistence.*;
 import lombok.Data;
 

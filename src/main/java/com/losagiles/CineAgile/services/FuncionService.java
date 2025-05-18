@@ -28,7 +28,7 @@ public class FuncionService {
     @Autowired
     private FuncionRepository funcionRepository;
 
-    public static float precio(Funcion funcion, Personeable personeable) {
+    public float precio(Funcion funcion, Personeable personeable) {
         return personeable.precio(
                 funcion.getPrecioBase()
                 + funcion.getCategorizable().precio(funcion.getPrecioBase())
@@ -67,10 +67,15 @@ public class FuncionService {
 
         return new ArrayList<>(mapa.values());
     }
+    
+    public Funcion getFuncionPorId(Long idFuncion){
+        Optional<Funcion> f = funcionRepository.findById(idFuncion);
+        return f.get();
+    }
 
     public List<ButacaFuncionDTO> mostrarButacasDeUnaFuncion(Long idFuncion) {
         return funcionRepository.getButacaCompuestoByFuncionId(idFuncion);
-    }
+    }    
     
     
 }

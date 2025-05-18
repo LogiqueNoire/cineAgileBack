@@ -8,5 +8,12 @@ package com.losagiles.CineAgile.dto;
  *
  * @author USUARIO
  */
-public class PrecioDTO {
+public class SolicitudPrecioDTO {
+    private Long idFuncion;
+    private String persona;
+    
+    public SolicitudPrecioDTO(Long idFuncion, String persona) {
+        this.idFuncion = idFuncion;
+        this.persona = persona;
+    }
 }
