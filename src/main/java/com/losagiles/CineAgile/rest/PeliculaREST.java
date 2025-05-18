@@ -47,7 +47,6 @@ public class PeliculaREST {
     private ResponseEntity<Pelicula> addPelicula(@RequestBody PeliculaDTO dto) {
         Pelicula pelicula = new Pelicula();
 
-        // Mapear campos
         pelicula.setNombre(dto.getNombre());
         pelicula.setDirector(dto.getDirector());
         pelicula.setActores(dto.getActores());
@@ -56,7 +55,6 @@ public class PeliculaREST {
         pelicula.setDuracion(dto.getDuracion());
         pelicula.setEstado(dto.getEstado());
 
-        // Convertir fechas si es necesario
         LocalDate fechaEstreno = LocalDate.parse(dto.getFechaInicioEstreno());
         LocalDate fechaPreventa = LocalDate.parse(dto.getFechaInicioPreventa());
         pelicula.setFechaInicioEstreno(fechaEstreno);

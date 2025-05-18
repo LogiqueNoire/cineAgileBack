@@ -5,6 +5,7 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.entidades.Butaca;
+import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.repository.SedeRepository;
@@ -30,5 +31,9 @@ public class SedeService {
             return sede.get().getSalas();
         }
         return new ArrayList<>();
+    }
+
+    public Sede agregarSede(Sede sede) {
+        return sedeRepository.save(sede);
     }
 }
