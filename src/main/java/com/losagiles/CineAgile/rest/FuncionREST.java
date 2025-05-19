@@ -4,18 +4,9 @@
  */
 package com.losagiles.CineAgile.rest;
 
-import com.losagiles.CineAgile.dto.ButacaFuncionDTO;
-import com.losagiles.CineAgile.dto.FuncionDTO;
-import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
-import com.losagiles.CineAgile.entidades.Funcion;
-import com.losagiles.CineAgile.entidades.Sede;
-import com.losagiles.CineAgile.services.DimensionDosD;
-import com.losagiles.CineAgile.services.DimensionTresD;
-import com.losagiles.CineAgile.services.FuncionService;
-import com.losagiles.CineAgile.services.PersonaConadis;
-import com.losagiles.CineAgile.services.PersonaGeneral;
-import com.losagiles.CineAgile.services.PersonaNiño;
-import com.losagiles.CineAgile.services.Personeable;
+import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.entidades.*;
+import com.losagiles.CineAgile.services.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -66,20 +57,28 @@ public class FuncionREST {
     @GetMapping("/precios")
     private float getPrecio(@RequestParam(required = false) Long idFuncion, @RequestParam(required = false) String persona) {
         Funcion f = funcionService.getFuncionPorId(idFuncion);
+        Sala s = f.getSala();
         Personeable p;
-        p = switch (persona) {
-            case "General" -> new PersonaGeneral();
-            case "Conadis" -> new PersonaConadis();
-            case "Niños" -> new PersonaNiño();
+        p = switch (persona.toLowerCase()) {
+            case "general" -> new PersonaGeneral();
+            case "mayores" -> new PersonaMayor();
+            case "conadis" -> new PersonaConadis();
+            case "niños" -> new PersonaNiño();
             default -> null;
         };
-        switch(f.getDimension()){
+        switch(f.getDimension().toUpperCase()){
             case "2D" -> f.setDimensionable(new DimensionDosD());
             case "3D" -> f.setDimensionable(new DimensionTresD());
             default -> {}
         }
+        switch(s.getCategoria().toUpperCase()){
+            case "REGULAR" -> f.setCategorizable(new CategoriaRegular());
+            case "PRIME" -> f.setCategorizable(new CategoriaPrime());
+            default -> {}
+        }
         
-        return funcionService.precio(f, p);
+        
+        return (float) (Math.round(funcionService.precio(f, p) * 100.0) / 100.0);
     }
     
     
