@@ -67,30 +67,16 @@ public class FuncionREST {
     private float getPrecio(@RequestParam(required = false) Long idFuncion, @RequestParam(required = false) String persona) {
         Funcion f = funcionService.getFuncionPorId(idFuncion);
         Personeable p;
-        switch(persona){
-            case "General":
-                p = new PersonaGeneral();
-                break;
-            case "Conadis":
-                p = new PersonaConadis();
-                break;
-            case "Niños":
-                p = new PersonaNiño();
-                break;
-            default:
-                p = null;
-                break;
-        }
+        p = switch (persona) {
+            case "General" -> new PersonaGeneral();
+            case "Conadis" -> new PersonaConadis();
+            case "Niños" -> new PersonaNiño();
+            default -> null;
+        };
         switch(f.getDimension()){
-            case "2D":
-                f.setDimensionable(new DimensionDosD());
-                break;
-            case "3D":
-                f.setDimensionable(new DimensionTresD());
-                break;
-            default:
-                
-                break;
+            case "2D" -> f.setDimensionable(new DimensionDosD());
+            case "3D" -> f.setDimensionable(new DimensionTresD());
+            default -> {}
         }
         
         return funcionService.precio(f, p);

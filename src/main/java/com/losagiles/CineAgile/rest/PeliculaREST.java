@@ -27,9 +27,9 @@ public class PeliculaREST {
         return ResponseEntity.ofNullable(peliculaService.mostrarPelicula(idPelicula));
     }
 
-    @GetMapping ("/estreno")
+    @GetMapping ("/encartelera")
     private ResponseEntity <List<PeliculaCarteleraDTO>> getEstreno(){
-        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasEstreno();
+        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasEnCartelera();
 
         // Mapear a PeliculaCarteleraDTO, el cual solo muestra información muy básica
         List<PeliculaCarteleraDTO> peliDTO = modelMapper.map(peliculas, new TypeToken<List<PeliculaCarteleraDTO>>() {}.getType());

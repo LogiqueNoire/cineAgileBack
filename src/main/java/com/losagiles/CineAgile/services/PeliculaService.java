@@ -21,8 +21,8 @@ public class PeliculaService {
         return pelicula.orElse(null);
     }
 
-    public List<PeliculaCarteleraDTO> mostrarPeliculasEstreno() {
-        return peliculaRepository.getPeliculasByEstado("estreno");
+    public List<PeliculaCarteleraDTO> mostrarPeliculasEnCartelera() {
+        return peliculaRepository.getPeliculasByEstado("en cartelera");
     }
 
     public List<PeliculaCarteleraDTO> mostrarPeliculasProximamente() {
