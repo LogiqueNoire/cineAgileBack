@@ -8,7 +8,6 @@ import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.services.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +77,7 @@ public class FuncionREST {
         }
         
         
-        return (float) (Math.round(funcionService.precio(f, p) * 100.0) / 100.0);
+        return (float) (Math.round(funcionService.precio(f, p) * 10.0) / 10.0);
     }
     
     
