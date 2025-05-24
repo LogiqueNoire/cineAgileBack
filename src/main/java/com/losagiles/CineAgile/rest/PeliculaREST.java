@@ -43,27 +43,5 @@ public class PeliculaREST {
         return ResponseEntity.ok(peliculas);
     }
 
-    @PostMapping ("/agregar")
-    private ResponseEntity<Pelicula> addPelicula(@RequestBody PeliculaDTO dto) {
-        Pelicula pelicula = new Pelicula();
 
-        pelicula.setNombre(dto.getNombre());
-        pelicula.setDirector(dto.getDirector());
-        pelicula.setActores(dto.getActores());
-        pelicula.setGenero(dto.getGenero());
-        pelicula.setClasificacion(dto.getClasificacion());
-        pelicula.setDuracion(dto.getDuracion());
-        pelicula.setEstado(dto.getEstado());
-
-        LocalDate fechaEstreno = LocalDate.parse(dto.getFechaInicioEstreno());
-        LocalDate fechaPreventa = LocalDate.parse(dto.getFechaInicioPreventa());
-        pelicula.setFechaInicioEstreno(fechaEstreno);
-        pelicula.setFechaInicioPreventa(fechaPreventa);
-
-        pelicula.setImageUrl(dto.getImageUrl());
-        pelicula.setSinopsis(dto.getSinopsis());
-
-        peliculaService.agregarPelicula(pelicula);
-        return ResponseEntity.ok(pelicula);
-    }
 }
