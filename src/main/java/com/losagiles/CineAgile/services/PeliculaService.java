@@ -33,4 +33,6 @@ public class PeliculaService {
         return peliculaRepository.save(pelicula);
     }
 
+    public List<Pelicula> findAll() { return peliculaRepository.findAll(); }
+
 }
