@@ -4,29 +4,34 @@
  */
 package com.losagiles.CineAgile.rest;
 
+import com.losagiles.CineAgile.dto.ReqRegistrarEntrada;
 import com.losagiles.CineAgile.entidades.Entrada;
 import com.losagiles.CineAgile.services.EntradaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  *
  * @author JOSE
  */
 @RestController
-@RequestMapping("/entrada/")
+@RequestMapping("/entrada")
 public class EntradaREST {
-    
-        @Autowired
-        private EntradaService entradaService;
-        
-        @GetMapping
-        private ResponseEntity<List<Entrada>> getAllEntradas (){
-            return ResponseEntity.ok(entradaService.findAll());
-        }
-        
+
+    @Autowired
+    private EntradaService entradaService;
+
+    @GetMapping
+    private ResponseEntity<List<Entrada>> getAllEntradas (){
+        return ResponseEntity.ok(entradaService.listarEntradas());
+    }
+
+    @PostMapping
+    private ResponseEntity<List<Entrada>> postEntradas(@RequestBody ReqRegistrarEntrada infoEntrada) {
+        List<Entrada> entradas = entradaService.registrarEntradas(infoEntrada);
+        return ResponseEntity.ok(entradas);
+    }
+
 }
