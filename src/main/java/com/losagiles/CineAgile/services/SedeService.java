@@ -36,4 +36,6 @@ public class SedeService {
     public Sede agregarSede(Sede sede) {
         return sedeRepository.save(sede);
     }
+
+    public List<Sede> findAll() { return sedeRepository.findAll(); }
 }

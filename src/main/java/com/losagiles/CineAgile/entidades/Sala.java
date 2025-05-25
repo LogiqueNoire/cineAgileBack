@@ -5,6 +5,7 @@
 package com.losagiles.CineAgile.entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -35,10 +36,12 @@ public class Sala {
     private Sede sede;
 
     @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JsonManagedReference
     private List<Butaca> butacas;
 
     @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JsonManagedReference
     private List<Funcion> funciones;
 }

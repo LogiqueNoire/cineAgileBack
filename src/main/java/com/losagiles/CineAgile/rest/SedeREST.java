@@ -30,13 +30,4 @@ public class SedeREST {
     private ResponseEntity<List<Sala>> getSedes(@PathVariable long idSede){
         return ResponseEntity.ok(sedeService.mostrarSalasDeSede(idSede));
     }
-
-    @PostMapping("/agregar")
-    private ResponseEntity<Sede> addSede(@RequestBody SedeDTO dto) {
-        Sede sede = new Sede();
-        sede.setNombre(dto.getNombre());
-        sedeService.agregarSede(sede);
-
-        return ResponseEntity.ok(sede);
-    }
 }
