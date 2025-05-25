@@ -14,7 +14,7 @@ import jakarta.persistence.Embeddable;
 public class PersonaMayor implements Personeable{
     @Override
     public float precio(float precioAnterior) {
-        return (float) 0.5*precioAnterior;
+        return (float) 0.7*precioAnterior;
     }
     
 }
