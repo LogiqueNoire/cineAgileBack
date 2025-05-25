@@ -18,6 +18,7 @@ import java.util.Objects;
  */
 
 @Data
+@Embeddable
 class EntradaId implements Serializable {
     private Long idFuncion;
     private Long idButaca;
@@ -40,12 +41,9 @@ class EntradaId implements Serializable {
 
 @Data
 @Entity
-@IdClass(EntradaId.class)
 public class Entrada {
-    @Id
-    private Long idFuncion;
-    @Id
-    private Long idButaca;
+    @EmbeddedId
+    private EntradaId id = new EntradaId();
 
     @Column
     private float costoFinal;
