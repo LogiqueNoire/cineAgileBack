@@ -6,27 +6,15 @@ package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.EntradaInfo;
 import com.losagiles.CineAgile.dto.ReqRegistrarEntrada;
-import com.losagiles.CineAgile.entidades.Butaca;
-import com.losagiles.CineAgile.entidades.Entrada;
-import com.losagiles.CineAgile.entidades.Funcion;
-import com.losagiles.CineAgile.entidades.Sala;
+import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 import com.losagiles.CineAgile.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Service;
 /**
  *
@@ -72,20 +60,19 @@ public class EntradaService {
         }
 
         List<Entrada> nuevasEntradas = new ArrayList<>();
-        for (Butaca butaca : butacas) {
+        for (EntradaInfo info : solicitud.entradas()) {
             Entrada nueva = new Entrada();
 
-            nueva.setIdButaca(butaca.getId());
-            nueva.setIdFuncion(funcion.getId());
+            Butaca butaca = new Butaca();
+            butaca.setId(info.id_butaca());
             nueva.setButaca(butaca);
-            nueva.setFuncion(funcion);
 
-            // Calcular precio con la sala por aquí....
+            nueva.setFuncion(funcion);
 
             nueva.setEstado("listo");
             nueva.setPersona("normal");
             nueva.setTiempoRegistro(solicitud.tiempoRegistro());
-            nueva.setCostoFinal(10.0f);
+            nueva.setCostoFinal(funcionService.precio(funcion, info.persona()));
             nuevasEntradas.add(nueva);
         }
         return entradaRepository.saveAll(nuevasEntradas);
