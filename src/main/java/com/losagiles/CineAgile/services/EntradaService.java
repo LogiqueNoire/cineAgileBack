@@ -6,6 +6,7 @@ package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.EntradaInfo;
 import com.losagiles.CineAgile.dto.ReqRegistrarEntrada;
+import com.losagiles.CineAgile.dto.ResRegistrarEntrada;
 import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
@@ -38,9 +39,8 @@ public class EntradaService {
         return entradaRepository.findAll();
     }
 
-    // Por ahora, devuelve una lista vacía cuando no es posible registrar una
-    // entrada, sea por cualquier razón.
-    public List<Entrada> registrarEntradas(ReqRegistrarEntrada solicitud) {
+    // Devuelve null cuando la solicitud no es válida.
+    public ResRegistrarEntrada registrarEntradas(ReqRegistrarEntrada solicitud) {
         Funcion funcion = funcionService.getFuncionPorId(solicitud.id_funcion());
 
         List<Long> butacaIds = solicitud.entradas().stream().map(EntradaInfo::id_butaca).toList();
@@ -48,14 +48,14 @@ public class EntradaService {
 
         // No existe alguna butaca
         if (butacaIds.size() != butacas.size()) {
-            return new ArrayList<>();
+            return null;
         }
 
         // Las butaca están bloqueadas o ya registradas
         List<Entrada> entradas = entradaRepository.findAllByButacaIdIn(butacaIds);
         for (Entrada entrada : entradas) {
             if (entrada.getEstado().equals("esperando") || entrada.getEstado().equals("listo")) {
-                return new ArrayList<>();
+                return null;
             }
         }
 
@@ -75,7 +75,17 @@ public class EntradaService {
             nueva.setCostoFinal(funcionService.precio(funcion, info.persona()));
             nuevasEntradas.add(nueva);
         }
-        return entradaRepository.saveAll(nuevasEntradas);
+
+        ResRegistrarEntrada res = new ResRegistrarEntrada(
+                entradaRepository.saveAll(nuevasEntradas),
+                funcion.getFechaHoraInicio(),
+                funcion.getFechaHoraFin(),
+                funcion.getSala().getCodigoSala(),
+                funcion.getSala().getSede().getNombre(),
+                funcion.getPelicula().getNombre()
+        );
+
+        return res;
     }
 
 }
