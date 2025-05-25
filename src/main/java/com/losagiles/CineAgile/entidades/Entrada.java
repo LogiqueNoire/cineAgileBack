@@ -8,17 +8,44 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.time.*;
+import java.util.Objects;
+
 /**
  *
  * @author JOSE
  */
 
 @Data
+class EntradaId implements Serializable {
+    private Long idFuncion;
+    private Long idButaca;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EntradaId)) return false;
+
+        EntradaId otro = (EntradaId) o;
+        return Objects.equals(idFuncion, otro.idFuncion) &&
+                Objects.equals(idButaca, otro.idButaca);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idFuncion, idButaca);
+    }
+}
+
+@Data
 @Entity
+@IdClass(EntradaId.class)
 public class Entrada {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idEntrada;
+    private Long idFuncion;
+    @Id
+    private Long idButaca;
 
     @Column
     private float costoFinal;
@@ -26,22 +53,15 @@ public class Entrada {
     @ManyToOne
     @JoinColumn (name = "id_funcion")
     @JsonBackReference
+    @MapsId("idFuncion")
     private Funcion funcion;
 
     @OneToOne
+    @MapsId("idButaca")
     private Butaca butaca;
-    /*
-    ¿No deberia ser asi el ManyToOne para funcion?(Es una sugerencia y duda a la vez)xd
-    @ManyToOne
-    @JoinColumn(name = "id_Funcion")
-    private Funcion funcion;
-    */
 
-    /*
-    Ah y tambien ponerle el de butaca obvio aun no lo colocamos pq todavia no esta todo al 100% ps xd
-    @ManyToOne
-    @JoinColumn(name = "id_Butaca")
-    private Butaca Butaca;
-    */
+    private LocalDateTime tiempoRegistro;
+    private String estado; // "listo", "esperando", "libre"
+    private String persona; // "normal", "menor de edad", etc
 
 }
