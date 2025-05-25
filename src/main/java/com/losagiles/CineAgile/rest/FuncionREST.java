@@ -55,29 +55,7 @@ public class FuncionREST {
     
     @GetMapping("/precios")
     private float getPrecio(@RequestParam(required = false) Long idFuncion, @RequestParam(required = false) String persona) {
-        Funcion f = funcionService.getFuncionPorId(idFuncion);
-        Sala s = f.getSala();
-        Personeable p;
-        p = switch (persona.toLowerCase()) {
-            case "general" -> new PersonaGeneral();
-            case "mayores" -> new PersonaMayor();
-            case "conadis" -> new PersonaConadis();
-            case "niños" -> new PersonaNiño();
-            default -> null;
-        };
-        switch(f.getDimension().toUpperCase()){
-            case "2D" -> f.setDimensionable(new DimensionDosD());
-            case "3D" -> f.setDimensionable(new DimensionTresD());
-            default -> {}
-        }
-        switch(s.getCategoria().toUpperCase()){
-            case "REGULAR" -> f.setCategorizable(new CategoriaRegular());
-            case "PRIME" -> f.setCategorizable(new CategoriaPrime());
-            default -> {}
-        }
-        
-        
-        return (float) (Math.round(funcionService.precio(f, p) * 10.0) / 10.0);
+        return funcionService.precio(funcionService.getFuncionPorId(idFuncion), persona);
     }
     
     

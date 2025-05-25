@@ -11,6 +11,8 @@ import com.losagiles.CineAgile.entidades.Funcion;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import com.losagiles.CineAgile.entidades.Sala;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.losagiles.CineAgile.repository.FuncionRepository;
@@ -28,12 +30,34 @@ public class FuncionService {
     @Autowired
     private FuncionRepository funcionRepository;
 
-    public float precio(Funcion funcion, Personeable personeable) {
-        return personeable.precio(
-                funcion.getPrecioBase()
-                + funcion.getCategorizable().precio(funcion.getPrecioBase())
-                + funcion.getDimensionable().precio()
+    public float precio(Funcion funcion, String persona) {
+        Sala s = funcion.getSala();
+        Personeable personeable;
+        personeable = switch (persona.toLowerCase()) {
+            case "general" -> new PersonaGeneral();
+            case "mayores" -> new PersonaMayor();
+            case "conadis" -> new PersonaConadis();
+            case "niños" -> new PersonaNiño();
+            default -> null;
+        };
+        switch(funcion.getDimension().toUpperCase()){
+            case "2D" -> funcion.setDimensionable(new DimensionDosD());
+            case "3D" -> funcion.setDimensionable(new DimensionTresD());
+            default -> {}
+        }
+        switch(s.getCategoria().toUpperCase()){
+            case "REGULAR" -> funcion.setCategorizable(new CategoriaRegular());
+            case "PRIME" -> funcion.setCategorizable(new CategoriaPrime());
+            default -> {}
+        }
+
+        float precio = personeable.precio(
+    funcion.getPrecioBase()
+            + funcion.getCategorizable().precio(funcion.getPrecioBase())
+            + funcion.getDimensionable().precio()
         );
+
+        return (float) (Math.round(precio * 10.0) / 10.0);
     }
 
     public List<FuncionDTO> mostrarFuncionesDePelicula(Long idPelicula) {
