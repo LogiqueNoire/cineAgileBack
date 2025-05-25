@@ -10,7 +10,7 @@ public record ResRegistrarEntrada(
         List<Entrada> entradas,
         LocalDateTime fechaHoraInicio,
         LocalDateTime fechaHoraFin,
-        String nombreSede,
         String sala,
+        String nombreSede,
         String tituloPelicula
 ) { }
