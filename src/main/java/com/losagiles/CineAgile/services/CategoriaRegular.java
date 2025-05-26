@@ -16,6 +16,6 @@ import jakarta.persistence.Embeddable;
 public class CategoriaRegular implements Categorizable{
     @Override
     public float precio(float precioBase) {
-        return precioBase;
+        return 0;
     }
 }
