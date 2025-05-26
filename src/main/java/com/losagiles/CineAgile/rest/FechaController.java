@@ -15,7 +15,7 @@ public class FechaController {
 
     private final WebClient webClient = WebClient.create("http://worldtimeapi.org");
 
-    @GetMapping("/fecha-real-lima")
+    @GetMapping("/fecha-actual")
     public Mono<String> obtenerFechaRealFormateada() {
         return webClient
                 .get()
