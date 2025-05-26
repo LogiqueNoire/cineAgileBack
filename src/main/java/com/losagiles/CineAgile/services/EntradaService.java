@@ -41,6 +41,11 @@ public class EntradaService {
 
     // Devuelve null cuando la solicitud no es válida.
     public ResRegistrarEntrada registrarEntradas(ReqRegistrarEntrada solicitud) {
+        // Limitar el nro. de entradas a 5
+        if (solicitud.entradas().size() > 5) {
+            return null;
+        }
+
         Funcion funcion = funcionService.getFuncionPorId(solicitud.id_funcion());
 
         List<Long> butacaIds = solicitud.entradas().stream().map(EntradaInfo::id_butaca).toList();
