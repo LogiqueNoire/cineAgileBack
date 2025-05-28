@@ -51,6 +51,10 @@ public class EntradaService {
         if (funcion == null)
             return null;
 
+        if (funcion.getFechaHoraInicio().isBefore(solicitud.tiempoRegistro())) {
+            return null;
+        }
+
         List<Long> butacaIds = solicitud.entradas().stream().map(EntradaInfo::id_butaca).toList();
         List<Butaca> butacas = butacaRepository.findAllById(butacaIds);
 
