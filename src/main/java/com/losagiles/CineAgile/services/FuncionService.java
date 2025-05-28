@@ -93,8 +93,7 @@ public class FuncionService {
     }
     
     public Funcion getFuncionPorId(Long idFuncion){
-        Optional<Funcion> f = funcionRepository.findById(idFuncion);
-        return f.get();
+        return funcionRepository.findById(idFuncion).orElse(null);
     }
 
     public List<ButacaFuncionDTO> mostrarButacasDeUnaFuncion(Long idFuncion) {

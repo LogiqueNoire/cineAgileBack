@@ -59,6 +59,11 @@ public class EntradaService {
             return null;
         }
 
+        for (Butaca but : butacas) {
+            if (but.getSala().getId().compareTo(funcion.getSala().getId()) != 0)
+                return null;
+        }
+
         // Las butaca están bloqueadas o ya registradas
         List<Entrada> entradas = entradaRepository.findAllByButacaIdIn(butacaIds);
         for (Entrada entrada : entradas) {
