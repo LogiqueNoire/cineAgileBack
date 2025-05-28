@@ -48,6 +48,9 @@ public class EntradaService {
 
         Funcion funcion = funcionService.getFuncionPorId(solicitud.id_funcion());
 
+        if (funcion == null)
+            return null;
+
         List<Long> butacaIds = solicitud.entradas().stream().map(EntradaInfo::id_butaca).toList();
         List<Butaca> butacas = butacaRepository.findAllById(butacaIds);
 
