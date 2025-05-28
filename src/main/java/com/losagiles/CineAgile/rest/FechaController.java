@@ -2,40 +2,35 @@ package com.losagiles.CineAgile.rest;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeParseException;
+import java.time.format.DateTimeFormatter;
+
+import org.json.JSONObject;
 
 @RestController
 public class FechaController {
 
-    private final WebClient webClient = WebClient.create("http://worldtimeapi.org");
+    private final RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/fecha-actual")
-    public Mono<String> obtenerFechaRealFormateada() {
-        return webClient
-                .get()
-                .uri("/api/timezone/America/Lima")
-                .retrieve()
-                .bodyToMono(String.class)
-                .map(json -> {
-                    try {
-                        // Extraer el valor de "datetime"
-                        String datetime = json.split("\"datetime\":\"")[1].split("\"")[0];
+    public String obtenerFechaRealFormateada() {
+        try {
+            String url = "https://timeapi.io/api/Time/current/zone?timeZone=America/Lima";
+            String response = restTemplate.getForObject(url, String.class);
+            System.out.println("Respuesta del API: " + response);
 
-                        // Parsear a objeto ZonedDateTime
-                        ZonedDateTime zonedDateTime = ZonedDateTime.parse(datetime);
+            JSONObject json = new JSONObject(response);
+            String datetime = json.getString("dateTime");
 
-                        // Formatear a string limpio
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        return zonedDateTime.format(formatter);
-                    } catch (Exception e) {
-                        return "Error al procesar la fecha: " + e.getMessage();
-                    }
-                });
+            LocalDateTime zonedDateTime = LocalDateTime.parse(datetime);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            return zonedDateTime.format(formatter);
+        } catch (Exception e) {
+            return "Error al obtener la fecha: " + e.getMessage();
+        }
     }
 }
