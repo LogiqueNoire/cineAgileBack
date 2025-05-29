@@ -42,10 +42,6 @@ public class Pelicula {
 
     @Column (nullable = false)
     @Temporal(TemporalType.DATE)
-    LocalDate fechaInicioPreventa;
-
-    @Column (nullable = false)
-    @Temporal(TemporalType.DATE)
     LocalDate fechaInicioEstreno;
 
     @Column (nullable = false)

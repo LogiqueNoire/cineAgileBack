@@ -3,6 +3,7 @@ package com.losagiles.CineAgile.rest;
 import com.losagiles.CineAgile.dto.PeliculaDTO;
 import com.losagiles.CineAgile.dto.SedeDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
+import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.services.PeliculaService;
 import com.losagiles.CineAgile.services.SedeService;
@@ -65,4 +66,20 @@ public class IntranetController {
 
         return ResponseEntity.ok(sede);
     }
+
+    @PostMapping("/sedesysalas/nuevaSala")
+    public ResponseEntity<Sala> agregarSala(@PathVariable Long idSede, @PathVariable String nombre, @PathVariable String categoria) {
+        Sede s = sedeService.findById(idSede);
+
+        Sala sala = new Sala();
+        sala.setCodigoSala(nuevaSala.getCodigoSala());
+        sala.setCategoria(nuevaSala.getCategoria());
+        sala.setSede(s);
+
+        Sala guardada = salaRepository.save(sala);
+
+        return ResponseEntity.ok(guardada);
+    }
+
+
 }
