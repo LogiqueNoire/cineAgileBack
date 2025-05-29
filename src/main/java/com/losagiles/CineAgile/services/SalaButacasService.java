@@ -27,4 +27,9 @@ public class SalaButacasService {
         List<Butaca> butacas = butacaRepository.findAllBySalaId(idSala);
         return butacas;
     }
+
+    public Sala save(Sala sala){
+        return salaRepository.save(sala);
+    }
+
 }

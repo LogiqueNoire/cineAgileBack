@@ -39,7 +39,8 @@ public class SedeService {
 
     public List<Sede> findAll() { return sedeRepository.findAll(); }
 
-    public Sede findSedebyId(Long idSede){
-        return sedeRepository.getById(idSede);
+    public Optional<Sede> findById(Long idSede){
+        return sedeRepository.findById(idSede);
     }
+
 }

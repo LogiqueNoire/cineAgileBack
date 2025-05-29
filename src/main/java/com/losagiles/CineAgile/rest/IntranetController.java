@@ -1,11 +1,13 @@
 package com.losagiles.CineAgile.rest;
 
 import com.losagiles.CineAgile.dto.PeliculaDTO;
+import com.losagiles.CineAgile.dto.SalaDTO;
 import com.losagiles.CineAgile.dto.SedeDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.services.PeliculaService;
+import com.losagiles.CineAgile.services.SalaButacasService;
 import com.losagiles.CineAgile.services.SedeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/intranet")
@@ -22,6 +25,9 @@ public class IntranetController {
 
     @Autowired
     SedeService sedeService;
+
+    @Autowired
+    SalaButacasService salaButacasService;
 
     @GetMapping("/peliculas")
     public List<Pelicula> findAll() {
@@ -41,9 +47,7 @@ public class IntranetController {
         pelicula.setEstado(dto.getEstado());
 
         LocalDate fechaEstreno = LocalDate.parse(dto.getFechaInicioEstreno());
-        LocalDate fechaPreventa = LocalDate.parse(dto.getFechaInicioPreventa());
         pelicula.setFechaInicioEstreno(fechaEstreno);
-        pelicula.setFechaInicioPreventa(fechaPreventa);
 
         pelicula.setImageUrl(dto.getImageUrl());
         pelicula.setSinopsis(dto.getSinopsis());
@@ -54,7 +58,6 @@ public class IntranetController {
 
     @GetMapping("/sedesysalas")
     public List<Sede> getSedes() {
-
         return sedeService.findAll();
     }
 
@@ -68,15 +71,17 @@ public class IntranetController {
     }
 
     @PostMapping("/sedesysalas/nuevaSala")
-    public ResponseEntity<Sala> agregarSala(@PathVariable Long idSede, @PathVariable String nombre, @PathVariable String categoria) {
-        Sede s = sedeService.findById(idSede);
+    public ResponseEntity<Sala> agregarSala(@RequestBody SalaDTO salaDTO) {
+        Optional<Sede> sedeOptional = sedeService.findById(salaDTO.getIdSede());
+
+        Sede sede = sedeOptional.get();
 
         Sala sala = new Sala();
-        sala.setCodigoSala(nuevaSala.getCodigoSala());
-        sala.setCategoria(nuevaSala.getCategoria());
-        sala.setSede(s);
+        sala.setCodigoSala(salaDTO.getCodigoSala());
+        sala.setCategoria(salaDTO.getCategoria());
+        sala.setSede(sede);
 
-        Sala guardada = salaRepository.save(sala);
+        Sala guardada = salaButacasService.save(sala);
 
         return ResponseEntity.ok(guardada);
     }
