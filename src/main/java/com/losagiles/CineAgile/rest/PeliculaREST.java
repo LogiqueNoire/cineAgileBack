@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -24,6 +26,7 @@ public class PeliculaREST {
 
     @GetMapping ("/{idPelicula}")
     private ResponseEntity<Pelicula> getPelicula(@PathVariable Long idPelicula) {
+
         return ResponseEntity.ofNullable(peliculaService.mostrarPelicula(idPelicula));
     }
 
