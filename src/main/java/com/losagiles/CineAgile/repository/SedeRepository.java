@@ -24,6 +24,7 @@ import java.util.List;
 public interface SedeRepository extends JpaRepository<Sede, Long> {
     @Query("""
             SELECT new com.losagiles.CineAgile.dto.NombreDTO(
+                    s.id,
                     s.nombre
             )
             FROM Sede s

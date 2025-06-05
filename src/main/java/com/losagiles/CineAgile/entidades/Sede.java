@@ -32,7 +32,7 @@ import java.util.List;
 public class Sede {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;

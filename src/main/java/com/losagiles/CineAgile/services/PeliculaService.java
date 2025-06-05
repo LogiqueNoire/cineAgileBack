@@ -37,6 +37,6 @@ public class PeliculaService {
 
     public List<Pelicula> findAll() { return peliculaRepository.findAll(); }
 
-    public List<NombreDTO> getNombresPeliculas(String nombreSede) { return peliculaRepository.getNombresPeliculas(nombreSede); }
+    public List<NombreDTO> getNombresPeliculas(Long idSede) { return peliculaRepository.getNombresPeliculas(idSede); }
 
 }

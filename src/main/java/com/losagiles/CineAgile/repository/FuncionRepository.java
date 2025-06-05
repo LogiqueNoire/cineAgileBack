@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -51,4 +52,17 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
             WHERE f.id = :idFuncion
             """)
     public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion);
+
+    @Query(value = """
+    SELECT f.id, f.dimension, f.fecha_hora_inicio, f.fecha_hora_fin, sa.categoria, p.id_pelicula
+    FROM pelicula AS p
+    JOIN funcion AS f ON f.id_pelicula = p.id_pelicula
+    JOIN sala AS sa ON f.id_sala = sa.id
+    JOIN sede AS se ON sa.id_sede = se.id
+    WHERE DATE(f.fecha_hora_inicio) BETWEEN 
+          DATE(date_trunc('week', :fechaBase))
+      AND DATE(date_trunc('week', :fechaBase)) + INTERVAL '6 days'
+    """, nativeQuery = true)
+    List<FuncionDTO> buscarFuncionesPorSemanaConFecha(@Param("fechaBase") LocalDateTime fechaBase);
+
 }

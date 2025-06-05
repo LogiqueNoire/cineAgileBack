@@ -14,7 +14,7 @@ public class FuncionDTO {
     private float precioBase;
 
     // Sede
-    private int idSede;
+    private Long idSede;
     private String nombreSede;
 
     // Sala
@@ -23,7 +23,7 @@ public class FuncionDTO {
     private String codigoSala;
 
     public FuncionDTO(Long idFuncion, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, String dimension,
-            float precioBase, int idSede, String nombreSede, Long idSala, String categoria, String codigoSala) {
+            float precioBase, Long idSede, String nombreSede, Long idSala, String categoria, String codigoSala) {
         this.idFuncion = idFuncion;
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;

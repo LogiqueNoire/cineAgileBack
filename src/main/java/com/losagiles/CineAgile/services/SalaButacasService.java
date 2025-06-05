@@ -1,5 +1,6 @@
 package com.losagiles.CineAgile.services;
 
+import com.losagiles.CineAgile.dto.SalaDTO;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.repository.ButacaRepository;
@@ -30,6 +31,10 @@ public class SalaButacasService {
 
     public Sala save(Sala sala){
         return salaRepository.save(sala);
+    }
+
+    public List<Sala> getSalasPorSede(Long idSede){
+        return salaRepository.findAllBySede_Id(idSede);
     }
 
 }

@@ -29,13 +29,14 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
 
     @Query("""
             SELECT DISTINCT new com.losagiles.CineAgile.dto.NombreDTO(
+                    p.idPelicula,
                     p.nombre
             )
             FROM Pelicula p
             JOIN Funcion f ON f.pelicula.idPelicula = p.idPelicula
             JOIN Sala as sa on f.sala.id = sa.id
             JOIN Sede as se on sa.sede.id = se.id
-            WHERE se.nombre = :nombreSede
+            WHERE se.id = :idSede
             """)
-    public List<NombreDTO> getNombresPeliculas(@Param("nombreSede") String nombreSede);
+    public List<NombreDTO> getNombresPeliculas(@Param("idSede") Long idSede);
 }

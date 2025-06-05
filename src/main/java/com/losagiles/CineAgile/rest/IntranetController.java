@@ -1,9 +1,6 @@
 package com.losagiles.CineAgile.rest;
 
-import com.losagiles.CineAgile.dto.NombreDTO;
-import com.losagiles.CineAgile.dto.PeliculaDTO;
-import com.losagiles.CineAgile.dto.SalaDTO;
-import com.losagiles.CineAgile.dto.SedeDTO;
+import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
@@ -20,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,8 +106,17 @@ public class IntranetController {
     }
 
     @GetMapping ("/peliculasPorSede")
-    private ResponseEntity<List<NombreDTO>> getNombresPeliculas(@RequestParam String nombreSede){
-        return ResponseEntity.ok(peliculaService.getNombresPeliculas(nombreSede));
+    private ResponseEntity<List<NombreDTO>> getNombresPeliculas(@RequestParam Long idSede){
+        return ResponseEntity.ok(peliculaService.getNombresPeliculas(idSede));
     }
 
+    @GetMapping ("/salasPorSede")
+    private ResponseEntity<List<Sala>> getSalasPorSede(@RequestParam Long idSede){
+        return ResponseEntity.ok(salaButacasService.getSalasPorSede(idSede));
+    }
+/*
+    @GetMapping ("/buscarFuncionesPorSemana")
+    private ResponseEntity<List<FuncionDTO>> buscarFuncionesPorSemanaConFecha(@RequestParam LocalDateTime fecha){
+
+    }*/
 }
