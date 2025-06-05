@@ -1,5 +1,6 @@
 package com.losagiles.CineAgile.rest;
 
+import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.dto.PeliculaDTO;
 import com.losagiles.CineAgile.dto.SalaDTO;
 import com.losagiles.CineAgile.dto.SedeDTO;
@@ -99,6 +100,16 @@ public class IntranetController {
             return ResponseEntity.status(401).body("no autenticado");
 
         return ResponseEntity.ok((String) auth.getPrincipal());
+    }
+
+    @GetMapping ("/soloSedes")
+    private ResponseEntity<List<NombreDTO>> getNombresSedes(){
+        return ResponseEntity.ok(sedeService.getNombresSedes());
+    }
+
+    @GetMapping ("/peliculasPorSede")
+    private ResponseEntity<List<NombreDTO>> getNombresPeliculas(@RequestParam String nombreSede){
+        return ResponseEntity.ok(peliculaService.getNombresPeliculas(nombreSede));
     }
 
 }

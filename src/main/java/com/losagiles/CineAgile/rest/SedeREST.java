@@ -4,6 +4,7 @@
  */
 package com.losagiles.CineAgile.rest;
 
+import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.dto.SedeDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;

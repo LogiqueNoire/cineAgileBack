@@ -10,13 +10,24 @@
 
 package com.losagiles.CineAgile.repository;
 
+import com.losagiles.CineAgile.dto.NombreDTO;
+import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.Sede;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface SedeRepository extends JpaRepository<Sede, Long> {
-
+    @Query("""
+            SELECT new com.losagiles.CineAgile.dto.NombreDTO(
+                    s.nombre
+            )
+            FROM Sede s
+            """)
+    public List<NombreDTO> getNombresSedes();
     
 }

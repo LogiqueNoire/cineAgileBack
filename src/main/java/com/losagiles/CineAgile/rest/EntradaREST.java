@@ -31,6 +31,7 @@ public class EntradaREST {
 
     @PostMapping
     private ResponseEntity<ResRegistrarEntrada> postEntradas(@RequestBody ReqRegistrarEntrada infoEntrada) {
+        System.out.println("Registrando");
         ResRegistrarEntrada res = entradaService.registrarEntradas(infoEntrada);
         return ResponseEntity.ok(res);
     }

@@ -4,6 +4,7 @@
  */
 package com.losagiles.CineAgile.services;
 
+import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
@@ -41,6 +42,10 @@ public class SedeService {
 
     public Optional<Sede> findById(Long idSede){
         return sedeRepository.findById(idSede);
+    }
+
+    public List<NombreDTO> getNombresSedes(){
+        return sedeRepository.getNombresSedes();
     }
 
 }

@@ -1,11 +1,13 @@
 
 package com.losagiles.CineAgile.services;
 
+import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,5 +36,7 @@ public class PeliculaService {
     }
 
     public List<Pelicula> findAll() { return peliculaRepository.findAll(); }
+
+    public List<NombreDTO> getNombresPeliculas(String nombreSede) { return peliculaRepository.getNombresPeliculas(nombreSede); }
 
 }
