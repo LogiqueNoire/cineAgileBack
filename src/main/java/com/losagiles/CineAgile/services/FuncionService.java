@@ -9,7 +9,9 @@ import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import com.losagiles.CineAgile.entidades.Sala;
@@ -100,9 +102,23 @@ public class FuncionService {
         return funcionRepository.getButacaCompuestoByFuncionId(idFuncion);
     }
 
-    public List<FuncionDTO> buscarFuncionesPorSemanaConFecha(LocalDateTime fecha){
-        return funcionRepository.buscarFuncionesPorSemanaConFecha(fecha);
+    public List<FuncionDTO> buscarFuncionesPorSemanaConPelicula(LocalDateTime fecha, Long idPelicula, Long idSede){
+        LocalDate fechaBase = fecha.toLocalDate();
+        LocalDate inicioSemana = fechaBase.with(DayOfWeek.MONDAY);
+        LocalDate finSemana = inicioSemana.plusDays(6);
+
+        LocalDateTime inicioSemanaDateTime = inicioSemana.atStartOfDay();
+        LocalDateTime finSemanaDateTime = finSemana.atTime(LocalTime.MAX);
+        return funcionRepository.buscarFuncionesPorSemanaConPelicula(idPelicula, idSede, inicioSemanaDateTime, finSemanaDateTime);
     }
-    
-    
+
+    public List<FuncionDTO> buscarFuncionesPorSemanaConSala(LocalDateTime fecha, Long idSala, Long idSede){
+        LocalDate fechaBase = fecha.toLocalDate();
+        LocalDate inicioSemana = fechaBase.with(DayOfWeek.MONDAY);
+        LocalDate finSemana = inicioSemana.plusDays(6);
+
+        LocalDateTime inicioSemanaDateTime = inicioSemana.atStartOfDay();
+        LocalDateTime finSemanaDateTime = finSemana.atTime(LocalTime.MAX);
+        return funcionRepository.buscarFuncionesPorSemanaConSala(idSala, idSede, inicioSemanaDateTime, finSemanaDateTime);
+    }
 }

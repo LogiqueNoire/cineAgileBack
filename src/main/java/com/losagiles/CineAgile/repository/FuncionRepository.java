@@ -34,7 +34,9 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
                 se.nombre,
                 sa.id,
                 sa.categoria,
-                sa.codigoSala
+                sa.codigoSala,
+                f.pelicula.idPelicula,
+                f.pelicula.nombre
             )
             FROM Funcion f
             JOIN Sala sa ON sa.id = f.sala.id
@@ -53,16 +55,47 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
             """)
     public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion);
 
-    @Query(value = """
-    SELECT f.id, f.dimension, f.fecha_hora_inicio, f.fecha_hora_fin, sa.categoria, p.id_pelicula
-    FROM pelicula AS p
-    JOIN funcion AS f ON f.id_pelicula = p.id_pelicula
-    JOIN sala AS sa ON f.id_sala = sa.id
-    JOIN sede AS se ON sa.id_sede = se.id
-    WHERE DATE(f.fecha_hora_inicio) BETWEEN 
-          DATE(date_trunc('week', :fechaBase))
-      AND DATE(date_trunc('week', :fechaBase)) + INTERVAL '6 days'
-    """, nativeQuery = true)
-    List<FuncionDTO> buscarFuncionesPorSemanaConFecha(@Param("fechaBase") LocalDateTime fechaBase);
+    @Query("""
+        SELECT new com.losagiles.CineAgile.dto.FuncionDTO(
+            f.id, f.fechaHoraInicio, f.fechaHoraFin, f.dimension, f.precioBase,
+            se.id, se.nombre,
+            sa.id, sa.categoria, sa.codigoSala,
+            f.pelicula.idPelicula,
+            f.pelicula.nombre)
+        FROM Funcion f
+        JOIN f.pelicula p
+        JOIN f.sala sa
+        JOIN sa.sede se
+        WHERE p.id = :idPelicula AND se.id = :idSede
+        AND f.fechaHoraInicio BETWEEN :inicioSemana AND :finSemana
+    """)
+    List<FuncionDTO> buscarFuncionesPorSemanaConPelicula(
+            @Param("idPelicula") Long idPelicula,
+            @Param("idSede") Long idSede,
+            @Param("inicioSemana") LocalDateTime inicioSemana,
+            @Param("finSemana") LocalDateTime finSemana
+    );
+
+
+    @Query("""
+        SELECT new com.losagiles.CineAgile.dto.FuncionDTO(
+            f.id, f.fechaHoraInicio, f.fechaHoraFin, f.dimension, f.precioBase,
+            se.id, se.nombre,
+            sa.id, sa.categoria, sa.codigoSala,
+            f.pelicula.idPelicula,
+            f.pelicula.nombre)
+        FROM Funcion f
+        JOIN f.pelicula p
+        JOIN f.sala sa
+        JOIN sa.sede se
+        WHERE sa.id = :idSala AND se.id = :idSede
+        AND f.fechaHoraInicio BETWEEN :inicioSemana AND :finSemana
+    """)
+    List<FuncionDTO> buscarFuncionesPorSemanaConSala(
+            @Param("idSala") Long idSala,
+            @Param("idSede") Long idSede,
+            @Param("inicioSemana") LocalDateTime inicioSemana,
+            @Param("finSemana") LocalDateTime finSemana
+    );
 
 }

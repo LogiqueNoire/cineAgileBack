@@ -4,10 +4,12 @@ import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.services.FuncionService;
 import com.losagiles.CineAgile.services.PeliculaService;
 import com.losagiles.CineAgile.services.SalaButacasService;
 import com.losagiles.CineAgile.services.SedeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,6 +34,9 @@ public class IntranetController {
 
     @Autowired
     SalaButacasService salaButacasService;
+
+    @Autowired
+    FuncionService funcionService;
 
     @GetMapping("/peliculas")
     public List<Pelicula> findAll() {
@@ -114,9 +119,22 @@ public class IntranetController {
     private ResponseEntity<List<Sala>> getSalasPorSede(@RequestParam Long idSede){
         return ResponseEntity.ok(salaButacasService.getSalasPorSede(idSede));
     }
-/*
-    @GetMapping ("/buscarFuncionesPorSemana")
-    private ResponseEntity<List<FuncionDTO>> buscarFuncionesPorSemanaConFecha(@RequestParam LocalDateTime fecha){
 
-    }*/
+    @GetMapping ("/buscarFuncionesPorSemanaConPelicula")
+    private ResponseEntity<List<FuncionDTO>>
+    buscarFuncionesPorSemanaConPelicula(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha,
+            @RequestParam Long idPelicula,
+            @RequestParam Long idSede) {
+        return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConPelicula(fecha, idPelicula, idSede));
+    }
+
+    @GetMapping ("/buscarFuncionesPorSemanaConSala")
+    private ResponseEntity<List<FuncionDTO>>
+    buscarFuncionesPorSemanaConSala(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha,
+            @RequestParam Long idSala,
+            @RequestParam Long idSede){
+        return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConSala(fecha, idSala, idSede));
+    }
 }
