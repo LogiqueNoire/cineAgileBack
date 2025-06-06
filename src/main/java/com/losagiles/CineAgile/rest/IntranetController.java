@@ -4,10 +4,7 @@ import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
-import com.losagiles.CineAgile.services.FuncionService;
-import com.losagiles.CineAgile.services.PeliculaService;
-import com.losagiles.CineAgile.services.SalaButacasService;
-import com.losagiles.CineAgile.services.SedeService;
+import com.losagiles.CineAgile.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +34,9 @@ public class IntranetController {
 
     @Autowired
     FuncionService funcionService;
+
+    @Autowired
+    SalaService salaService;
 
     @GetMapping("/peliculas")
     public List<Pelicula> findAll() {
@@ -84,6 +84,7 @@ public class IntranetController {
         Optional<Sede> sedeOptional = sedeService.findById(salaDTO.getIdSede());
 
         Sede sede = sedeOptional.get();
+        System.out.println("Sede agregada: " + sede.getId());
 
         Sala sala = new Sala();
         sala.setCodigoSala(salaDTO.getCodigoSala());
@@ -136,5 +137,17 @@ public class IntranetController {
             @RequestParam Long idSala,
             @RequestParam Long idSede){
         return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConSala(fecha, idSala, idSede));
+    }
+
+
+    @PostMapping("/crearsala")
+    public ResponseEntity<String> crearSala(@RequestBody SolicitudCrearSala solicitudCrearSala) {
+        Sala sala = salaService.crearSala(solicitudCrearSala);
+
+        if (sala == null) {
+            return ResponseEntity.status(409).build();
+        }
+
+        return ResponseEntity.ok().build();
     }
 }

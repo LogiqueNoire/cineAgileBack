@@ -1,14 +1,12 @@
 package com.losagiles.CineAgile.rest;
 
+import com.losagiles.CineAgile.dto.SolicitudCrearSala;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.services.SalaButacasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 

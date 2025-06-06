@@ -8,7 +8,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -16,8 +19,11 @@ import java.util.List;
 // porque nos ahorra colocar los getters, setters y constructores
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(
-    uniqueConstraints = @UniqueConstraint(name = "", columnNames = { "id_sede", "codigoSala" })
+    uniqueConstraints = @UniqueConstraint(name = "salaUnica", columnNames = { "id_sede", "codigoSala" })
 )
 public class Sala {
     @Id
