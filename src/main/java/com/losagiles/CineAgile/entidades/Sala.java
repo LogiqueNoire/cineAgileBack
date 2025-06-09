@@ -42,7 +42,6 @@ public class Sala {
     private Sede sede;
 
     @OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     @JsonManagedReference
     private List<Butaca> butacas;
 

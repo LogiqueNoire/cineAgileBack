@@ -20,8 +20,13 @@ public class SalaButacasService {
     ButacaRepository butacaRepository;
 
     public Sala mostrarSala(Long idSala) {
-        Optional<Sala> sala = salaRepository.findById(idSala);
-        return sala.orElse(null);
+        Sala sala = salaRepository.findById(idSala).orElse(null);
+
+        if (sala != null) {
+            sala.getButacas().forEach(el -> el.setSala(null));
+        }
+
+        return sala;
     }
 
     public List<Butaca> mostrarButacas(Long idSala) {
