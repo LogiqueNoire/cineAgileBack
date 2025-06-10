@@ -14,7 +14,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
+import com.losagiles.CineAgile.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.losagiles.CineAgile.repository.FuncionRepository;
@@ -31,6 +33,9 @@ public class FuncionService {
 
     @Autowired
     private FuncionRepository funcionRepository;
+
+    @Autowired
+    private PeliculaRepository peliculaRepository;
 
     public float precio(Funcion funcion, String persona) {
         Sala s = funcion.getSala();
@@ -120,5 +125,23 @@ public class FuncionService {
         LocalDateTime inicioSemanaDateTime = inicioSemana.atStartOfDay();
         LocalDateTime finSemanaDateTime = finSemana.atTime(LocalTime.MAX);
         return funcionRepository.buscarFuncionesPorSemanaConSala(idSala, idSede, inicioSemanaDateTime, finSemanaDateTime);
+    }
+
+    public Optional<Funcion> actualizarFuncion(FuncionDTO dto){
+        Optional<Funcion> optional = funcionRepository.findById(dto.getIdFuncion());
+        if (!optional.isPresent()) {
+            return Optional.empty();
+        }
+
+        Funcion funcion = optional.get();
+        Pelicula pelicula = peliculaRepository.findById(funcion.getPelicula().getIdPelicula()).get();
+        int duracion = pelicula.getDuracion();
+        if (dto.getFechaHoraInicio() != null){
+            funcion.setFechaHoraInicio(dto.getFechaHoraInicio());
+            funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
+        }
+
+        funcionRepository.save(funcion);
+        return Optional.of(funcion);
     }
 }

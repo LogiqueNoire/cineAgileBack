@@ -17,7 +17,7 @@ import java.util.List;
 public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long idPelicula;
+    Long idPelicula;
 
     @Column (nullable = false)
     String nombre;

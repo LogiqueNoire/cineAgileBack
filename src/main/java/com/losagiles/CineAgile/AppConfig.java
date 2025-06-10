@@ -24,7 +24,7 @@ public class AppConfig {
                 public void addCorsMappings(CorsRegistry registry) {
                     registry.addMapping("/**") // Apply to all endpoints
                             .allowedOrigins("*")
-                            .allowedMethods("GET", "POST", "PUT", "DELETE") // Allowed HTTP methods
+                            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE") // Allowed HTTP methods
                             .allowedHeaders("*"); // Allowed headers
                 }
             };
