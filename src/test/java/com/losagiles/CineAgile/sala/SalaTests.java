@@ -1,5 +1,6 @@
 package com.losagiles.CineAgile.sala;
 
+import com.losagiles.CineAgile.dto.ResCrearSala;
 import com.losagiles.CineAgile.dto.SolicitudCrearSala;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
@@ -81,10 +82,10 @@ public class SalaTests {
                 .butacas(List.of(butaca))
                 .build();
 
-        Sala resultado = salaService.crearSala(solicitudCrearSala);
+        ResCrearSala resultado = salaService.crearSala(solicitudCrearSala);
         System.out.println(nuevaSede.getId());
 
-        if (resultado != null) {
+        if (resultado.sala() != null) {
             System.out.println("Sala creada!");
         }
     }

@@ -143,10 +143,20 @@ public class IntranetController {
 
     @PostMapping("/crearsala")
     public ResponseEntity<String> crearSala(@RequestBody SolicitudCrearSala solicitudCrearSala) {
-        Sala sala = salaService.crearSala(solicitudCrearSala);
+        ResCrearSala resSala = salaService.crearSala(solicitudCrearSala);
 
-        if (sala == null) {
-            return ResponseEntity.status(409).build();
+        if (resSala.error() != null) {
+            if (resSala.error() == ResSalaErrorCode.EXCEPCION_INTEGRACION_DATOS)
+                return ResponseEntity
+                        .status(409)
+                        .body(resSala.error().getDescripcion());
+
+            if (resSala.error() == ResSalaErrorCode.MAX_FILA_SOBREPASADA
+                    || resSala.error() == ResSalaErrorCode.BUTACAS_NO_ENCONTRADAS) {
+                return ResponseEntity
+                        .status(422)
+                        .body(resSala.error().getDescripcion());
+            }
         }
 
         return ResponseEntity.ok().build();
