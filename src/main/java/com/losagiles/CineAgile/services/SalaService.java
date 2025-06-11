@@ -50,4 +50,8 @@ public class SalaService {
                     .build();
         }
     }
+
+    public boolean existsBySedeAndCodigoSala(Sede sede, String codigoSala){
+        return salaRepository.existsBySedeAndCodigoSala(sede, codigoSala);
+    }
 }

@@ -48,4 +48,6 @@ public class SedeService {
         return sedeRepository.getNombresSedes();
     }
 
+    public boolean existsByNombre(String nombre){ return sedeRepository.existsByNombre(nombre); }
+
 }

@@ -72,29 +72,17 @@ public class IntranetController {
     }
 
     @PostMapping("/sedesysalas/agregar")
-    private ResponseEntity<Sede> addSede(@RequestBody SedeDTO dto) {
-        Sede sede = new Sede();
-        sede.setNombre(dto.getNombre());
-        sedeService.agregarSede(sede);
+    private ResponseEntity<?> addSede(@RequestBody SedeDTO dto) {
+        if (sedeService.existsByNombre(dto.getNombre())) {
+            return ResponseEntity.status(409).body("Sede repetida");
+        } else {
+            Sede sede = new Sede();
+            sede.setNombre(dto.getNombre());
 
-        return ResponseEntity.ok(sede);
-    }
+            sedeService.agregarSede(sede);
 
-    @PostMapping("/sedesysalas/nuevaSala")
-    public ResponseEntity<Sala> agregarSala(@RequestBody SalaDTO salaDTO) {
-        Optional<Sede> sedeOptional = sedeService.findById(salaDTO.getIdSede());
-
-        Sede sede = sedeOptional.get();
-        System.out.println("Sede agregada: " + sede.getId());
-
-        Sala sala = new Sala();
-        sala.setCodigoSala(salaDTO.getCodigoSala());
-        sala.setCategoria(salaDTO.getCategoria());
-        sala.setSede(sede);
-
-        Sala guardada = salaButacasService.save(sala);
-
-        return ResponseEntity.ok(guardada);
+            return ResponseEntity.ok(sede);
+        }
     }
 
     @GetMapping("/user")
@@ -143,23 +131,27 @@ public class IntranetController {
 
     @PostMapping("/crearsala")
     public ResponseEntity<String> crearSala(@RequestBody SolicitudCrearSala solicitudCrearSala) {
-        ResCrearSala resSala = salaService.crearSala(solicitudCrearSala);
+        Sede sede = sedeService.findById(solicitudCrearSala.idSede()).get();
+        if(salaService.existsBySedeAndCodigoSala(sede, solicitudCrearSala.codigoSala())){
+            return ResponseEntity.status(409).body("Sala repetida");
+        } else {
 
-        if (resSala.error() != null) {
-            if (resSala.error() == ResSalaErrorCode.EXCEPCION_INTEGRACION_DATOS)
-                return ResponseEntity
+            ResCrearSala resSala = salaService.crearSala(solicitudCrearSala);
+
+            if (resSala.error() != null) {
+                if (resSala.error() == ResSalaErrorCode.EXCEPCION_INTEGRACION_DATOS)
+                    return ResponseEntity
                         .status(409)
                         .body(resSala.error().getDescripcion());
-
-            if (resSala.error() == ResSalaErrorCode.MAX_FILA_SOBREPASADA
+                if (resSala.error() == ResSalaErrorCode.MAX_FILA_SOBREPASADA
                     || resSala.error() == ResSalaErrorCode.BUTACAS_NO_ENCONTRADAS) {
-                return ResponseEntity
+                    return ResponseEntity
                         .status(422)
                         .body(resSala.error().getDescripcion());
+                }
             }
+            return ResponseEntity.ok().build();
         }
-
-        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/actualizarFuncion")

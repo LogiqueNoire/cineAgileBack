@@ -30,5 +30,6 @@ public interface SedeRepository extends JpaRepository<Sede, Long> {
             FROM Sede s
             """)
     public List<NombreDTO> getNombresSedes();
-    
+
+    public boolean existsByNombre(String nombre);
 }

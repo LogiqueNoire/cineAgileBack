@@ -12,6 +12,7 @@ package com.losagiles.CineAgile.repository;
 
 import com.losagiles.CineAgile.dto.SalaDTO;
 import com.losagiles.CineAgile.entidades.Sala;
+import com.losagiles.CineAgile.entidades.Sede;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,6 @@ import java.util.List;
 public interface SalaRepository extends JpaRepository<Sala, Long> {
     //findAllBy + Sede (la propiedad) + _Id (el campo id de la entidad Sede).
     public List<Sala> findAllBySede_Id(@Param("idSede") Long idSede);
+
+    public boolean existsBySedeAndCodigoSala(Sede sede, String codigoSala);
 }
