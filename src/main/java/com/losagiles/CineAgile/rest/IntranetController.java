@@ -154,9 +154,7 @@ public class IntranetController {
 
     @PatchMapping("/actualizarFuncion")
     public ResponseEntity<Funcion> actualizarFuncion(@RequestBody FuncionDTO funcionDTO){
-        System.out.print("funcion dto" + funcionDTO.getIdFuncion());
         Optional<Funcion> actualizado = funcionService.actualizarFuncion(funcionDTO);
-        System.out.print("nueva funcion" + actualizado.get().getFechaHoraInicio());
         return actualizado.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
