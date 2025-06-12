@@ -32,4 +32,7 @@ public interface SedeRepository extends JpaRepository<Sede, Long> {
     public List<NombreDTO> getNombresSedes();
 
     public boolean existsByNombre(String nombre);
+
+    public List<Sede> findByNombre(String nombre);
+
 }

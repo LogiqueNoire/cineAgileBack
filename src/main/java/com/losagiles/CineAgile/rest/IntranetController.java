@@ -9,11 +9,8 @@ import com.losagiles.CineAgile.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -79,7 +76,7 @@ public class IntranetController {
             Sede sede = new Sede();
             sede.setNombre(dto.getNombre());
 
-            sedeService.agregarSede(sede);
+            sedeService.save(sede);
 
             return ResponseEntity.ok(sede);
         }
@@ -156,8 +153,20 @@ public class IntranetController {
 
     @PatchMapping("/actualizarFuncion")
     public ResponseEntity<Funcion> actualizarFuncion(@RequestBody FuncionDTO funcionDTO){
-        Optional<Funcion> actualizado = funcionService.actualizarFuncion(funcionDTO);
-        return actualizado.map(ResponseEntity::ok)
+        Optional<Funcion> actualizada = funcionService.actualizarFuncion(funcionDTO);
+        return actualizada.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/editarSede")
+    public ResponseEntity<?> editarSede(@RequestBody NombreDTO sedeDTO){
+        Optional<Sede> actualizada = sedeService.editarSede(sedeDTO);
+
+        if (actualizada.isEmpty()) {
+            return ResponseEntity.status(409).body("Nombre de sede ya está en uso");
+        }
+
+        return actualizada.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 

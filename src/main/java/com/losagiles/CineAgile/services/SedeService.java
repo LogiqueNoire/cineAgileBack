@@ -5,8 +5,7 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.NombreDTO;
-import com.losagiles.CineAgile.entidades.Butaca;
-import com.losagiles.CineAgile.entidades.Pelicula;
+import com.losagiles.CineAgile.dto.SedeDTO;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.repository.SedeRepository;
@@ -34,7 +33,7 @@ public class SedeService {
         return new ArrayList<>();
     }
 
-    public Sede agregarSede(Sede sede) {
+    public Sede save(Sede sede) {
         return sedeRepository.save(sede);
     }
 
@@ -49,5 +48,24 @@ public class SedeService {
     }
 
     public boolean existsByNombre(String nombre){ return sedeRepository.existsByNombre(nombre); }
+
+    public Optional<Sede> editarSede(NombreDTO dto){
+        List<Sede> otras = sedeRepository.findByNombre(dto.getNombre());
+        System.out.println(dto.getId());
+        Sede sede = sedeRepository.findById(dto.getId()).get();
+        boolean repetido = false;
+        for(Sede s : otras){
+            if (!s.getId().equals(sede.getId())){
+                repetido = true;
+            }
+        }
+        if(repetido){
+            return Optional.empty();
+        } else {
+            sede.setNombre(dto.getNombre());
+            return Optional.of(sedeRepository.save(sede));
+        }
+    }
+
 
 }
