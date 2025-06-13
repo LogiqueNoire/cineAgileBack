@@ -9,10 +9,7 @@ import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
+import java.time.*;
 
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
@@ -151,15 +148,19 @@ public class FuncionService {
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
         }
 
-        funcionRepository.save(funcion);
-        return Optional.of(funcion);
+        if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
+                && funcion.getFechaHoraFin().isBefore(LocalTime.MIDNIGHT)) {
+            funcionRepository.save(funcion);
+            return Optional.of(funcion);
+        } else
+            return Optional.empty();
     }
 
     public Optional<Funcion> save(FuncionDTO dto){
+
         Funcion funcion = new Funcion();
         Pelicula pelicula = peliculaRepository.findById(dto.getIdPelicula()).get();
         int duracion = pelicula.getDuracion();
-        System.out.println(dto.getFechaHoraInicio());
         Sala sala = salaRepository.findById(dto.getIdSala()).get();
 
 
@@ -172,7 +173,11 @@ public class FuncionService {
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
         }
 
-        funcionRepository.save(funcion);
-        return Optional.of(funcion);
+        if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
+                && funcion.getFechaHoraFin().isBefore(LocalTime.MIDNIGHT)) {
+            funcionRepository.save(funcion);
+            return Optional.of(funcion);
+        } else
+            return Optional.empty();
     }
 }
