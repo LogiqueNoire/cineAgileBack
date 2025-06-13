@@ -32,6 +32,7 @@ public class SalaService {
 
             for (int i = 0; i < sala.getButacas().size(); i++) {
                 Butaca butaca = sala.getButacas().get(i);
+                butaca.setSala(sala);
 
                 if (butaca.getFila() > 25) {
                     return ResCrearSala.builder()
