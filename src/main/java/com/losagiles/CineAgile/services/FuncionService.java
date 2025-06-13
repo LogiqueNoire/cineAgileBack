@@ -17,6 +17,7 @@ import java.util.List;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
+import com.losagiles.CineAgile.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.losagiles.CineAgile.repository.FuncionRepository;
@@ -36,6 +37,9 @@ public class FuncionService {
 
     @Autowired
     private PeliculaRepository peliculaRepository;
+
+    @Autowired
+    private SalaRepository salaRepository;
 
     public float precio(Funcion funcion, String persona) {
         Sala s = funcion.getSala();
@@ -134,8 +138,35 @@ public class FuncionService {
         }
 
         Funcion funcion = optional.get();
-        Pelicula pelicula = peliculaRepository.findById(funcion.getPelicula().getIdPelicula()).get();
+        Pelicula pelicula = peliculaRepository.findById(dto.getIdPelicula()).get();
         int duracion = pelicula.getDuracion();
+
+        Sala sala = salaRepository.findById(dto.getIdSala()).get();
+        funcion.setPelicula(pelicula);
+        funcion.setSala(sala);
+        funcion.setDimension(dto.getDimension());
+        funcion.setPrecioBase(dto.getPrecioBase());
+        if (dto.getFechaHoraInicio() != null){
+            funcion.setFechaHoraInicio(dto.getFechaHoraInicio());
+            funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
+        }
+
+        funcionRepository.save(funcion);
+        return Optional.of(funcion);
+    }
+
+    public Optional<Funcion> save(FuncionDTO dto){
+        Funcion funcion = new Funcion();
+        Pelicula pelicula = peliculaRepository.findById(dto.getIdPelicula()).get();
+        int duracion = pelicula.getDuracion();
+        System.out.println(dto.getFechaHoraInicio());
+        Sala sala = salaRepository.findById(dto.getIdSala()).get();
+
+
+        funcion.setPelicula(pelicula);
+        funcion.setSala(sala);
+        funcion.setDimension(dto.getDimension());
+        funcion.setPrecioBase(dto.getPrecioBase());
         if (dto.getFechaHoraInicio() != null){
             funcion.setFechaHoraInicio(dto.getFechaHoraInicio());
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));

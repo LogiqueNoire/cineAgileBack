@@ -19,6 +19,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SalaRepository extends JpaRepository<Sala, Long> {
@@ -26,4 +27,6 @@ public interface SalaRepository extends JpaRepository<Sala, Long> {
     public List<Sala> findAllBySede_Id(@Param("idSede") Long idSede);
 
     public boolean existsBySedeAndCodigoSala(Sede sede, String codigoSala);
+
+    public Optional<Sala> findById(Long id);
 }

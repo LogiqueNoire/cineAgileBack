@@ -170,4 +170,11 @@ public class IntranetController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping("/crearFuncion")
+    public ResponseEntity<Funcion> save(@RequestBody FuncionDTO funcionDTO){
+        Optional<Funcion> funcion = funcionService.save(funcionDTO);
+        return funcion.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }

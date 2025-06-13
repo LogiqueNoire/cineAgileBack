@@ -17,10 +17,11 @@ import java.util.List;
 
 @Data
 @Entity
+@Table (name = "Funcion")
 public class Funcion {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column (nullable = false)
     private LocalDateTime fechaHoraInicio;
