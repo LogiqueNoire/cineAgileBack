@@ -149,7 +149,7 @@ public class FuncionService {
         }
 
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                && funcion.getFechaHoraFin().isBefore(LocalTime.MIDNIGHT)) {
+                && funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)) {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else
@@ -174,7 +174,7 @@ public class FuncionService {
         }
 
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                && funcion.getFechaHoraFin().isBefore(LocalTime.MIDNIGHT)) {
+                && funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)) {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else
