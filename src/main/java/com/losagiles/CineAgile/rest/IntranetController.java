@@ -36,6 +36,9 @@ public class IntranetController {
     @Autowired
     SalaService salaService;
 
+    @Autowired
+    UsuarioInternoService usuarioInternoService;
+
     @GetMapping("/peliculas")
     public List<Pelicula> findAll() {
         return peliculaService.findAll();
@@ -175,6 +178,29 @@ public class IntranetController {
         Optional<Funcion> funcion = funcionService.save(funcionDTO);
         return funcion.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/usuario")
+    public ResponseEntity<List<UsuarioTablaDTO>> getUsuarios() {
+        return ResponseEntity.ok(usuarioInternoService.mostrarUsuariosEnTabla());
+    }
+
+    @PostMapping("/usuario")
+    public ResponseEntity<String> crearUsuario(@RequestBody SolicitudCrearUsuario solicitudCrearUsuario) {
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+
+        if (res.error() != null) {
+            if (res.error() == ResUsuarioErrorCode.NOMBRE_USUARIO_INVALIDO ||
+                    res.error() == ResUsuarioErrorCode.CONTRASENA_INVALIDA ||
+                    res.error() == ResUsuarioErrorCode.SEDE_NO_EXISTE) {
+                return ResponseEntity.status(422).body(res.error().getDescripcion());
+            }
+
+            if (res.error() == ResUsuarioErrorCode.USUARIO_YA_EXISTE)
+                return ResponseEntity.status(409).body(res.error().getDescripcion());
+        }
+
+        return ResponseEntity.status(201).body("¡Usuario creado con exito!");
     }
 
 }
