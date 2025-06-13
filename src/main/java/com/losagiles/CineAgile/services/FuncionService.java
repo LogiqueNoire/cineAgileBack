@@ -149,7 +149,8 @@ public class FuncionService {
         }
         System.out.println(funcion.getFechaHoraFin().toLocalTime());
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                /*&& funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)*/) {
+                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(7, 0)) &&
+    !funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.of(7, 0)) ) {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else
@@ -174,7 +175,8 @@ public class FuncionService {
         }
     System.out.println(funcion.getFechaHoraFin().toLocalTime());
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                /*&& funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)*/) {
+                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(7, 0)) &&
+    !funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.of(7, 0))  ) {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else
