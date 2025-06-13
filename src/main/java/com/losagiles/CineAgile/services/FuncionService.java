@@ -147,9 +147,9 @@ public class FuncionService {
             funcion.setFechaHoraInicio(dto.getFechaHoraInicio());
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
         }
-
+        System.out.println(funcion.getFechaHoraFin().toLocalTime());
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                && funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)) {
+                /*&& funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)*/) {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else
@@ -172,9 +172,9 @@ public class FuncionService {
             funcion.setFechaHoraInicio(dto.getFechaHoraInicio());
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
         }
-
+    System.out.println(funcion.getFechaHoraFin().toLocalTime());
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                && funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)) {
+                /*&& funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.MIDNIGHT)*/) {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else
