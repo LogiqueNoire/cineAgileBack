@@ -26,6 +26,9 @@ public class FuncionREST {
     @Autowired
     private FuncionService funcionService;
 
+    @Autowired
+    private SalaButacasService salaButacasService;
+
     @GetMapping("/sedes/{idPelicula}")
     private ResponseEntity<List<Sede>> getAllFunciones(@PathVariable Long idPelicula) {
         return ResponseEntity.ok(new ArrayList<>());
@@ -56,6 +59,11 @@ public class FuncionREST {
     @GetMapping("/precios")
     private float getPrecio(@RequestParam(required = false) Long idFuncion, @RequestParam(required = false) String persona) {
         return funcionService.precio(funcionService.getFuncionPorId(idFuncion), persona);
+    }
+
+    @GetMapping("/cantidadButacasDisponibles")
+    private int consultarCantidadButacasDisponibles(@RequestParam Long idFuncion){
+        return salaButacasService.consultarCantidadButacasDisponibles(idFuncion);
     }
     
     

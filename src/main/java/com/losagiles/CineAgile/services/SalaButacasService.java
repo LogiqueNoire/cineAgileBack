@@ -42,4 +42,6 @@ public class SalaButacasService {
         return salaRepository.findAllBySede_Id(idSede);
     }
 
+    public int consultarCantidadButacasDisponibles(Long idFuncion){ return butacaRepository.consultarCantidadButacasDisponibles(idFuncion); }
+
 }
