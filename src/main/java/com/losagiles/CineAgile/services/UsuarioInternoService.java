@@ -1,15 +1,13 @@
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.dto.ResCrearUsuario;
-import com.losagiles.CineAgile.dto.ResUsuarioErrorCode;
-import com.losagiles.CineAgile.dto.SolicitudCrearUsuario;
-import com.losagiles.CineAgile.dto.UsuarioTablaDTO;
+import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.entidades.Usuario;
 import com.losagiles.CineAgile.repository.SedeRepository;
 import com.losagiles.CineAgile.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -66,6 +64,27 @@ public class UsuarioInternoService {
 
     public List<UsuarioTablaDTO> mostrarUsuariosEnTabla() {
         return usuarioRepository.findAllUsuarioTablaDTO();
+    }
+
+    public ResCambiarContraErrorCode cambiarContra(SolicitudCambiarContra solicitudCambiarContra) {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Usuario usuario = usuarioRepository.findByUsername(username).orElse(null);
+
+        if (!passwordEncoder.matches(solicitudCambiarContra.contraActual(), usuario.getPassword()))
+            return ResCambiarContraErrorCode.CONTRA_ACTUAL_INVALIDA;
+
+        String nuevaContra = solicitudCambiarContra.nuevaContra().replaceAll("\\s", "");
+
+        if (nuevaContra.length() < 8)
+            return ResCambiarContraErrorCode.LONGITUD_INVALIDA;
+
+        if (!nuevaContra.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d]+$"))
+            return ResCambiarContraErrorCode.FORMATO_INVALIDO;
+
+        usuario.setPassword(passwordEncoder.encode(solicitudCambiarContra.nuevaContra()));
+        usuarioRepository.save(usuario);
+
+        return ResCambiarContraErrorCode.NO_ERROR;
     }
 
 }

@@ -203,4 +203,18 @@ public class IntranetController {
         return ResponseEntity.status(201).body("¡Usuario creado con exito!");
     }
 
+    @PutMapping("/nuevacontra")
+    public ResponseEntity<String> setNuevaContra(@RequestBody SolicitudCambiarContra solicitudCambiarContra) {
+        ResCambiarContraErrorCode res = usuarioInternoService.cambiarContra(solicitudCambiarContra);
+
+        if (res != null) {
+            if (res == ResCambiarContraErrorCode.CONTRA_ACTUAL_INVALIDA ||
+            res == ResCambiarContraErrorCode.LONGITUD_INVALIDA ||
+            res == ResCambiarContraErrorCode.FORMATO_INVALIDO)
+                return ResponseEntity.status(422).body(res.getDescripcion());
+        }
+
+        return ResponseEntity.ok("Se cambió la contraseña.");
+    }
+
 }
