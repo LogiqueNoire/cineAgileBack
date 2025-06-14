@@ -13,6 +13,7 @@ import java.time.*;
 
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
+import com.losagiles.CineAgile.repository.EntradaRepository;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import com.losagiles.CineAgile.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class FuncionService {
 
     @Autowired
     private SalaRepository salaRepository;
+
+    @Autowired
+    private EntradaRepository entradaRepository;
 
     public float precio(Funcion funcion, String persona) {
         Sala s = funcion.getSala();
@@ -148,9 +152,11 @@ public class FuncionService {
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
         }
         System.out.println(funcion.getFechaHoraFin().toLocalTime());
-        if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(7, 0)) &&
-    !funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.of(7, 0)) ) {
+        if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin()) //no se haber cruce
+                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(7, 0))  //07:00 < hora inicio < 23:59
+                && !funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.of(7, 0))  //07:00 < hora fin < 23:59
+                && !entradaRepository.tieneEntradas(funcion.getId()) ) //la funcion no debe tener entradas
+        {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else

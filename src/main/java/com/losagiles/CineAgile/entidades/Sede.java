@@ -47,6 +47,9 @@ public class Sede {
     @OneToMany(mappedBy = "sede", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Sala> salas;
-
+/*
+    @Column(nullable = false)
+    private boolean activo;
+*/
 }
 
