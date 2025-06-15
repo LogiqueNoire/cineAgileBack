@@ -4,11 +4,13 @@ import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.SalaRepository;
 import com.losagiles.CineAgile.repository.SedeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Locale;
 
@@ -20,23 +22,26 @@ public class SalaService {
     @Autowired
     private SedeRepository sedeRepository;
 
+    @Autowired
+    private ButacaRepository butacaRepository;
+
+    @Transactional
     public ResCrearSala crearSala(SolicitudCrearSala solicitudCrearSala) {
         try {
             Sala sala = Sala.builder()
                     .codigoSala(solicitudCrearSala.codigoSala())
                     .categoria(solicitudCrearSala.categoria())
-                    .butacas(solicitudCrearSala.butacas())
+                    // .butacas(solicitudCrearSala.butacas())
                     .sede(Sede.builder().id(solicitudCrearSala.idSede()).build())
                     .build();
 
-            if (sala.getButacas().isEmpty())
+            if (solicitudCrearSala.butacas().isEmpty())
                 return ResCrearSala.builder()
                         .error(ResSalaErrorCode.BUTACAS_NO_ENCONTRADAS)
                         .build();
 
-            for (int i = 0; i < sala.getButacas().size(); i++) {
-                Butaca butaca = sala.getButacas().get(i);
-                butaca.setSala(sala);
+            for (int i = 0; i < solicitudCrearSala.butacas().size(); i++) {
+                Butaca butaca = solicitudCrearSala.butacas().get(i);
 
                 if (butaca.getFila() > 25) {
                     return ResCrearSala.builder()
@@ -45,8 +50,13 @@ public class SalaService {
                 }
             }
 
+            Sala salaGuardada = salaRepository.save(sala);
+
+            solicitudCrearSala.butacas().forEach(butaca -> butaca.setSala(salaGuardada));
+            butacaRepository.saveAll(solicitudCrearSala.butacas());
+
             return ResCrearSala.builder()
-                    .sala(salaRepository.save(sala))
+                    .sala(salaGuardada)
                     .build();
         }
         catch (DataIntegrityViolationException e) {

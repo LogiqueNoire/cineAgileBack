@@ -4,8 +4,7 @@
  */
 package com.losagiles.CineAgile.rest;
 
-import com.losagiles.CineAgile.dto.ReqRegistrarEntrada;
-import com.losagiles.CineAgile.dto.ResRegistrarEntrada;
+import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Entrada;
 import com.losagiles.CineAgile.services.EntradaService;
 import java.util.List;
@@ -30,10 +29,11 @@ public class EntradaREST {
     }
 
     @PostMapping
-    private ResponseEntity<ResRegistrarEntrada> postEntradas(@RequestBody ReqRegistrarEntrada infoEntrada) {
-        System.out.println("Registrando");
+    private ResponseEntity<ResComprarEntrada> postEntradas(@RequestBody ReqRegistrarEntrada infoEntrada) {
         ResRegistrarEntrada res = entradaService.registrarEntradas(infoEntrada);
-        return ResponseEntity.ok(res);
+        return ResponseEntity
+                .status(res.status().getHttpStatus())
+                .body(new ResComprarEntrada(res.entradasCompradas(), res.status().getDescripcion()));
     }
 
 }

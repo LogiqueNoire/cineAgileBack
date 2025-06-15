@@ -4,9 +4,7 @@
  */
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.dto.EntradaInfo;
-import com.losagiles.CineAgile.dto.ReqRegistrarEntrada;
-import com.losagiles.CineAgile.dto.ResRegistrarEntrada;
+import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
@@ -42,37 +40,34 @@ public class EntradaService {
     // Devuelve null cuando la solicitud no es válida.
     public ResRegistrarEntrada registrarEntradas(ReqRegistrarEntrada solicitud) {
         // Limitar el nro. de entradas a 5
-        if (solicitud.entradas().size() > 5) {
-            return null;
-        }
+        if (solicitud.entradas().size() > 5)
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.NRO_ENTRADAS_INVALIDAS);
 
         Funcion funcion = funcionService.getFuncionPorId(solicitud.id_funcion());
 
         if (funcion == null)
-            return null;
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.FUNCION_INVALIDA);
 
-        if (funcion.getFechaHoraInicio().isBefore(solicitud.tiempoRegistro())) {
-            return null;
-        }
+        if (funcion.getFechaHoraInicio().isBefore(solicitud.tiempoRegistro()))
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.FECHA_INCORRECTA);
 
         List<Long> butacaIds = solicitud.entradas().stream().map(EntradaInfo::id_butaca).toList();
         List<Butaca> butacas = butacaRepository.findAllById(butacaIds);
 
         // No existe alguna butaca
-        if (butacaIds.size() != butacas.size()) {
-            return null;
-        }
+        if (butacaIds.size() != butacas.size())
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_INCORRECTAS);
 
         for (Butaca but : butacas) {
             if (but.getSala().getId().compareTo(funcion.getSala().getId()) != 0)
-                return null;
+                return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_INCORRECTAS);
         }
 
         // Las butaca están bloqueadas o ya registradas
         List<Entrada> entradas = entradaRepository.findAllByButacaIdIn(butacaIds);
         for (Entrada entrada : entradas) {
             if (entrada.getEstado().equals("esperando") || entrada.getEstado().equals("listo")) {
-                return null;
+                return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_OCUPADAS);
             }
         }
 
@@ -80,12 +75,8 @@ public class EntradaService {
         for (EntradaInfo info : solicitud.entradas()) {
             Entrada nueva = new Entrada();
 
-            Butaca butaca = new Butaca();
-            butaca.setId(info.id_butaca());
-            nueva.setButaca(butaca);
-
+            nueva.setButaca(Butaca.builder().id(info.id_butaca()).build());
             nueva.setFuncion(funcion);
-
             nueva.setEstado("listo");
             nueva.setPersona("normal");
             nueva.setTiempoRegistro(solicitud.tiempoRegistro());
@@ -93,7 +84,7 @@ public class EntradaService {
             nuevasEntradas.add(nueva);
         }
 
-        ResRegistrarEntrada res = new ResRegistrarEntrada(
+        EntradasCompradasDTO entradasCompradas = new EntradasCompradasDTO(
                 entradaRepository.saveAll(nuevasEntradas),
                 funcion.getFechaHoraInicio(),
                 funcion.getFechaHoraFin(),
@@ -102,7 +93,7 @@ public class EntradaService {
                 funcion.getPelicula().getNombre()
         );
 
-        return res;
+        return ResRegistrarEntrada.ok(entradasCompradas);
     }
 
 }

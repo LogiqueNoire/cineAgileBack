@@ -7,10 +7,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record ResRegistrarEntrada(
-        List<Entrada> entradas,
-        LocalDateTime fechaHoraInicio,
-        LocalDateTime fechaHoraFin,
-        String sala,
-        String nombreSede,
-        String tituloPelicula
-) { }
+        EntradasCompradasDTO entradasCompradas,
+        ResRegEntradaStatusCode status
+) {
+    public static ResRegistrarEntrada error(ResRegEntradaStatusCode status) {
+        return new ResRegistrarEntrada(null, status);
+    }
+
+    public static ResRegistrarEntrada ok(EntradasCompradasDTO body) {
+        return new ResRegistrarEntrada(body, ResRegEntradaStatusCode.OK);
+    }
+}
