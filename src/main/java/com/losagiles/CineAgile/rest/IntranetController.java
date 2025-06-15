@@ -217,4 +217,14 @@ public class IntranetController {
         return ResponseEntity.ok("Se cambió la contraseña.");
     }
 
+    @PatchMapping("/sala")
+    public ResponseEntity<String> patchSala(@RequestBody SolicitudEditarSala solicitudEditarSala) {
+        ResEditarSalaResultCode res = salaService.editarSala(solicitudEditarSala);
+
+        if (res != ResEditarSalaResultCode.NO_ERROR)
+            return ResponseEntity.status(422).body(res.getDescripcion());
+
+        return ResponseEntity.ok(res.getDescripcion());
+    }
+
 }
