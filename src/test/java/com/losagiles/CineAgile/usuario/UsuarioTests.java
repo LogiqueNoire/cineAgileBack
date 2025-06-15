@@ -26,7 +26,7 @@ public class UsuarioTests {
     @Test
     public void noSePuedecrearUsuarioConSedeInvalida() throws Exception {
         SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
-                .username("spiderdoggy")
+                .username("spiderdoggyeronny")
                 .password("holacomoestas12345")
                 .sedeId(51512521L)
                 .build();
@@ -121,7 +121,7 @@ public class UsuarioTests {
         sedeA = sedeRepository.save(sedeA);
 
         SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
-                .username("spiderdoggy")
+                .username("spiderdoggyeronny")
                 .password("ho13A")
                 .sedeId(sedeA.getId())
                 .build();
@@ -140,7 +140,7 @@ public class UsuarioTests {
         sedeA = sedeRepository.save(sedeA);
 
         SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
-                .username("spiderdoggy")
+                .username("spiderdoggyeronny")
                 .password("dska1212d12j12jd21")
                 .sedeId(sedeA.getId())
                 .build();
@@ -159,7 +159,7 @@ public class UsuarioTests {
         sedeA = sedeRepository.save(sedeA);
 
         SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
-                .username("spiderdoggy")
+                .username("spiderdoggyeronny")
                 .password("saasddjAJKJSdjASdkj")
                 .sedeId(sedeA.getId())
                 .build();
@@ -178,7 +178,7 @@ public class UsuarioTests {
         sedeA = sedeRepository.save(sedeA);
 
         SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
-                .username("spiderdoggy")
+                .username("spiderdoggyeronny")
                 .password("SF12NJ12F1JF1")
                 .sedeId(sedeA.getId())
                 .build();
@@ -198,7 +198,7 @@ public class UsuarioTests {
         sedeA = sedeRepository.save(sedeA);
 
         SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
-                .username("spiderdoggy")
+                .username("spiderdoggyeronny")
                 .password("ojAsdjasj5adj")
                 .sedeId(sedeA.getId())
                 .build();
