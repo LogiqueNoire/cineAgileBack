@@ -21,6 +21,6 @@ public class PasswordManager implements CommandLineRunner {
             o no la contraseña.
          */
 
-        authService.establecerContra("hola12345");
+        authService.establecerContra("Hola12345");
     }
 }
