@@ -10,4 +10,5 @@ import java.util.List;
 public class SedeDTO {
     private String nombre;
     private List<Sala> salas;
+    private boolean activo;
 }

@@ -1,6 +1,7 @@
 package com.losagiles.CineAgile.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

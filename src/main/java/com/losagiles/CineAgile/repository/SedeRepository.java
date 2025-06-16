@@ -26,12 +26,22 @@ public interface SedeRepository extends JpaRepository<Sede, Long> {
     @Query("""
             SELECT new com.losagiles.CineAgile.dto.NombreDTO(
                     s.id,
+                    s.nombre,
+                    s.activo
+            )
+            FROM Sede s
+            """)
+    public List<NombreDTO> getNombresSedes();
+
+    @Query("""
+            SELECT new com.losagiles.CineAgile.dto.NombreDTO(
+                    s.id,
                     s.nombre
             )
             FROM Sede s
             where s.activo = true
             """)
-    public List<NombreDTO> getNombresSedes();
+    public List<NombreDTO> getNombresSedesActivas();
 
     public boolean existsByNombre(String nombre);
 

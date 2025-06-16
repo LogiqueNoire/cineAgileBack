@@ -49,7 +49,7 @@ public class Sede {
     private List<Sala> salas;
 
     @Column(nullable = false)
-    private boolean activo;
+    private Boolean activo;
 
 }
 

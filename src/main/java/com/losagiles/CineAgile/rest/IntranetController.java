@@ -66,9 +66,9 @@ public class IntranetController {
         return ResponseEntity.ok(pelicula);
     }
 
-    @GetMapping("/sedesysalas")
-    public List<Sede> getSedes() {
-        return sedeService.findAll();
+    @GetMapping("/sedesTodas")
+    public List<?> getSedes() {
+        return sedeService.getNombresSedes();
     }
 
     @PostMapping("/sedesysalas/agregar")
@@ -96,8 +96,8 @@ public class IntranetController {
     }
 
     @GetMapping ("/soloSedes")
-    private ResponseEntity<List<NombreDTO>> getNombresSedes(){
-        return ResponseEntity.ok(sedeService.getNombresSedes());
+    private ResponseEntity<List<NombreDTO>> getNombresSedesActivas(){
+        return ResponseEntity.ok(sedeService.getNombresSedesActivas());
     }
 
     @GetMapping ("/peliculasPorSede")
@@ -225,6 +225,18 @@ public class IntranetController {
             return ResponseEntity.status(422).body(res.getDescripcion());
 
         return ResponseEntity.ok(res.getDescripcion());
+    }
+
+    @PatchMapping("activarDesactivarSede")
+    public ResponseEntity<?> activarDesactivar(@RequestBody NombreDTO dto){
+        Sede sede = sedeService.findById(dto.getId()).get();
+        if (sede != null) {
+            sede.setActivo(!sede.getActivo());
+            sedeService.save(sede);
+            return ResponseEntity.ok("Sede cambiada");
+        } else {
+            return ResponseEntity.status(422).body("Error al editar");
+        }
     }
 
 }

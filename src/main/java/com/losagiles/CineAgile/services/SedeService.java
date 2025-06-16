@@ -43,6 +43,10 @@ public class SedeService {
         return sedeRepository.findById(idSede);
     }
 
+    public List<NombreDTO> getNombresSedesActivas(){
+        return sedeRepository.getNombresSedesActivas();
+    }
+
     public List<NombreDTO> getNombresSedes(){
         return sedeRepository.getNombresSedes();
     }

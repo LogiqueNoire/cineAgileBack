@@ -37,7 +37,7 @@ public class Sala {
     private String categoria;
 
     @Column(nullable = false)
-    private boolean activo;
+    private Boolean activo;
 
     @ManyToOne
     @JoinColumn(name = "id_sede") // este nombre puede variar según tu tabla
