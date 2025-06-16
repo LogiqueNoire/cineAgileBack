@@ -25,7 +25,7 @@ import java.util.Optional;
 @Repository
 public interface SalaRepository extends JpaRepository<Sala, Long> {
     //findAllBy + Sede (la propiedad) + _Id (el campo id de la entidad Sede).
-    public List<Sala> findAllBySede_Id(@Param("idSede") Long idSede);
+    public List<Sala> findAllBySede_IdAndActivoTrue(@Param("idSede") Long idSede);
 
     public boolean existsBySedeAndCodigoSala(Sede sede, String codigoSala);
 

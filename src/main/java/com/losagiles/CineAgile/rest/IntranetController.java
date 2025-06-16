@@ -78,7 +78,7 @@ public class IntranetController {
         } else {
             Sede sede = new Sede();
             sede.setNombre(dto.getNombre());
-
+            sede.setActivo(true);
             sedeService.save(sede);
 
             return ResponseEntity.ok(sede);

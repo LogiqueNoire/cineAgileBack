@@ -39,7 +39,7 @@ public class SalaButacasService {
     }
 
     public List<Sala> getSalasPorSede(Long idSede){
-        return salaRepository.findAllBySede_Id(idSede);
+        return salaRepository.findAllBySede_IdAndActivoTrue(idSede);
     }
 
     public int consultarCantidadButacasDisponibles(Long idFuncion){ return butacaRepository.consultarCantidadButacasDisponibles(idFuncion); }

@@ -29,6 +29,7 @@ public interface SedeRepository extends JpaRepository<Sede, Long> {
                     s.nombre
             )
             FROM Sede s
+            where s.activo = true
             """)
     public List<NombreDTO> getNombresSedes();
 
