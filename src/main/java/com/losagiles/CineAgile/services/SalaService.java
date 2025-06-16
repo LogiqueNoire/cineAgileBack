@@ -32,6 +32,7 @@ public class SalaService {
                     .codigoSala(solicitudCrearSala.codigoSala())
                     .categoria(solicitudCrearSala.categoria())
                     // .butacas(solicitudCrearSala.butacas())
+                    .activo(true)
                     .sede(Sede.builder().id(solicitudCrearSala.idSede()).build())
                     .build();
 
