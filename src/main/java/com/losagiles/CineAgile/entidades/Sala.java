@@ -35,10 +35,10 @@ public class Sala {
 
     @Column(nullable = false)
     private String categoria;
-/*
+
     @Column(nullable = false)
     private boolean activo;
-*/
+
     @ManyToOne
     @JoinColumn(name = "id_sede") // este nombre puede variar según tu tabla
     @JsonBackReference

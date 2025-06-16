@@ -179,7 +179,9 @@ public class FuncionService {
             funcion.setFechaHoraInicio(dto.getFechaHoraInicio());
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
         }
-    System.out.println(funcion.getFechaHoraFin().toLocalTime());
+        System.out.println(funcion.getFechaHoraInicio());
+
+        System.out.println(funcion.getFechaHoraFin().toLocalTime());
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
                 && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(7, 0)) &&
     !funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.of(7, 0))  ) {
