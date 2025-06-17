@@ -105,11 +105,13 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
         WHERE f.sala.id = :idSala
           AND f.fechaHoraInicio < :fechaHoraFin
           AND f.fechaHoraFin > :fechaHoraInicio
+          AND f.id <> :idFuncion
     """)
     boolean cruce(
         @Param("idSala") Long idSala,
         @Param("fechaHoraInicio") LocalDateTime fechaHoraInicio,
-        @Param("fechaHoraFin") LocalDateTime fechaHoraFin
+        @Param("fechaHoraFin") LocalDateTime fechaHoraFin,
+        @Param("idFuncion") Long idFuncion
 );
 
 
