@@ -153,8 +153,8 @@ public class FuncionService {
         }
         System.out.println(funcion.getFechaHoraFin().toLocalTime());
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin()) //no se haber cruce
-                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(7, 0))  //07:00 < hora inicio < 23:59
-                && !funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.of(7, 0))  //07:00 < hora fin < 23:59
+                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(8, 30))   // hora inicio >= 08:30
+                && !funcion.getFechaHoraInicio().toLocalTime().isAfter(LocalTime.of(22, 30))   // hora inicio <= 20:30
                 && !entradaRepository.tieneEntradas(funcion.getId()) ) //la funcion no debe tener entradas
         {
             funcionRepository.save(funcion);
@@ -183,8 +183,9 @@ public class FuncionService {
 
         System.out.println(funcion.getFechaHoraFin().toLocalTime());
         if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(7, 0)) &&
-    !funcion.getFechaHoraFin().toLocalTime().isBefore(LocalTime.of(7, 0))  ) {
+                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(8, 30))   // hora inicio >= 08:30
+                && !funcion.getFechaHoraInicio().toLocalTime().isAfter(LocalTime.of(22, 30)) )  // hora inicio <= 20:30
+        {
             funcionRepository.save(funcion);
             return Optional.of(funcion);
         } else
