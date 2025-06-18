@@ -13,6 +13,7 @@ import java.time.*;
 
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
+import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import com.losagiles.CineAgile.repository.SalaRepository;
@@ -194,5 +195,18 @@ public class FuncionService {
             return Optional.of(funcion);
         } else
             return Optional.empty();
+    }
+
+    public boolean estaDisponible(Long id) {
+        Funcion funcion = funcionRepository.findById(id).orElse(null);
+
+        if (funcion != null) {
+            Sala sala = funcion.getSala();
+            Sede sede = sala.getSede();
+
+            return (sala.getActivo() == true && sede.getActivo() == true);
+        }
+
+        return false;
     }
 }

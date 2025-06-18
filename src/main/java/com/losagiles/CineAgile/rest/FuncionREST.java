@@ -65,6 +65,14 @@ public class FuncionREST {
     private int consultarCantidadButacasDisponibles(@RequestParam Long idFuncion){
         return salaButacasService.consultarCantidadButacasDisponibles(idFuncion);
     }
+
+    @GetMapping("/disponibilidad/{id}")
+    public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable Long id) {
+        boolean res = funcionService.estaDisponible(id);
+        if (!res)
+            return ResponseEntity.status(423).body(false);
+        return ResponseEntity.ok(funcionService.estaDisponible(id));
+    }
     
     
 }
