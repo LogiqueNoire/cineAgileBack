@@ -103,16 +103,29 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
         SELECT COUNT(f) > 0
         FROM Funcion f
         WHERE f.sala.id = :idSala
-          AND f.fechaHoraInicio < :fechaHoraFin
-          AND f.fechaHoraFin > :fechaHoraInicio
+          AND f.fechaHoraInicio < (:fechaHoraFin + INTERVAL 20 MINUTE)
+          AND f.fechaHoraFin > (:fechaHoraInicio - INTERVAL 20 MINUTE)
           AND f.id <> :idFuncion
     """)
-    boolean cruce(
+    boolean cruceConIdFuncion(
         @Param("idSala") Long idSala,
         @Param("fechaHoraInicio") LocalDateTime fechaHoraInicio,
         @Param("fechaHoraFin") LocalDateTime fechaHoraFin,
         @Param("idFuncion") Long idFuncion
-);
+    );
+
+    @Query("""
+        SELECT COUNT(f) > 0
+        FROM Funcion f
+        WHERE f.sala.id = :idSala
+          AND f.fechaHoraInicio < (:fechaHoraFin + INTERVAL 20 MINUTE)
+          AND f.fechaHoraFin > (:fechaHoraInicio - INTERVAL 20 MINUTE)
+    """)
+    boolean cruce(
+            @Param("idSala") Long idSala,
+            @Param("fechaHoraInicio") LocalDateTime fechaHoraInicio,
+            @Param("fechaHoraFin") LocalDateTime fechaHoraFin
+    );
 
 
 

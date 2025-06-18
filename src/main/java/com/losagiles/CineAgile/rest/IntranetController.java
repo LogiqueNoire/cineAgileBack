@@ -8,6 +8,7 @@ import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -155,10 +156,18 @@ public class IntranetController {
     }
 
     @PatchMapping("/actualizarFuncion")
-    public ResponseEntity<Funcion> actualizarFuncion(@RequestBody FuncionDTO funcionDTO){
-        Optional<Funcion> actualizada = funcionService.actualizarFuncion(funcionDTO);
+    public ResponseEntity<?> actualizarFuncion(@RequestBody FuncionDTO funcionDTO){
+        if(funcionDTO.getIdFuncion() == null ||
+                funcionDTO.getFechaHoraInicio() == null ||
+                funcionDTO.getDimension () == null ||
+                funcionDTO.getPrecioBase() == 0 ||
+                funcionDTO.getIdSala() == null ||
+                funcionDTO.getIdPelicula() == null){
+            return ResponseEntity.status(400).body("Datos incompletos");
+        }
+        Optional<?> actualizada = funcionService.actualizarFuncion(funcionDTO);
         return actualizada.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Función no encontrada"));
     }
 
     @PatchMapping("/editarSede")
@@ -174,7 +183,15 @@ public class IntranetController {
     }
 
     @PostMapping("/crearFuncion")
-    public ResponseEntity<Funcion> save(@RequestBody FuncionDTO funcionDTO){
+    public ResponseEntity<?> save(@RequestBody FuncionDTO funcionDTO){
+        if(funcionDTO.getIdFuncion() == null ||
+                funcionDTO.getFechaHoraInicio() == null ||
+                funcionDTO.getDimension () == null ||
+                funcionDTO.getPrecioBase() == 0 ||
+                funcionDTO.getIdSala() == null ||
+                funcionDTO.getIdPelicula() == null){
+            return ResponseEntity.status(400).body("Datos incompletos");
+        }
         Optional<Funcion> funcion = funcionService.save(funcionDTO);
         return funcion.map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
