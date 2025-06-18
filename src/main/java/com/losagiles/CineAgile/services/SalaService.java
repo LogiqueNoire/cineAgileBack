@@ -95,4 +95,15 @@ public class SalaService {
     public boolean existsBySedeAndCodigoSala(Sede sede, String codigoSala){
         return salaRepository.existsBySedeAndCodigoSala(sede, codigoSala);
     }
+
+    public Sala establecerEstadoSala(Long idSala, boolean activo) {
+        Sala sala = salaRepository.findById(idSala).orElse(null);
+
+        if (sala != null) {
+            sala.setActivo(activo);
+            salaRepository.save(sala);
+        }
+
+        return sala;
+    }
 }

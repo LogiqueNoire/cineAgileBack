@@ -256,4 +256,14 @@ public class IntranetController {
         }
     }
 
+    @PatchMapping("/sala/cambiar-estado/{id}")
+    public ResponseEntity<String> patchSalaCambiarEstado(@PathVariable Long id, @RequestBody NombreDTO nombreDTO) {
+        Sala sala = salaService.establecerEstadoSala(id, nombreDTO.getActivo());
+
+        if (sala == null)
+            return ResponseEntity.status(404).body("Sala no encontrada.");
+
+        return ResponseEntity.ok("Estado de sala " + id + " cambiado a " + nombreDTO.getActivo() + "!");
+    }
+
 }

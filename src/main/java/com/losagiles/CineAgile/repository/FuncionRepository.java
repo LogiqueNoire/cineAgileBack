@@ -43,6 +43,7 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
             JOIN Sede se ON se.id = sa.sede.id
             WHERE f.pelicula.idPelicula = :idPelicula
             AND se.activo = TRUE
+            AND sa.activo = TRUE
             """)
     public List<FuncionDTO> getFuncionesByPeliculaId(@Param("idPelicula") Long idPelicula);
 
