@@ -8,6 +8,8 @@ import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Entrada;
 import com.losagiles.CineAgile.services.EntradaService;
 import java.util.List;
+
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,7 @@ public class EntradaREST {
     @Autowired
     private EntradaService entradaService;
 
-    @GetMapping
+    @GetMapping("/todas")
     private ResponseEntity<List<Entrada>> getAllEntradas (){
         return ResponseEntity.ok(entradaService.listarEntradas());
     }
@@ -36,4 +38,8 @@ public class EntradaREST {
                 .body(new ResComprarEntrada(res.entradasCompradas(), res.status().getDescripcion()));
     }
 
+    @GetMapping
+    public ResponseEntity<?> findEntrada(@RequestParam Long idFuncion, @RequestParam Long idButaca){
+        return ResponseEntity.ok(entradaService.findEntrada(idFuncion, idButaca));
+    }
 }

@@ -11,6 +11,7 @@ public record EntradasCompradasDTO(
         LocalDateTime fechaHoraFin,
         String sala,
         String nombreSede,
-        String tituloPelicula
+        String tituloPelicula,
+        List<String> tokens
 ) {
 }

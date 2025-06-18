@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -28,4 +29,5 @@ public interface EntradaRepository extends JpaRepository<Entrada, Long> {
     )
     public boolean tieneEntradas(@Param("id_funcion") Long idFuncion);
 
+    Optional<Entrada> findById_IdFuncionAndId_IdButaca(Long idFuncion, Long idButaca);
 }

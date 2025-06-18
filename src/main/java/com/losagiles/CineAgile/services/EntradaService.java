@@ -10,9 +10,11 @@ import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.losagiles.CineAgile.repository.SalaRepository;
+import com.losagiles.CineAgile.seguridad.AESCipher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -84,16 +86,31 @@ public class EntradaService {
             nuevasEntradas.add(nueva);
         }
 
+        List <Entrada> listaEntradas = entradaRepository.saveAll(nuevasEntradas);
+        List <String> tokens = new LinkedList<>();
+        for(Entrada e: listaEntradas)
+            try {
+                tokens.add(AESCipher.encrypt(String.valueOf(e.getFuncion().getId()) + String.valueOf(e.getButaca().getId())));
+            } catch (Exception ex) {
+                tokens.add("");
+            }
+
+
         EntradasCompradasDTO entradasCompradas = new EntradasCompradasDTO(
-                entradaRepository.saveAll(nuevasEntradas),
+                listaEntradas,
                 funcion.getFechaHoraInicio(),
                 funcion.getFechaHoraFin(),
                 funcion.getSala().getCodigoSala(),
                 funcion.getSala().getSede().getNombre(),
-                funcion.getPelicula().getNombre()
+                funcion.getPelicula().getNombre(),
+                tokens
         );
 
         return ResRegistrarEntrada.ok(entradasCompradas);
     }
 
+
+    public Entrada findEntrada(Long idFuncion, Long idButaca) {
+        return entradaRepository.findById_IdFuncionAndId_IdButaca(idFuncion, idButaca).get();
+    }
 }
