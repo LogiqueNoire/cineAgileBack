@@ -54,7 +54,9 @@ public class EntradaService {
             return ResRegistrarEntrada.error(ResRegEntradaStatusCode.FECHA_INCORRECTA);
 
         List<Long> butacaIds = solicitud.entradas().stream().map(EntradaInfo::id_butaca).toList();
-        List<Butaca> butacas = butacaRepository.findAllById(butacaIds);
+        List<Butaca> butacas = funcion.getSala().getButacas().stream()
+                .filter(butaca -> butacaIds.contains(butaca.getId()))
+                .toList();
 
         // No existe alguna butaca
         if (butacaIds.size() != butacas.size())
