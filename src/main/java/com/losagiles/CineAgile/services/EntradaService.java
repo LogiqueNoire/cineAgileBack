@@ -92,7 +92,7 @@ public class EntradaService {
         List <String> tokens = new LinkedList<>();
         for(Entrada e: listaEntradas)
             try {
-                tokens.add(AESCipher.encrypt(String.valueOf(e.getFuncion().getId()) + String.valueOf(e.getButaca().getId())));
+                tokens.add(AESCipher.encrypt(String.valueOf(e.getFuncion().getId()) + "_" + String.valueOf(e.getButaca().getId())));
             } catch (Exception ex) {
                 tokens.add("");
             }
@@ -112,7 +112,12 @@ public class EntradaService {
     }
 
 
-    public Entrada findEntrada(Long idFuncion, Long idButaca) {
-        return entradaRepository.findById_IdFuncionAndId_IdButaca(idFuncion, idButaca).get();
+    public Entrada findEntrada(String token) {
+        try{
+            String[] result = AESCipher.decrypt(token).split("_");
+            return entradaRepository.findById_IdFuncionAndId_IdButaca(Long.valueOf(result[0]), Long.valueOf(result[1])).get();
+        } catch (Exception e){
+            return null;
+        }
     }
 }

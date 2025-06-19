@@ -39,7 +39,7 @@ public class EntradaREST {
     }
 
     @GetMapping
-    public ResponseEntity<?> findEntrada(@RequestParam Long idFuncion, @RequestParam Long idButaca){
-        return ResponseEntity.ok(entradaService.findEntrada(idFuncion, idButaca));
+    public ResponseEntity<?> findEntrada(@RequestParam String token){
+        return ResponseEntity.ok(entradaService.findEntrada(token));
     }
 }

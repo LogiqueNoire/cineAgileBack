@@ -152,8 +152,10 @@ public class FuncionService {
             funcion.setFechaHoraFin(dto.getFechaHoraInicio().plusMinutes(duracion));
         }
         System.out.println(funcion.getFechaHoraFin().toLocalTime());
-        if(!funcionRepository.cruceConIdFuncion(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin(), funcion.getId()) //no se haber cruce
-                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(8, 30))   // hora inicio >= 08:30
+        LocalDateTime inicioConMargen = funcion.getFechaHoraInicio().minusMinutes(20);
+        LocalDateTime finConMargen = funcion.getFechaHoraFin().plusMinutes(20);
+        if(!funcionRepository.cruceConIdFuncion(funcion.getSala().getId(), inicioConMargen, finConMargen, funcion.getId()) //no se haber cruce
+                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(8, 0))   // hora inicio >= 08:00
                 && !funcion.getFechaHoraInicio().toLocalTime().isAfter(LocalTime.of(22, 30))   // hora inicio <= 20:30
                 && !entradaRepository.tieneEntradas(funcion.getId()) ) //la funcion no debe tener entradas
         {
@@ -182,8 +184,10 @@ public class FuncionService {
         System.out.println(funcion.getFechaHoraInicio());
 
         System.out.println(funcion.getFechaHoraFin().toLocalTime());
-        if(!funcionRepository.cruce(funcion.getSala().getId(), funcion.getFechaHoraInicio(), funcion.getFechaHoraFin())
-                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(8, 30))   // hora inicio >= 08:30
+        LocalDateTime inicioConMargen = funcion.getFechaHoraInicio().minusMinutes(20);
+        LocalDateTime finConMargen = funcion.getFechaHoraFin().plusMinutes(20);
+        if(!funcionRepository.cruce(funcion.getSala().getId(), inicioConMargen, finConMargen)
+                && !funcion.getFechaHoraInicio().toLocalTime().isBefore(LocalTime.of(8, 0))   // hora inicio >= 08:00
                 && !funcion.getFechaHoraInicio().toLocalTime().isAfter(LocalTime.of(22, 30)) )  // hora inicio <= 20:30
         {
             funcionRepository.save(funcion);
