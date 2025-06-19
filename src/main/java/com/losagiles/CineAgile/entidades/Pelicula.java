@@ -44,7 +44,7 @@ public class Pelicula {
     @Temporal(TemporalType.DATE)
     LocalDate fechaInicioEstreno;
 
-    @Column (nullable = false)
+    @Transient
     String estado;
 
     @Column (nullable = false)

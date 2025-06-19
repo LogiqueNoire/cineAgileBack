@@ -6,6 +6,7 @@ import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.services.PeliculaService;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -31,20 +32,30 @@ public class PeliculaREST {
     }
 
     @GetMapping ("/encartelera")
-    private ResponseEntity <List<PeliculaCarteleraDTO>> getEstreno(){
-        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasEnCartelera();
+    private ResponseEntity <List<PeliculaCarteleraDTO>> getEnCartelera(@RequestParam String fecha){
+        LocalDateTime fechaParseada = LocalDateTime.parse(fecha.replace("Z", ""));
+        System.out.println("Fecha parseada: " + fechaParseada);
+        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasEnCartelera(fechaParseada);
 
         // Mapear a PeliculaCarteleraDTO, el cual solo muestra información muy básica
         List<PeliculaCarteleraDTO> peliDTO = modelMapper.map(peliculas, new TypeToken<List<PeliculaCarteleraDTO>>() {}.getType());
-
+        System.out.println(fecha);
         return ResponseEntity.ok(peliDTO);
     }
 
     @GetMapping ("/proximamente")
-    private ResponseEntity <List<PeliculaCarteleraDTO>> getProximamente(){
-        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasProximamente();
+    private ResponseEntity <List<PeliculaCarteleraDTO>> getProximamente(@RequestParam String fecha){
+        LocalDateTime fechaParseada = LocalDateTime.parse(fecha.replace("Z", ""));
+        System.out.println("Fecha parseada: " + fechaParseada);
+        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasProximamente(fechaParseada);
         return ResponseEntity.ok(peliculas);
     }
-
+    /*
+    @GetMapping ("/todas")
+    private ResponseEntity <List<PeliculaCarteleraDTO>> getALl(){
+        List<PeliculaCarteleraDTO> peliculas = peliculaService.getAll();
+        return ResponseEntity.ok(peliculas);
+    }
+*/
 
 }

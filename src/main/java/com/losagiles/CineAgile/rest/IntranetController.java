@@ -41,9 +41,17 @@ public class IntranetController {
     UsuarioInternoService usuarioInternoService;
 
     @GetMapping("/peliculas")
+    public List<PeliculaDTO> obtenerPeliculasConEstado(@RequestParam String fechaReal) {
+        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+        System.out.println(fecha);
+        return peliculaService.obtenerPeliculasConEstado(fecha);
+    }
+
+    @GetMapping("/soloPeliculas")
     public List<Pelicula> findAll() {
         return peliculaService.findAll();
     }
+
 
     @PostMapping("/peliculas/agregar")
     private ResponseEntity<Pelicula> addPelicula(@RequestBody PeliculaDTO dto) {
@@ -55,7 +63,6 @@ public class IntranetController {
         pelicula.setGenero(dto.getGenero());
         pelicula.setClasificacion(dto.getClasificacion());
         pelicula.setDuracion(dto.getDuracion());
-        pelicula.setEstado(dto.getEstado());
 
         LocalDate fechaEstreno = LocalDate.parse(dto.getFechaInicioEstreno());
         pelicula.setFechaInicioEstreno(fechaEstreno);
