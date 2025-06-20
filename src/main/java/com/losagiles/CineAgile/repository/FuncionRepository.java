@@ -52,7 +52,7 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
                 new com.losagiles.CineAgile.dto.ButacaFuncionDTO(but, ent IS NOT NULL)
             FROM Funcion f
             JOIN Butaca but ON f.sala.id = but.sala.id
-            LEFT JOIN Entrada ent ON but.id = ent.butaca.id
+            LEFT JOIN Entrada ent ON ent.funcion.id = f.id AND ent.butaca.id = but.id
             WHERE f.id = :idFuncion
             """)
     public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion);
