@@ -83,7 +83,7 @@ public class EntradaService {
             nueva.setButaca(Butaca.builder().id(info.id_butaca()).build());
             nueva.setFuncion(funcion);
             nueva.setEstado("listo");
-            nueva.setPersona("normal");
+            nueva.setPersona(info.persona());
             nueva.setTiempoRegistro(solicitud.tiempoRegistro());
             nueva.setCostoFinal(funcionService.precio(funcion, info.persona()));
             nuevasEntradas.add(nueva);

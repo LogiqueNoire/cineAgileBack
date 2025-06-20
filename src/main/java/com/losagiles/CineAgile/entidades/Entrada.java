@@ -60,6 +60,6 @@ public class Entrada {
 
     private LocalDateTime tiempoRegistro;
     private String estado; // "listo", "esperando", "libre"
-    private String persona; // "normal", "menor de edad", etc
+    private String persona; // "general", "mayores", "conadis", "niños"
 
 }
