@@ -1,9 +1,7 @@
 
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.dto.NombreDTO;
-import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
-import com.losagiles.CineAgile.dto.PeliculaDTO;
+import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +47,52 @@ public class PeliculaService {
     }
 
     public List<NombreDTO> getNombresPeliculas(Long idSede) { return peliculaRepository.getNombresPeliculas(idSede); }
+
+    public PatchPeliculaStatus editarPelicula(PatchPeliculaRequest patchPeliculaRequest) {
+        Pelicula pelicula = peliculaRepository.findById(patchPeliculaRequest.idPelicula()).orElse(null);
+
+        if (pelicula != null) {
+            if (patchPeliculaRequest.nombre() != null) {
+                pelicula.setNombre(patchPeliculaRequest.nombre());
+            }
+
+            if (patchPeliculaRequest.director() != null) {
+                pelicula.setDirector(patchPeliculaRequest.director());
+            }
+
+            if (patchPeliculaRequest.duracion() != null) {
+                pelicula.setDuracion(patchPeliculaRequest.duracion());
+            }
+
+            if (patchPeliculaRequest.sinopsis() != null) {
+                pelicula.setSinopsis(patchPeliculaRequest.sinopsis());
+            }
+
+            if (patchPeliculaRequest.clasificacion() != null) {
+                pelicula.setClasificacion(patchPeliculaRequest.clasificacion());
+            }
+
+            if (patchPeliculaRequest.actores() != null) {
+                pelicula.setActores(patchPeliculaRequest.actores());
+            }
+
+            if (patchPeliculaRequest.fechaEstreno() != null) {
+                pelicula.setFechaInicioEstreno(patchPeliculaRequest.fechaEstreno());
+            }
+
+            if (patchPeliculaRequest.urlImagen() != null) {
+                pelicula.setImageUrl(patchPeliculaRequest.urlImagen());
+            }
+
+            if (patchPeliculaRequest.genero() != null) {
+                pelicula.setGenero(patchPeliculaRequest.genero());
+            }
+
+            peliculaRepository.save(pelicula);
+            return PatchPeliculaStatus.NO_ERROR;
+        }
+
+        return PatchPeliculaStatus.PELICULA_NO_EXISTE;
+    }
 
 }

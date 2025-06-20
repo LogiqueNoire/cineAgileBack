@@ -16,6 +16,20 @@ public class PeliculaDTO {
     private String imageUrl;
     private String sinopsis;
 
+    public PeliculaDTO(Long idPelicula, String nombre, String director, String actores, String genero, String clasificacion, Integer duracion, String estado, String fechaInicioEstreno, String imageUrl, String sinopsis) {
+        this.idPelicula = idPelicula;
+        this.nombre = nombre;
+        this.director = director;
+        this.actores = actores;
+        this.genero = genero;
+        this.clasificacion = clasificacion;
+        this.duracion = duracion;
+        this.estado = estado;
+        this.fechaInicioEstreno = fechaInicioEstreno;
+        this.imageUrl = imageUrl;
+        this.sinopsis = sinopsis;
+    }
+
     public PeliculaDTO(String nombre, String director, String actores, String genero, String clasificacion, Integer duracion, String estado, String fechaInicioEstreno, String imageUrl, String sinopsis) {
 
         this.nombre = nombre;

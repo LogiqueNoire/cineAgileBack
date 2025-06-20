@@ -87,6 +87,7 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
 
     @Query("""
         SELECT new com.losagiles.CineAgile.dto.PeliculaDTO(
+            p.idPelicula,
             p.nombre,
             p.director,
             p.actores,

@@ -273,4 +273,10 @@ public class IntranetController {
         return ResponseEntity.ok("Estado de sala " + id + " cambiado a " + nombreDTO.getActivo() + "!");
     }
 
+    @PatchMapping("/pelicula")
+    public ResponseEntity<String> patchPelicula(@RequestBody PatchPeliculaRequest patchPeliculaRequest) {
+        PatchPeliculaStatus status = peliculaService.editarPelicula(patchPeliculaRequest);
+        return ResponseEntity.status(status.getHttpStatus()).body(status.getDescripcion());
+    }
+
 }
