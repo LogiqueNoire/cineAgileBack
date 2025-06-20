@@ -12,7 +12,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Locale;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SalaService {
@@ -67,6 +68,7 @@ public class SalaService {
         }
     }
 
+    @Transactional
     public ResEditarSalaResultCode editarSala(SolicitudEditarSala solicitudEditarSala) {
         String categoria = solicitudEditarSala.categoria().toLowerCase(Locale.ROOT);
 
@@ -89,6 +91,35 @@ public class SalaService {
         sala.setCategoria(solicitudEditarSala.categoria());
         salaRepository.save(sala);
 
+        if (solicitudEditarSala.butacas() == null)
+            return ResEditarSalaResultCode.NO_ERROR;
+
+        List<Long> butacasSolIds = solicitudEditarSala.butacas().stream().map(SolicitudButacaAccion::idButaca).toList();
+        Map<Long, Butaca> butacaMap = butacaRepository.findAllById(butacasSolIds)
+                .stream().collect(Collectors.toMap(Butaca::getId, but -> but ));
+
+        if (butacasSolIds.size() != butacaMap.size()) {
+            return ResEditarSalaResultCode.CATEGORIA_INVALIDA;
+        }
+
+        for (SolicitudButacaAccion solicitud : solicitudEditarSala.butacas()) {
+            if (!solicitud.accion().equals("activar") && !solicitud.accion().equals("desactivar"))
+                continue;
+
+            Butaca but = butacaMap.get(solicitud.idButaca());
+
+            boolean nuevoEstadoActivo = but.isActivo();
+
+            if (solicitud.accion().equals("activar"))
+                nuevoEstadoActivo = true;
+
+            if (solicitud.accion().equals("desactivar"))
+                nuevoEstadoActivo = false;
+
+            but.setActivo(nuevoEstadoActivo);
+        }
+
+        butacaRepository.saveAll(butacaMap.values());
         return ResEditarSalaResultCode.NO_ERROR;
     }
 
