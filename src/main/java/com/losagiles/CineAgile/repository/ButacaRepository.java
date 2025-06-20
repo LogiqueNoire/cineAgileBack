@@ -28,9 +28,10 @@ public interface ButacaRepository extends JpaRepository<Butaca, Long> {
             LEFT JOIN Entrada e
             ON b.id = e.id.idButaca
             AND e.id.idFuncion = :funcionid
-            where b.sala.id = (
-            	select sala.id from Funcion f where f.id = :funcionid
+            WHERE b.sala.id = (
+            	SELECT sala.id FROM Funcion f WHERE f.id = :funcionid
             )
+            AND e IS null
             """)
     public int consultarCantidadButacasDisponibles(@Param("funcionid") Long idFuncion);
 }
