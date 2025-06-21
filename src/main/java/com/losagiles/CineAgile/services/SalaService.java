@@ -37,6 +37,8 @@ public class SalaService {
                     .sede(Sede.builder().id(solicitudCrearSala.idSede()).build())
                     .build();
 
+            Sala salaGuardada = salaRepository.save(sala);
+
             if (solicitudCrearSala.butacas().isEmpty())
                 return ResCrearSala.builder()
                         .error(ResSalaErrorCode.BUTACAS_NO_ENCONTRADAS)
@@ -50,13 +52,12 @@ public class SalaService {
                             .error(ResSalaErrorCode.MAX_FILA_SOBREPASADA)
                             .build();
                 }
+
+                butaca.setSala(salaGuardada);
+                butaca.setActivo(true);
             }
 
-            Sala salaGuardada = salaRepository.save(sala);
-
-            solicitudCrearSala.butacas().forEach(butaca -> butaca.setSala(salaGuardada));
             butacaRepository.saveAll(solicitudCrearSala.butacas());
-
             return ResCrearSala.builder()
                     .sala(salaGuardada)
                     .build();
