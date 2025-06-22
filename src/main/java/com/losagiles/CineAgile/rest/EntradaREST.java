@@ -7,10 +7,13 @@ package com.losagiles.CineAgile.rest;
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Entrada;
 import com.losagiles.CineAgile.services.EntradaService;
+
+import java.util.LinkedList;
 import java.util.List;
 
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +43,13 @@ public class EntradaREST {
 
     @GetMapping
     public ResponseEntity<?> findEntrada(@RequestParam String token){
-        return ResponseEntity.ok(entradaService.findEntrada(token));
+
+        EntradasCompradasDTO entradasCompradasDTO = entradaService.findEntrada(token);
+        if (entradasCompradasDTO == null) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("No se encontró ninguna entrada con ese token.");
+        }
+        return ResponseEntity.ok(entradasCompradasDTO);
     }
 }

@@ -9,6 +9,7 @@ import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -112,10 +113,31 @@ public class EntradaService {
     }
 
 
-    public Entrada findEntrada(String token) {
+    public EntradasCompradasDTO findEntrada(String token) {
         try{
             String[] result = AESCipher.decrypt(token).split("_");
-            return entradaRepository.findById_IdFuncionAndId_IdButaca(Long.valueOf(result[0]), Long.valueOf(result[1])).get();
+            System.out.println("prueba"+result);
+
+            Entrada e = entradaRepository.findById_IdFuncionAndId_IdButaca(Long.valueOf(result[0]), Long.valueOf(result[1])).get();
+            LocalDateTime fechaHoraInicio = e.getFuncion().getFechaHoraInicio();
+            LocalDateTime fechaHoraFin = e.getFuncion().getFechaHoraFin();
+            String sala = e.getFuncion().getSala().getCodigoSala();
+            String nombreSede = e.getFuncion().getSala().getSede().getNombre();
+            String tituloPelicula = e.getFuncion().getPelicula().getNombre();
+            LinkedList<Entrada> listaEntradas = new LinkedList<>();
+            listaEntradas.add(e);
+            LinkedList<String> tokens = new LinkedList<>();
+            tokens.add(token);
+            EntradasCompradasDTO entradasCompradasDTO = new EntradasCompradasDTO(
+                    listaEntradas,
+                    fechaHoraInicio,
+                    fechaHoraFin,
+                    sala,
+                    nombreSede,
+                    tituloPelicula,
+                    tokens
+            );
+            return entradasCompradasDTO;
         } catch (Exception e){
             return null;
         }
