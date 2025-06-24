@@ -12,6 +12,7 @@ import com.losagiles.CineAgile.repository.EntradaRepository;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,6 +75,7 @@ public class EntradaService {
         now = now.minusMinutes(5);
 
         List<Entrada> entradas = entradaRepository.findAllByFuncionIdAndButacaIdIn(funcion.getId(), butacaIds);
+
         for (Entrada entrada : entradas) {
             if ((entrada.getEstado().equals("esperando") && entrada.getTiempoRegistro().isBefore(now)) ||
                     entrada.getEstado().equals("listo")) {
@@ -81,17 +83,22 @@ public class EntradaService {
             }
         }
 
+        Iterator<Entrada> iteratorEntrada = entradas.iterator();
+
         List<Entrada> nuevasEntradas = new ArrayList<>();
         for (EntradaInfo info : solicitud.entradas()) {
-            Entrada nueva = new Entrada();
+            Entrada ent = entradas.isEmpty() ? new Entrada() : iteratorEntrada.next();
 
-            nueva.setButaca(Butaca.builder().id(info.id_butaca()).build());
-            nueva.setFuncion(funcion);
-            nueva.setEstado("listo");
-            nueva.setPersona(info.persona());
-            nueva.setTiempoRegistro(solicitud.tiempoRegistro());
-            nueva.setCostoFinal(funcionService.precio(funcion, info.persona()));
-            nuevasEntradas.add(nueva);
+            if (entradas.isEmpty()) {
+                ent.setButaca(Butaca.builder().id(info.id_butaca()).build());
+                ent.setFuncion(funcion);
+            }
+
+            ent.setEstado("listo");
+            ent.setPersona(info.persona());
+            ent.setTiempoRegistro(solicitud.tiempoRegistro());
+            ent.setCostoFinal(funcionService.precio(funcion, info.persona()));
+            nuevasEntradas.add(ent);
         }
 
         List <Entrada> listaEntradas = entradaRepository.saveAll(nuevasEntradas);
