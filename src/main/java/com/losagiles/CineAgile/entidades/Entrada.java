@@ -59,7 +59,7 @@ public class Entrada {
     private Butaca butaca;
 
     private LocalDateTime tiempoRegistro;
-    private String estado; // "listo", "esperando", "libre"
+    private String estado; // "listo", "esperando"
     private String persona; // "general", "mayores", "conadis", "niños"
 
 }

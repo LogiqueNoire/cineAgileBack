@@ -49,13 +49,13 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
 
     @Query("""
             SELECT
-                new com.losagiles.CineAgile.dto.ButacaFuncionDTO(but, ent IS NOT NULL)
+                new com.losagiles.CineAgile.dto.ButacaFuncionDTO(but, ent IS NOT NULL AND ent.tiempoRegistro > :tiempoAhora)
             FROM Funcion f
             JOIN Butaca but ON f.sala.id = but.sala.id
             LEFT JOIN Entrada ent ON ent.funcion.id = f.id AND ent.butaca.id = but.id
             WHERE f.id = :idFuncion
             """)
-    public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion);
+    public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion, @Param("tiempoAhora") LocalDateTime tiempoAhora);
 
     @Query("""
         SELECT new com.losagiles.CineAgile.dto.FuncionDTO(

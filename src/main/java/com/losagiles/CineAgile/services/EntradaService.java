@@ -142,4 +142,38 @@ public class EntradaService {
             return null;
         }
     }
+
+    public ResRegistrarEntrada lockEntradas(ReqRegistrarEntrada reqRegistrarEntrada) {
+        Funcion funcion = funcionService.getFuncionPorId(reqRegistrarEntrada.id_funcion());
+
+        List<Long> butacaIds = reqRegistrarEntrada.entradas().stream().map(EntradaInfo::id_butaca).toList();
+        List<Butaca> butacas = funcion.getSala().getButacas().stream()
+                .filter(butaca -> butacaIds.contains(butaca.getId()))
+                .toList();
+
+        // No existe alguna butaca
+        if (butacaIds.size() != butacas.size())
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_INCORRECTAS);
+
+        for (Butaca but : butacas) {
+            if (but.getSala().getId().compareTo(funcion.getSala().getId()) != 0)
+                return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_INCORRECTAS);
+        }
+
+        List<Entrada> entradasReservadas = new ArrayList<>();
+        for (EntradaInfo entradaInfo : reqRegistrarEntrada.entradas()) {
+            Entrada nuevaEntrada = new Entrada();
+            nuevaEntrada.setFuncion(funcion);
+            nuevaEntrada.setButaca(Butaca.builder().id(entradaInfo.id_butaca()).build());
+            nuevaEntrada.setTiempoRegistro(reqRegistrarEntrada.tiempoRegistro());
+            nuevaEntrada.setEstado("esperando");
+            entradasReservadas.add(nuevaEntrada);
+        }
+
+        EntradasCompradasDTO entradasCompradas = EntradasCompradasDTO.builder().entradas(
+                entradaRepository.saveAll(entradasReservadas)
+        ).build();
+
+        return ResRegistrarEntrada.ok(entradasCompradas);
+    }
 }

@@ -2,6 +2,7 @@ package com.losagiles.CineAgile.dto;
 
 public enum ResRegEntradaStatusCode {
     OK("Entradas compradas.", 200),
+    OK_RESERVA("Entradas reservadas.", 200),
     NRO_ENTRADAS_INVALIDAS("El nro. de entradas debe estar entre 1-5.", 422),
     FUNCION_INVALIDA("La función no existe.", 422),
     FECHA_INCORRECTA("La(s) entrada(s) deben comprarse antes del comienzo de la función", 422),

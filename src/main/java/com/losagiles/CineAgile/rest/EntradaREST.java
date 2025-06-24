@@ -52,4 +52,10 @@ public class EntradaREST {
         }
         return ResponseEntity.ok(entradasCompradasDTO);
     }
+
+    @PostMapping("/lock")
+    public ResponseEntity<String> lockEntrada(@RequestBody ReqRegistrarEntrada reqRegistrarEntrada) {
+        ResRegistrarEntrada res = entradaService.lockEntradas(reqRegistrarEntrada);
+        return ResponseEntity.status(res.status().getHttpStatus()).body(res.status().getDescripcion());
+    }
 }

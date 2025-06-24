@@ -110,7 +110,9 @@ public class FuncionService {
     }
 
     public List<ButacaFuncionDTO> mostrarButacasDeUnaFuncion(Long idFuncion) {
-        return funcionRepository.getButacaCompuestoByFuncionId(idFuncion);
+        LocalDateTime time = LocalDateTime.now(ZoneId.of("America/Lima"));
+        time = time.minusMinutes(5);
+        return funcionRepository.getButacaCompuestoByFuncionId(idFuncion, time);
     }
 
     public List<FuncionDTO> buscarFuncionesPorSemanaConPelicula(LocalDateTime fecha, Long idPelicula, Long idSede){
