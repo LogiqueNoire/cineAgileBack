@@ -45,4 +45,8 @@ public class GeneroService {
         }
         return null;
     }
+
+    public List<Genero> findAllById(List<Long> generoIds) {
+        return generoRepository.findAllById(generoIds);
+    }
 }

@@ -2,10 +2,12 @@ package com.losagiles.CineAgile.dto;
 
 import com.losagiles.CineAgile.entidades.Genero;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class PeliculaDTO {
     private Long idPelicula;
     private String nombre;

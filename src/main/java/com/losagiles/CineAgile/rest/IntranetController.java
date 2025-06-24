@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/intranet")
@@ -60,7 +61,14 @@ public class IntranetController {
         pelicula.setNombre(dto.getNombre());
         pelicula.setDirector(dto.getDirector());
         pelicula.setActores(dto.getActores());
-        pelicula.setGenero(dto.getGenero());
+
+        List<Long> generoIds = dto.getGenero().stream()
+                .map(Genero::getId)
+                .collect(Collectors.toList());
+
+        List<Genero> generos = generoService.findAllById(generoIds);
+        pelicula.setGenero(generos);
+
         pelicula.setClasificacion(dto.getClasificacion());
         pelicula.setDuracion(dto.getDuracion());
 
