@@ -1,10 +1,7 @@
 package com.losagiles.CineAgile.rest;
 
 import com.losagiles.CineAgile.dto.*;
-import com.losagiles.CineAgile.entidades.Funcion;
-import com.losagiles.CineAgile.entidades.Pelicula;
-import com.losagiles.CineAgile.entidades.Sala;
-import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,6 +36,9 @@ public class IntranetController {
 
     @Autowired
     UsuarioInternoService usuarioInternoService;
+
+    @Autowired
+    GeneroService generoService;
 
     @GetMapping("/peliculas")
     public List<PeliculaDTO> obtenerPeliculasConEstado(@RequestParam String fechaReal) {
@@ -277,6 +277,29 @@ public class IntranetController {
     public ResponseEntity<String> patchPelicula(@RequestBody PatchPeliculaRequest patchPeliculaRequest) {
         PatchPeliculaStatus status = peliculaService.editarPelicula(patchPeliculaRequest);
         return ResponseEntity.status(status.getHttpStatus()).body(status.getDescripcion());
+    }
+
+    @GetMapping("/generos")
+    public ResponseEntity<List<Genero>> getGeneros(){
+        return ResponseEntity.ok(generoService.findAll());
+    }
+
+    @PostMapping("/generos/agregar")
+    public ResponseEntity<?> saveGenero(@RequestBody String nombre){
+        Genero g = generoService.save(nombre);
+        if(g != null){
+            return ResponseEntity.ok(g);
+        }
+        return ResponseEntity.status(422).body("Error al guardar");
+    }
+
+    @PatchMapping("/generos/editar")
+    public ResponseEntity<?> editarGenero(@RequestBody NombreDTO dto){
+        Genero g = generoService.editar(dto);
+        if(g != null){
+            return ResponseEntity.ok(g);
+        }
+        return ResponseEntity.status(422).body("Error al guardar");
     }
 
 }
