@@ -37,9 +37,40 @@ public class PeliculaService {
         return peliculaRepository.save(pelicula);
     }
 
-    public List<PeliculaDTO> obtenerPeliculasConEstado(LocalDateTime fechaDesdeFront) {
-        LocalDate fecha = fechaDesdeFront.toLocalDate();
-        return peliculaRepository.obtenerPeliculasConEstado(fecha, fechaDesdeFront);
+    public List<PeliculaDTO> obtenerPeliculasConEstado(LocalDateTime ahora) {
+        LocalDate hoy = ahora.toLocalDate();
+
+        List<Pelicula> peliculas = peliculaRepository.obtenerPeliculasConEstadoEntidades();
+
+            return peliculas.stream().map(p -> {
+                String estado;
+                boolean enCartelera = p.getFuncion().stream()
+                        .anyMatch(f -> f.getFechaHoraInicio().isAfter(ahora));
+
+                if (p.getFechaInicioEstreno().isAfter(hoy)) {
+                    estado = "Próximamente";
+                } else if (enCartelera) {
+                    estado = "En cartelera";
+                } else {
+                    estado = "Finalizada";
+                }
+
+                return new PeliculaDTO(
+                        p.getIdPelicula(),
+                        p.getNombre(),
+                        p.getDirector(),
+                        p.getActores(),
+                        p.getGenero(),
+                        p.getClasificacion(),
+                        p.getDuracion(),
+                        estado,
+                        p.getFechaInicioEstreno().toString(),
+                        p.getImageUrl(),
+                        p.getSinopsis()
+                );
+            }).toList();
+
+
     }
 
     public List<Pelicula> findAll() {

@@ -86,31 +86,10 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
     public List<NombreDTO> getNombresPeliculas(@Param("idSede") Long idSede);
 
     @Query("""
-        SELECT new com.losagiles.CineAgile.dto.PeliculaDTO(
-            p.idPelicula,
-            p.nombre,
-            p.director,
-            p.actores,
-            p.genero,
-            p.clasificacion,
-            p.duracion,
-            CASE
-                WHEN p.fechaInicioEstreno > :hoy THEN 'Próximamente'
-                WHEN EXISTS (
-                    SELECT f FROM Funcion f
-                    WHERE f.pelicula = p AND f.fechaHoraInicio >= :ahora
-                ) THEN 'En cartelera'
-                ELSE 'Finalizada'
-            END,
-            CAST(p.fechaInicioEstreno AS string),
-            p.imageUrl,
-            p.sinopsis
-        )
+        SELECT DISTINCT p
         FROM Pelicula p
+        LEFT JOIN FETCH p.genero
     """)
-    List<PeliculaDTO> obtenerPeliculasConEstado(
-            @Param("hoy") LocalDate hoy,
-            @Param("ahora") LocalDateTime ahora
-    );
+    List<Pelicula> obtenerPeliculasConEstadoEntidades();
 
 }

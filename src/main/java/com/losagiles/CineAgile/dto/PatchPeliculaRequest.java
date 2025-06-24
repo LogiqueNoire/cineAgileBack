@@ -1,8 +1,10 @@
 package com.losagiles.CineAgile.dto;
 
+import com.losagiles.CineAgile.entidades.Genero;
 import lombok.NonNull;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record PatchPeliculaRequest(
         @NonNull Long idPelicula,
@@ -14,6 +16,6 @@ public record PatchPeliculaRequest(
         String urlImagen,
         LocalDate fechaEstreno,
         String sinopsis,
-        String genero
+        List<Genero> genero
 ) {
 }

@@ -29,9 +29,6 @@ public class Pelicula {
     String sinopsis;
 
     @Column (nullable = false)
-    String genero;
-
-    @Column (nullable = false)
     String director;
 
     @Column (nullable = false)
@@ -54,4 +51,12 @@ public class Pelicula {
     @JsonIgnore
     @JsonManagedReference
     private List<Funcion> funcion;
+
+    @ManyToMany
+    @JoinTable(
+            name = "pelicula_genero",
+            joinColumns = @JoinColumn(name = "pelicula_id"),
+            inverseJoinColumns = @JoinColumn(name = "genero_id")
+    )
+    private List<Genero> genero;
 }
