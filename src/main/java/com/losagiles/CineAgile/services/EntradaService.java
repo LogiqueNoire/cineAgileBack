@@ -174,6 +174,35 @@ public class EntradaService {
                 entradaRepository.saveAll(entradasReservadas)
         ).build();
 
-        return ResRegistrarEntrada.ok(entradasCompradas);
+        return new ResRegistrarEntrada(entradasCompradas, ResRegEntradaStatusCode.OK_RESERVA);
+    }
+
+    public ResRegistrarEntrada unlock(ReqRegistrarEntrada reqRegistrarEntrada) {
+        Funcion funcion = funcionService.getFuncionPorId(reqRegistrarEntrada.id_funcion());
+
+        List<Long> butacaIds = reqRegistrarEntrada.entradas().stream().map(EntradaInfo::id_butaca).toList();
+        List<Butaca> butacas = funcion.getSala().getButacas().stream()
+                .filter(butaca -> butacaIds.contains(butaca.getId()))
+                .toList();
+
+        // No existe alguna butaca
+        if (butacaIds.size() != butacas.size())
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_INCORRECTAS);
+
+        for (Butaca but : butacas) {
+            if (but.getSala().getId().compareTo(funcion.getSala().getId()) != 0)
+                return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_INCORRECTAS);
+        }
+
+        // Las butaca ya registradas
+        List<Entrada> entradas = entradaRepository.findAllByFuncionIdAndButacaIdIn(funcion.getId(), butacaIds);
+        for (Entrada entrada : entradas) {
+            if (entrada.getEstado().equals("listo")) {
+                return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_OCUPADAS);
+            }
+        }
+
+        entradaRepository.deleteAllInBatch(entradas);
+        return new ResRegistrarEntrada(null, ResRegEntradaStatusCode.OK_LIBERAR);
     }
 }

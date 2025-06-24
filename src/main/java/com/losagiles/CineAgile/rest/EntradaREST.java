@@ -58,4 +58,10 @@ public class EntradaREST {
         ResRegistrarEntrada res = entradaService.lockEntradas(reqRegistrarEntrada);
         return ResponseEntity.status(res.status().getHttpStatus()).body(res.status().getDescripcion());
     }
+
+    @PostMapping("/unlock")
+    public ResponseEntity<String> unlockEntrada(@RequestBody ReqRegistrarEntrada reqRegistrarEntrada) {
+        ResRegistrarEntrada res = entradaService.unlock(reqRegistrarEntrada);
+        return ResponseEntity.status(res.status().getHttpStatus()).body(res.status().getDescripcion());
+    }
 }
