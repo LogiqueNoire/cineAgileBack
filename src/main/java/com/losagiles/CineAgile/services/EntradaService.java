@@ -10,6 +10,7 @@ import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,9 +70,13 @@ public class EntradaService {
         }
 
         // Las butaca están bloqueadas o ya registradas
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Lima"));
+        now = now.minusMinutes(5);
+
         List<Entrada> entradas = entradaRepository.findAllByFuncionIdAndButacaIdIn(funcion.getId(), butacaIds);
         for (Entrada entrada : entradas) {
-            if (entrada.getEstado().equals("esperando") || entrada.getEstado().equals("listo")) {
+            if ((entrada.getEstado().equals("esperando") && entrada.getTiempoRegistro().isBefore(now)) ||
+                    entrada.getEstado().equals("listo")) {
                 return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_OCUPADAS);
             }
         }
@@ -160,21 +165,37 @@ public class EntradaService {
                 return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_INCORRECTAS);
         }
 
-        List<Entrada> entradasReservadas = new ArrayList<>();
-        for (EntradaInfo entradaInfo : reqRegistrarEntrada.entradas()) {
-            Entrada nuevaEntrada = new Entrada();
-            nuevaEntrada.setFuncion(funcion);
-            nuevaEntrada.setButaca(Butaca.builder().id(entradaInfo.id_butaca()).build());
-            nuevaEntrada.setTiempoRegistro(reqRegistrarEntrada.tiempoRegistro());
-            nuevaEntrada.setEstado("esperando");
-            entradasReservadas.add(nuevaEntrada);
+        // Las butaca están bloqueadas o ya registradas
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("America/Lima"));
+        now = now.minusMinutes(5);
+
+        List<Entrada> entradas = entradaRepository.findAllByFuncionIdAndButacaIdIn(funcion.getId(), butacaIds);
+
+        if (!entradas.isEmpty()) {
+            for (Entrada entrada : entradas) {
+                if (entrada.getEstado().equals("listo")) {
+                    return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_OCUPADAS);
+                }
+                entrada.setTiempoRegistro(reqRegistrarEntrada.tiempoRegistro());
+            }
+
+            entradaRepository.saveAll(entradas);
+        }
+        else {
+            List<Entrada> entradasReservadas = new ArrayList<>();
+            for (EntradaInfo entradaInfo : reqRegistrarEntrada.entradas()) {
+                Entrada nuevaEntrada = new Entrada();
+                nuevaEntrada.setFuncion(funcion);
+                nuevaEntrada.setButaca(Butaca.builder().id(entradaInfo.id_butaca()).build());
+                nuevaEntrada.setTiempoRegistro(reqRegistrarEntrada.tiempoRegistro());
+                nuevaEntrada.setEstado("esperando");
+                entradasReservadas.add(nuevaEntrada);
+            }
+
+            entradaRepository.saveAll(entradasReservadas);
         }
 
-        EntradasCompradasDTO entradasCompradas = EntradasCompradasDTO.builder().entradas(
-                entradaRepository.saveAll(entradasReservadas)
-        ).build();
-
-        return new ResRegistrarEntrada(entradasCompradas, ResRegEntradaStatusCode.OK_RESERVA);
+        return new ResRegistrarEntrada(null, ResRegEntradaStatusCode.OK_RESERVA);
     }
 
     public ResRegistrarEntrada unlock(ReqRegistrarEntrada reqRegistrarEntrada) {
