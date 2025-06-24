@@ -69,7 +69,7 @@ public class EntradaService {
         }
 
         // Las butaca están bloqueadas o ya registradas
-        List<Entrada> entradas = entradaRepository.findAllByButacaIdIn(butacaIds);
+        List<Entrada> entradas = entradaRepository.findAllByFuncionIdAndButacaIdIn(funcion.getId(), butacaIds);
         for (Entrada entrada : entradas) {
             if (entrada.getEstado().equals("esperando") || entrada.getEstado().equals("listo")) {
                 return ResRegistrarEntrada.error(ResRegEntradaStatusCode.BUTACAS_OCUPADAS);

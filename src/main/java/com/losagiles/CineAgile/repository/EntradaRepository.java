@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Repository
 public interface EntradaRepository extends JpaRepository<Entrada, Long> {
-    List<Entrada> findAllByButacaIdIn(Iterable<Long> ids);
+    List<Entrada> findAllByFuncionIdAndButacaIdIn(Long idFuncion, Iterable<Long> ids);
 
     @Query("""
               select count(e.id.idFuncion) != 0
