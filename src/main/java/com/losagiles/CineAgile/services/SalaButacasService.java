@@ -8,6 +8,8 @@ import com.losagiles.CineAgile.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +44,11 @@ public class SalaButacasService {
         return salaRepository.findAllBySede_IdAndActivoTrue(idSede);
     }
 
-    public int consultarCantidadButacasDisponibles(Long idFuncion){ return butacaRepository.consultarCantidadButacasDisponibles(idFuncion); }
+    public int consultarCantidadButacasDisponibles(Long idFuncion){
+        // Para filtrar las entradas "en espera", que han sido bloqueadas hace más de 5 min
+        LocalDateTime time = LocalDateTime.now(ZoneId.of("America/Lima"));
+        time = time.minusMinutes(5);
+        return butacaRepository.consultarCantidadButacasDisponibles(idFuncion, time);
+    }
 
 }

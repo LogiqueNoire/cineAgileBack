@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -31,7 +32,7 @@ public interface ButacaRepository extends JpaRepository<Butaca, Long> {
             WHERE b.sala.id = (
             	SELECT sala.id FROM Funcion f WHERE f.id = :funcionid
             )
-            AND e IS null
+            AND (e IS null OR (e.estado != 'listo' AND e.tiempoRegistro <= :tiempoCincoMinAntes))
             """)
-    public int consultarCantidadButacasDisponibles(@Param("funcionid") Long idFuncion);
+    public int consultarCantidadButacasDisponibles(@Param("funcionid") Long idFuncion, @Param("tiempoCincoMinAntes") LocalDateTime tiempoCincoMinAntes);
 }
