@@ -2,6 +2,7 @@ package com.losagiles.CineAgile.dto;
 
 public enum PatchPeliculaStatus {
     NO_ERROR("La película se ha editado", 200),
+    GENEROS_INVALIDOS("Los géneros no existen", 200),
     PELICULA_NO_EXISTE("La película no existe", 422);
 
     private final String descripcion;

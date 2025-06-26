@@ -2,10 +2,13 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.entidades.Genero;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +19,9 @@ import java.util.Optional;
 public class PeliculaService {
     @Autowired
     PeliculaRepository peliculaRepository;
+
+    @Autowired
+    GeneroService generoService;
 
     public Pelicula mostrarPelicula(Long idPelicula) {
         Optional<Pelicula> pelicula = peliculaRepository.findById(idPelicula);
@@ -79,6 +85,7 @@ public class PeliculaService {
 
     public List<NombreDTO> getNombresPeliculas(Long idSede) { return peliculaRepository.getNombresPeliculas(idSede); }
 
+    @Transactional
     public PatchPeliculaStatus editarPelicula(PatchPeliculaRequest patchPeliculaRequest) {
         Pelicula pelicula = peliculaRepository.findById(patchPeliculaRequest.idPelicula()).orElse(null);
 
@@ -115,11 +122,18 @@ public class PeliculaService {
                 pelicula.setImageUrl(patchPeliculaRequest.urlImagen());
             }
 
-            if (patchPeliculaRequest.genero() != null) {
-                pelicula.setGenero(patchPeliculaRequest.genero());
+            if (patchPeliculaRequest.generos() != null) {
+                List<Long> generosIds = patchPeliculaRequest.generos().stream().map(Genero::getId).toList();
+                List<Genero> generos = generoService.findAllById(generosIds);
+
+                if (generos.size() != generosIds.size()) {
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                    return PatchPeliculaStatus.GENEROS_INVALIDOS;
+                }
+
+                pelicula.setGenero(patchPeliculaRequest.generos());
             }
 
-            peliculaRepository.save(pelicula);
             return PatchPeliculaStatus.NO_ERROR;
         }
 

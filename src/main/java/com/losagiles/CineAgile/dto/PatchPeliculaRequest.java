@@ -16,6 +16,6 @@ public record PatchPeliculaRequest(
         String urlImagen,
         LocalDate fechaEstreno,
         String sinopsis,
-        List<Genero> genero
+        List<Genero> generos
 ) {
 }
