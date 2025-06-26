@@ -159,7 +159,17 @@ public class EntradaService {
     }
 
     public ResRegistrarEntrada lockEntradas(ReqRegistrarEntrada reqRegistrarEntrada) {
+        // Limitar el nro. de entradas a 5
+        if (reqRegistrarEntrada.entradas().size() > 5)
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.NRO_ENTRADAS_INVALIDAS);
+
         Funcion funcion = funcionService.getFuncionPorId(reqRegistrarEntrada.id_funcion());
+
+        if (funcion == null)
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.FUNCION_INVALIDA);
+
+        if (funcion.getFechaHoraInicio().isBefore(reqRegistrarEntrada.tiempoRegistro()))
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.FECHA_INCORRECTA);
 
         List<Long> butacaIds = reqRegistrarEntrada.entradas().stream().map(EntradaInfo::id_butaca).toList();
         List<Butaca> butacas = funcion.getSala().getButacas().stream()
@@ -209,7 +219,17 @@ public class EntradaService {
     }
 
     public ResRegistrarEntrada unlock(ReqRegistrarEntrada reqRegistrarEntrada) {
+        // Limitar el nro. de entradas a 5
+        if (reqRegistrarEntrada.entradas().size() > 5)
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.NRO_ENTRADAS_INVALIDAS);
+
         Funcion funcion = funcionService.getFuncionPorId(reqRegistrarEntrada.id_funcion());
+
+        if (funcion == null)
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.FUNCION_INVALIDA);
+
+        if (funcion.getFechaHoraInicio().isBefore(reqRegistrarEntrada.tiempoRegistro()))
+            return ResRegistrarEntrada.error(ResRegEntradaStatusCode.FECHA_INCORRECTA);
 
         List<Long> butacaIds = reqRegistrarEntrada.entradas().stream().map(EntradaInfo::id_butaca).toList();
         List<Butaca> butacas = funcion.getSala().getButacas().stream()
