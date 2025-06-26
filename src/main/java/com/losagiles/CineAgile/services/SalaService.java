@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,8 +62,7 @@ public class SalaService {
             return ResCrearSala.builder()
                     .sala(salaGuardada)
                     .build();
-        }
-        catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             return ResCrearSala.builder()
                     .error(ResSalaErrorCode.EXCEPCION_INTEGRACION_DATOS)
                     .build();
@@ -96,35 +96,40 @@ public class SalaService {
             return ResEditarSalaResultCode.NO_ERROR;
 
         List<Long> butacasSolIds = solicitudEditarSala.butacas().stream().map(SolicitudButacaAccion::idButaca).toList();
-        Map<Long, Butaca> butacaMap = butacaRepository.findAllById(butacasSolIds)
-                .stream().collect(Collectors.toMap(Butaca::getId, but -> but ));
+        List<Butaca> allButacas = butacaRepository.findAllBySalaId(sala.getId());
+        Map<Long, Butaca> butacaMap = allButacas.stream().filter(but -> butacasSolIds.contains(but.getId()))
+                .collect(Collectors.toMap(Butaca::getId, but -> but));
 
         if (butacasSolIds.size() != butacaMap.size()) {
             return ResEditarSalaResultCode.BUTACAS_INVALIDAS;
         }
 
         for (SolicitudButacaAccion solicitud : solicitudEditarSala.butacas()) {
-            if (!solicitud.accion().equals("activar") && !solicitud.accion().equals("desactivar"))
-                continue;
-
             Butaca but = butacaMap.get(solicitud.idButaca());
 
-            boolean nuevoEstadoActivo = but.isActivo();
+            if (solicitud.accion().equals("activar") || solicitud.accion().equals("desactivar")) {
+                but.setActivo(solicitud.accion().equals("activar"));
+            }
+        }
 
-            if (solicitud.accion().equals("activar"))
-                nuevoEstadoActivo = true;
+        boolean todosDesactivados = true;
+        for (Butaca but : allButacas) {
+            if (but.isActivo()) {
+                todosDesactivados = false;
+                break;
+            }
+        }
 
-            if (solicitud.accion().equals("desactivar"))
-                nuevoEstadoActivo = false;
-
-            but.setActivo(nuevoEstadoActivo);
+        if (todosDesactivados) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly(); // ROLLBACK
+            return ResEditarSalaResultCode.ALL_BUTACAS_DESACTIVADAS;
         }
 
         butacaRepository.saveAll(butacaMap.values());
         return ResEditarSalaResultCode.NO_ERROR;
     }
 
-    public boolean existsBySedeAndCodigoSala(Sede sede, String codigoSala){
+    public boolean existsBySedeAndCodigoSala(Sede sede, String codigoSala) {
         return salaRepository.existsBySedeAndCodigoSala(sede, codigoSala);
     }
 
