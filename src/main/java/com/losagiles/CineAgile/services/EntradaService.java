@@ -118,6 +118,7 @@ public class EntradaService {
                 funcion.getSala().getCodigoSala(),
                 funcion.getSala().getSede().getNombre(),
                 funcion.getPelicula().getNombre(),
+                funcion.getPelicula().getClasificacion(),
                 tokens
         );
 
@@ -136,6 +137,7 @@ public class EntradaService {
             String sala = e.getFuncion().getSala().getCodigoSala();
             String nombreSede = e.getFuncion().getSala().getSede().getNombre();
             String tituloPelicula = e.getFuncion().getPelicula().getNombre();
+            String clasificacion = e.getFuncion().getPelicula().getClasificacion();
             LinkedList<Entrada> listaEntradas = new LinkedList<>();
             listaEntradas.add(e);
             LinkedList<String> tokens = new LinkedList<>();
@@ -147,6 +149,7 @@ public class EntradaService {
                     sala,
                     nombreSede,
                     tituloPelicula,
+                    clasificacion,
                     tokens
             );
             return entradasCompradasDTO;

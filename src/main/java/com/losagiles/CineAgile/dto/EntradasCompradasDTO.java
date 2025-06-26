@@ -14,6 +14,7 @@ public record EntradasCompradasDTO(
         String sala,
         String nombreSede,
         String tituloPelicula,
+        String clasificacion,
         List<String> tokens
 ) {
 }
