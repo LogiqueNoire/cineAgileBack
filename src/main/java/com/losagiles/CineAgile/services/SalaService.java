@@ -100,7 +100,7 @@ public class SalaService {
                 .stream().collect(Collectors.toMap(Butaca::getId, but -> but ));
 
         if (butacasSolIds.size() != butacaMap.size()) {
-            return ResEditarSalaResultCode.CATEGORIA_INVALIDA;
+            return ResEditarSalaResultCode.BUTACAS_INVALIDAS;
         }
 
         for (SolicitudButacaAccion solicitud : solicitudEditarSala.butacas()) {
