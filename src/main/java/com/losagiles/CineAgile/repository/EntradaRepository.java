@@ -24,7 +24,7 @@ public interface EntradaRepository extends JpaRepository<Entrada, Long> {
     @Query("""
               select count(e.id.idFuncion) != 0
               from Entrada e
-              where e.id.idFuncion = :id_funcion
+              where e.id.idFuncion = :id_funcion AND e.estado = "listo"
           """
     )
     public boolean tieneEntradas(@Param("id_funcion") Long idFuncion);
