@@ -40,15 +40,17 @@ public class SalaService {
 
             Sala salaGuardada = salaRepository.save(sala);
 
-            if (solicitudCrearSala.butacas().isEmpty())
+            if (solicitudCrearSala.butacas().isEmpty()) {
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return ResCrearSala.builder()
                         .error(ResSalaErrorCode.BUTACAS_NO_ENCONTRADAS)
                         .build();
-
+            }
             for (int i = 0; i < solicitudCrearSala.butacas().size(); i++) {
                 Butaca butaca = solicitudCrearSala.butacas().get(i);
 
                 if (butaca.getFila() > 25) {
+                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                     return ResCrearSala.builder()
                             .error(ResSalaErrorCode.MAX_FILA_SOBREPASADA)
                             .build();
