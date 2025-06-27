@@ -6,6 +6,7 @@ public enum PatchPeliculaStatus {
     NOMBRE_REPETIDO("Ya existe una película con el mismo nombre", 409),
     SUPERA_LIMITE_CARACTERES("Supera los límites de caracteres", 422),
     SUPERA_LIMITE_MINUTOS("La duración supera el límite (500 min).", 422),
+    ERROR_INTERNO("Ha ocurrido un error interno.", 422),
     PELICULA_NO_EXISTE("La película no existe", 422);
 
     private final String descripcion;

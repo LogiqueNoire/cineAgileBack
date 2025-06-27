@@ -88,73 +88,80 @@ public class PeliculaService {
 
     @Transactional
     public PatchPeliculaStatus editarPelicula(PatchPeliculaRequest patchPeliculaRequest) {
-        Pelicula pelicula = peliculaRepository.findById(patchPeliculaRequest.idPelicula()).orElse(null);
+        try {
+            Pelicula pelicula = peliculaRepository.findById(patchPeliculaRequest.idPelicula()).orElse(null);
 
-        if (pelicula != null) {
-            if (patchPeliculaRequest.nombre() != null) {
-                if (patchPeliculaRequest.nombre().length() > 255)
-                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
+            if (pelicula != null) {
+                if (patchPeliculaRequest.nombre() != null) {
+                    if (patchPeliculaRequest.nombre().length() > 255)
+                        return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
 
-                Pelicula existente = peliculaRepository.findByNombreIgnoreCase(patchPeliculaRequest.nombre().strip()).orElse(null);
-                if (existente != null) return PatchPeliculaStatus.NOMBRE_REPETIDO;
+                    Pelicula existente = peliculaRepository.findByNombreIgnoreCase(patchPeliculaRequest.nombre().strip()).orElse(null);
+                    if (existente != null) return PatchPeliculaStatus.NOMBRE_REPETIDO;
 
-                pelicula.setNombre(patchPeliculaRequest.nombre());
-            }
-
-            if (patchPeliculaRequest.director() != null) {
-                if (patchPeliculaRequest.director().length() > 255)
-                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
-                pelicula.setDirector(patchPeliculaRequest.director());
-            }
-
-            if (patchPeliculaRequest.duracion() != null) {
-                if (patchPeliculaRequest.duracion() > 500)
-                    return PatchPeliculaStatus.SUPERA_LIMITE_MINUTOS;
-                pelicula.setDuracion(patchPeliculaRequest.duracion());
-            }
-
-            if (patchPeliculaRequest.sinopsis() != null) {
-                if (patchPeliculaRequest.sinopsis().length() > 500)
-                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
-                pelicula.setSinopsis(patchPeliculaRequest.sinopsis());
-            }
-
-            if (patchPeliculaRequest.clasificacion() != null) {
-                pelicula.setClasificacion(patchPeliculaRequest.clasificacion());
-            }
-
-            if (patchPeliculaRequest.actores() != null) {
-                if (patchPeliculaRequest.sinopsis().length() > 500)
-                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
-                pelicula.setActores(patchPeliculaRequest.actores());
-            }
-
-            if (patchPeliculaRequest.fechaEstreno() != null) {
-                pelicula.setFechaInicioEstreno(patchPeliculaRequest.fechaEstreno());
-            }
-
-            if (patchPeliculaRequest.urlImagen() != null) {
-                if (patchPeliculaRequest.urlImagen().length() > 500)
-                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
-                pelicula.setImageUrl(patchPeliculaRequest.urlImagen());
-            }
-
-            if (patchPeliculaRequest.generos() != null) {
-                List<Long> generosIds = patchPeliculaRequest.generos().stream().map(Genero::getId).toList();
-                List<Genero> generos = generoService.findAllById(generosIds);
-
-                if (generos.size() != generosIds.size()) {
-                    TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-                    return PatchPeliculaStatus.GENEROS_INVALIDOS;
+                    pelicula.setNombre(patchPeliculaRequest.nombre());
                 }
 
-                pelicula.setGenero(patchPeliculaRequest.generos());
+                if (patchPeliculaRequest.director() != null) {
+                    if (patchPeliculaRequest.director().length() > 255)
+                        return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
+                    pelicula.setDirector(patchPeliculaRequest.director());
+                }
+
+                if (patchPeliculaRequest.duracion() != null) {
+                    if (patchPeliculaRequest.duracion() > 500)
+                        return PatchPeliculaStatus.SUPERA_LIMITE_MINUTOS;
+                    pelicula.setDuracion(patchPeliculaRequest.duracion());
+                }
+
+                if (patchPeliculaRequest.sinopsis() != null) {
+                    if (patchPeliculaRequest.sinopsis().length() > 500)
+                        return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
+                    pelicula.setSinopsis(patchPeliculaRequest.sinopsis());
+                }
+
+                if (patchPeliculaRequest.clasificacion() != null) {
+                    pelicula.setClasificacion(patchPeliculaRequest.clasificacion());
+                }
+
+                if (patchPeliculaRequest.actores() != null) {
+                    if (patchPeliculaRequest.sinopsis().length() > 500)
+                        return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
+                    pelicula.setActores(patchPeliculaRequest.actores());
+                }
+
+                if (patchPeliculaRequest.fechaEstreno() != null) {
+                    pelicula.setFechaInicioEstreno(patchPeliculaRequest.fechaEstreno());
+                }
+
+                if (patchPeliculaRequest.urlImagen() != null) {
+                    if (patchPeliculaRequest.urlImagen().length() > 500)
+                        return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
+                    pelicula.setImageUrl(patchPeliculaRequest.urlImagen());
+                }
+
+                if (patchPeliculaRequest.generos() != null) {
+                    List<Long> generosIds = patchPeliculaRequest.generos().stream().map(Genero::getId).toList();
+                    List<Genero> generos = generoService.findAllById(generosIds);
+
+                    if (generos.size() != generosIds.size()) {
+                        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+                        return PatchPeliculaStatus.GENEROS_INVALIDOS;
+                    }
+
+                    pelicula.setGenero(patchPeliculaRequest.generos());
+                }
+
+                return PatchPeliculaStatus.NO_ERROR;
             }
 
-            return PatchPeliculaStatus.NO_ERROR;
+            return PatchPeliculaStatus.PELICULA_NO_EXISTE;
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return PatchPeliculaStatus.ERROR_INTERNO;
         }
 
-        return PatchPeliculaStatus.PELICULA_NO_EXISTE;
     }
 
 }
