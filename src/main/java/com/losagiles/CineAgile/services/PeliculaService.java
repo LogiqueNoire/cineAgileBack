@@ -126,7 +126,7 @@ public class PeliculaService {
                 }
 
                 if (patchPeliculaRequest.actores() != null) {
-                    if (patchPeliculaRequest.sinopsis().length() > 500)
+                    if (patchPeliculaRequest.actores().length() > 255)
                         return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
                     pelicula.setActores(patchPeliculaRequest.actores());
                 }
@@ -136,7 +136,7 @@ public class PeliculaService {
                 }
 
                 if (patchPeliculaRequest.urlImagen() != null) {
-                    if (patchPeliculaRequest.urlImagen().length() > 500)
+                    if (patchPeliculaRequest.urlImagen().length() > 255)
                         return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
                     pelicula.setImageUrl(patchPeliculaRequest.urlImagen());
                 }
