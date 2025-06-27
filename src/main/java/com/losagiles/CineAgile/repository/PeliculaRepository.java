@@ -11,11 +11,15 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
+    Optional<Pelicula> findByNombreIgnoreCase(String nombre);
+
     @Query("""
         SELECT new com.losagiles.CineAgile.dto.PeliculaCarteleraDTO(
             p.idPelicula,

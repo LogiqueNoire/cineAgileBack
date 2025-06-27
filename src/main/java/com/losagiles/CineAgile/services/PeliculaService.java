@@ -94,6 +94,10 @@ public class PeliculaService {
             if (patchPeliculaRequest.nombre() != null) {
                 if (patchPeliculaRequest.nombre().length() > 255)
                     return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
+
+                Pelicula existente = peliculaRepository.findByNombreIgnoreCase(patchPeliculaRequest.nombre().strip()).orElse(null);
+                if (existente != null) return PatchPeliculaStatus.NOMBRE_REPETIDO;
+
                 pelicula.setNombre(patchPeliculaRequest.nombre());
             }
 
