@@ -54,7 +54,7 @@ public class PeliculaService {
                 boolean enCartelera = p.getFuncion().stream()
                         .anyMatch(f -> f.getFechaHoraInicio().isAfter(ahora));
 
-                if (!p.getFechaInicioEstreno().isBefore(hoy)) {
+                if (!p.getFechaInicioEstreno().isBefore(hoy) && !enCartelera) {
                     estado = "Próximamente";
                 } else if (enCartelera) {
                     estado = "En cartelera";
