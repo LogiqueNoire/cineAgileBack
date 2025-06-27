@@ -92,18 +92,26 @@ public class PeliculaService {
 
         if (pelicula != null) {
             if (patchPeliculaRequest.nombre() != null) {
+                if (patchPeliculaRequest.nombre().length() > 255)
+                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
                 pelicula.setNombre(patchPeliculaRequest.nombre());
             }
 
             if (patchPeliculaRequest.director() != null) {
+                if (patchPeliculaRequest.director().length() > 255)
+                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
                 pelicula.setDirector(patchPeliculaRequest.director());
             }
 
             if (patchPeliculaRequest.duracion() != null) {
+                if (patchPeliculaRequest.duracion() > 500)
+                    return PatchPeliculaStatus.SUPERA_LIMITE_MINUTOS;
                 pelicula.setDuracion(patchPeliculaRequest.duracion());
             }
 
             if (patchPeliculaRequest.sinopsis() != null) {
+                if (patchPeliculaRequest.sinopsis().length() > 500)
+                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
                 pelicula.setSinopsis(patchPeliculaRequest.sinopsis());
             }
 
@@ -112,6 +120,8 @@ public class PeliculaService {
             }
 
             if (patchPeliculaRequest.actores() != null) {
+                if (patchPeliculaRequest.sinopsis().length() > 500)
+                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
                 pelicula.setActores(patchPeliculaRequest.actores());
             }
 
@@ -120,6 +130,8 @@ public class PeliculaService {
             }
 
             if (patchPeliculaRequest.urlImagen() != null) {
+                if (patchPeliculaRequest.urlImagen().length() > 500)
+                    return PatchPeliculaStatus.SUPERA_LIMITE_CARACTERES;
                 pelicula.setImageUrl(patchPeliculaRequest.urlImagen());
             }
 
