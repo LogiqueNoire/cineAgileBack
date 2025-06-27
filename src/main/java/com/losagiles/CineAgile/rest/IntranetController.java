@@ -2,6 +2,7 @@ package com.losagiles.CineAgile.rest;
 
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.*;
+import com.losagiles.CineAgile.repository.PeliculaRepository;
 import com.losagiles.CineAgile.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,6 +42,9 @@ public class IntranetController {
     @Autowired
     GeneroService generoService;
 
+    @Autowired
+    PeliculaRepository peliculaRepository;
+
     @GetMapping("/peliculas")
     public List<PeliculaDTO> obtenerPeliculasConEstado(@RequestParam String fechaReal) {
         LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
@@ -57,6 +61,9 @@ public class IntranetController {
     @PostMapping("/peliculas/agregar")
     private ResponseEntity<Pelicula> addPelicula(@RequestBody PeliculaDTO dto) {
         Pelicula pelicula = new Pelicula();
+
+        Pelicula existente = peliculaRepository.findByNombreIgnoreCase(dto.getNombre().strip()).orElse(null);
+        if (existente != null) return ResponseEntity.status(409).body(null);
 
         pelicula.setNombre(dto.getNombre());
         pelicula.setDirector(dto.getDirector());
