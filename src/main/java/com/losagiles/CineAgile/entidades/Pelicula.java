@@ -25,7 +25,7 @@ public class Pelicula {
     @Column (nullable = false)
     private int duracion; // En minutos
 
-    @Column (nullable = false)
+    @Column(length = 500, nullable = false)
     String sinopsis;
 
     @Column (nullable = false)

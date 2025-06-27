@@ -44,8 +44,9 @@ public class PeliculaService {
     }
 
     public List<PeliculaDTO> obtenerPeliculasConEstado(LocalDateTime ahora) {
+        System.out.println("ahora"+ahora);
         LocalDate hoy = ahora.toLocalDate();
-
+        System.out.println("hoy"+hoy);
         List<Pelicula> peliculas = peliculaRepository.obtenerPeliculasConEstadoEntidades();
 
             return peliculas.stream().map(p -> {
@@ -53,7 +54,7 @@ public class PeliculaService {
                 boolean enCartelera = p.getFuncion().stream()
                         .anyMatch(f -> f.getFechaHoraInicio().isAfter(ahora));
 
-                if (p.getFechaInicioEstreno().isAfter(hoy)) {
+                if (!p.getFechaInicioEstreno().isBefore(hoy)) {
                     estado = "Próximamente";
                 } else if (enCartelera) {
                     estado = "En cartelera";
