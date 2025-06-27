@@ -53,7 +53,7 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
             FROM Funcion f
             JOIN Butaca but ON f.sala.id = but.sala.id
             LEFT JOIN Entrada ent ON ent.funcion.id = f.id AND ent.butaca.id = but.id
-            WHERE f.id = :idFuncion
+            WHERE f.id = :idFuncion AND but.activo = TRUE
             """)
     public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion, @Param("cincoMinAntes") LocalDateTime cincoMinAntes);
 
