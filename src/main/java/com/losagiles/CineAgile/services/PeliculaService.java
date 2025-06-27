@@ -110,8 +110,8 @@ public class PeliculaService {
                 }
 
                 if (patchPeliculaRequest.duracion() != null) {
-                    if (patchPeliculaRequest.duracion() > 500)
-                        return PatchPeliculaStatus.SUPERA_LIMITE_MINUTOS;
+                    if (patchPeliculaRequest.duracion() > 500 || patchPeliculaRequest.duracion() < 1)
+                        return PatchPeliculaStatus.DURACION_FUERA_DE_RANGO;
                     pelicula.setDuracion(patchPeliculaRequest.duracion());
                 }
 
