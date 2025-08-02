@@ -30,8 +30,9 @@ public class PeliculaService {
     }
 
     public List<PeliculaCarteleraDTO> mostrarPeliculasEnCartelera(LocalDateTime fechaDesdeFront) {
-        LocalDate fecha = fechaDesdeFront.toLocalDate();
-        return peliculaRepository.getPeliculasEnCartelera(fecha, fechaDesdeFront);
+        LocalDate hoy = fechaDesdeFront.toLocalDate();
+        System.out.println("Fecha desde front"+ hoy);
+        return peliculaRepository.getPeliculasEnCartelera(hoy, fechaDesdeFront);
     }
 
     public List<PeliculaCarteleraDTO> mostrarPeliculasProximamente(LocalDateTime fechaDesdeFront) {

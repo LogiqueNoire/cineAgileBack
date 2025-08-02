@@ -7,6 +7,7 @@ import com.losagiles.CineAgile.services.PeliculaService;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -34,8 +35,9 @@ public class PeliculaREST {
     @GetMapping ("/encartelera")
     private ResponseEntity <List<PeliculaCarteleraDTO>> getEnCartelera(@RequestParam String fecha){
         LocalDateTime fechaParseada = LocalDateTime.parse(fecha.replace("Z", ""));
-        System.out.println("Fecha parseada: " + fechaParseada);
-        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasEnCartelera(fechaParseada);
+        LocalDateTime fechaAjustadaPeru = fechaParseada.atZone(ZoneId.of("UTC")).withZoneSameInstant(ZoneId.of("America/Lima")).toLocalDateTime();
+        System.out.println("Fecha ajustada: " + fechaAjustadaPeru);
+        List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasEnCartelera(fechaAjustadaPeru);
 
         // Mapear a PeliculaCarteleraDTO, el cual solo muestra información muy básica
         List<PeliculaCarteleraDTO> peliDTO = modelMapper.map(peliculas, new TypeToken<List<PeliculaCarteleraDTO>>() {}.getType());
