@@ -35,5 +35,21 @@ public interface ButacaRepository extends JpaRepository<Butaca, Long> {
             )
             AND (e IS null OR (e.estado != 'listo' AND e.tiempoRegistro <= :tiempoCincoMinAntes))
             """)
-    public int consultarCantidadButacasDisponibles(@Param("funcionid") Long idFuncion, @Param("tiempoCincoMinAntes") LocalDateTime tiempoCincoMinAntes);
+    public int consultarCantidadButacasDisponibles(@Param("funcionid") Long idFuncion,
+                                                   @Param("tiempoCincoMinAntes") LocalDateTime tiempoCincoMinAntes);
+
+    /*
+    @Query ("""
+            SELECT count(b.id) as butacas_por_vender
+            FROM "cine-dev".butaca b
+            JOIN "cine-dev".sala s
+            ON b.id_sala = s.id
+            JOIN "cine-dev".funcion f
+            ON f.id_sala = s.id
+            WHERE f.fecha_hora_inicio BETWEEN :inicio AND :fin
+            AND b.activo = true
+    """)
+    int butacasPorVenderEnDia(@Param("inicio") LocalDateTime inicio,
+                              @Param("fin") LocalDateTime fin);
+     */
 }

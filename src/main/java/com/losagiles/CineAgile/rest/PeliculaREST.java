@@ -1,11 +1,9 @@
 package com.losagiles.CineAgile.rest;
 
 import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
-import com.losagiles.CineAgile.dto.PeliculaDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.services.PeliculaService;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;

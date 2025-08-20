@@ -9,12 +9,13 @@ import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 
+import java.math.BigDecimal;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import com.losagiles.CineAgile.repository.SalaRepository;
 import com.losagiles.CineAgile.seguridad.AESCipher;
@@ -255,5 +256,45 @@ public class EntradaService {
 
         entradaRepository.deleteAllInBatch(entradas);
         return new ResRegistrarEntrada(null, ResRegEntradaStatusCode.OK_LIBERAR);
+    }
+
+    public int entradasVendidasEnPeriodoTiempo(LocalDateTime fecha){
+        LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
+        LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();
+        return entradaRepository.entradasVendidasEnPeriodoTiempo(inicio, fin);
+    }
+
+    public BigDecimal ventasEnPeriodoTiempo(LocalDateTime fecha) {
+        LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
+        LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();
+        return entradaRepository.ventasEnPeriodoTiempo(inicio, fin);
+    }
+
+    public LinkedList<DiaHoraVentaDTO> getDesempenoSemanal(Long idPelicula, LocalDateTime fecha) {
+        LocalDateTime inicioSemana = fecha.with(DayOfWeek.MONDAY).toLocalDate().atStartOfDay();
+        LocalDateTime finSemana = inicioSemana.plusDays(6).toLocalDate().atTime(LocalTime.MAX);
+        List<Object[]> listaObjetos = entradaRepository.ventasDetalladaPelicula(inicioSemana, finSemana, idPelicula);
+        List<DiaHoraVentaDTO> lista = listaObjetos.stream()
+                .map(obj -> new DiaHoraVentaDTO(
+                        ((Number) obj[0]).intValue(),
+                        ((Number) obj[1]).intValue(),
+                        new BigDecimal(obj[2].toString())
+                ))
+                .collect(Collectors.toList());
+        int dia = inicioSemana.getDayOfMonth();
+        LinkedList<DiaHoraVentaDTO> resultado = new LinkedList<>();
+        LinkedList<Integer> dias = new LinkedList<>();
+        for(int i = 0; i < 7; i++){
+            dias.add(inicioSemana.plusDays(i).getDayOfMonth());
+        }
+        for(Integer d: dias){
+            for(int h=0; h<=24; h++){
+                if(!lista.isEmpty() && lista.getFirst().getDia() == d && lista.getFirst().getHora() == h)
+                    resultado.add(lista.removeFirst());
+                else
+                    resultado.add(new DiaHoraVentaDTO(d, h, BigDecimal.valueOf(0)));
+            }
+        }
+        return resultado;
     }
 }

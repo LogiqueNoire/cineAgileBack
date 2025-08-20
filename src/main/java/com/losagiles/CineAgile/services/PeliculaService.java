@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -166,4 +168,17 @@ public class PeliculaService {
 
     }
 
+    public List<Object[]> obtenerVentasMensuales(){
+        return peliculaRepository.obtenerVentasMensuales();
+    }
+
+    public List<Object[]> obtenerPeliculasMasTaquillerasDeMes(int mes){
+        return peliculaRepository.obtenerPeliculasMasTaquillerasDeMes(mes);
+    }
+
+    public List<Pelicula> obtenerPeliculasConVentasEnPeriodoTiempo(LocalDateTime fecha){
+        LocalDateTime inicioSemana = fecha.with(DayOfWeek.MONDAY).toLocalDate().atStartOfDay();
+        LocalDateTime finSemana = inicioSemana.plusDays(6).toLocalDate().atTime(LocalTime.MAX);
+        return peliculaRepository.obtenerPeliculasConVentasEnPeriodoTiempo(inicioSemana, finSemana);
+    }
 }

@@ -3,7 +3,6 @@ package com.losagiles.CineAgile.repository;
 
 import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
-import com.losagiles.CineAgile.dto.PeliculaDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -74,8 +73,6 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
                     AND f.fechaHoraInicio < :fecha
                 )*/
 
-
-
     @Query("""
             SELECT DISTINCT new com.losagiles.CineAgile.dto.NombreDTO(
                     p.idPelicula,
@@ -96,4 +93,38 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
     """)
     List<Pelicula> obtenerPeliculasConEstadoEntidades();
 
+    @Query(value = """
+        SELECT SUM(e.costo_final) AS totalRecaudado,
+               EXTRACT(MONTH FROM f.fecha_hora_inicio) AS mes
+        FROM "cine-dev".pelicula p
+        JOIN "cine-dev".funcion f ON p.id_pelicula = f.id_pelicula
+        JOIN "cine-dev".entrada e ON f.id = e.id_funcion
+        WHERE EXTRACT(YEAR FROM f.fecha_hora_inicio) = EXTRACT(YEAR FROM CURRENT_DATE)
+        GROUP BY 2
+        ORDER BY 2
+    """, nativeQuery = true)
+    List<Object[]> obtenerVentasMensuales();
+
+    @Query(value = """      
+        SELECT SUM(e.costo_final), p.nombre
+        FROM "cine-dev".pelicula as p
+        JOIN "cine-dev".funcion as f on p.id_pelicula = f.id_pelicula
+        JOIN "cine-dev".entrada as e on f.id = e.id_funcion
+        WHERE EXTRACT(MONTH FROM f.fecha_hora_inicio) = :mes
+        GROUP by 2
+        ORDER by 1 DESC
+        LIMIT 7
+    """, nativeQuery = true)
+    List<Object[]> obtenerPeliculasMasTaquillerasDeMes(@Param("mes") int mes);
+
+    @Query(value = """
+        SELECT DISTINCT p
+        FROM Entrada e
+        JOIN e.funcion f
+        JOIN f.pelicula p
+        WHERE f.fechaHoraInicio BETWEEN :inicioSem AND :finSem
+        AND e.estado = 'listo'
+    """)
+    List<Pelicula> obtenerPeliculasConVentasEnPeriodoTiempo(@Param("inicioSem") LocalDateTime inicioSem,
+                                                            @Param("finSem") LocalDateTime finSem);
 }

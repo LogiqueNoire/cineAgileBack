@@ -12,10 +12,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -44,6 +44,9 @@ public class IntranetController {
 
     @Autowired
     PeliculaRepository peliculaRepository;
+
+    @Autowired
+    EntradaService entradaService;
 
     @GetMapping("/peliculas")
     public List<PeliculaDTO> obtenerPeliculasConEstado(@RequestParam String fechaReal) {
@@ -315,6 +318,75 @@ public class IntranetController {
             return ResponseEntity.ok(g);
         }
         return ResponseEntity.status(422).body("Error al guardar");
+    }
+
+    @GetMapping ("/obtenerVentasMensuales")
+    private ResponseEntity<?> obtenerVentasMensuales(){
+        List<Object[]> resultado = peliculaService.obtenerVentasMensuales();
+        if (resultado != null)
+            return ResponseEntity.ok(resultado);
+        else
+            return ResponseEntity.status(404).body("Error");
+    }
+
+    @GetMapping ("/obtenerPeliculasMasTaquillerasDeMes")
+    private ResponseEntity<?> obtenerPeliculasMasTaquillerasDeMes(@RequestParam int mes){
+        List<Object[]> resultado = peliculaService.obtenerPeliculasMasTaquillerasDeMes(mes);
+        if (resultado != null)
+            return ResponseEntity.ok(resultado);
+        else
+            return ResponseEntity.status(404).body("Error");
+    }
+
+    @GetMapping ("/getFuncionesPorProyectar")
+    private ResponseEntity<?> getFuncionesPorProyectar(@RequestParam String fechaReal){
+        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+        Integer resultado = funcionService.funcionesPorProyectar(fecha);
+        if (resultado != null)
+            return ResponseEntity.ok(resultado);
+        else
+            return ResponseEntity.status(404).body("Error");
+    }
+
+    @GetMapping ("/getFuncionesAgotadas")
+    private ResponseEntity<?> getFuncionesAgotadas(@RequestParam String fechaReal){
+        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+        Integer resultado = funcionService.funcionesAgotadasEnPeriodoTiempo(fecha);
+        if (resultado != null)
+            return ResponseEntity.ok(resultado);
+        else
+            return ResponseEntity.status(404).body("Error");
+    }
+
+    @GetMapping ("/getEntradasVendidas")
+    private ResponseEntity<?> entradasVendidasEnPeriodoTiempo(@RequestParam String fechaReal){
+        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+        Integer resultado = Optional.ofNullable(entradaService.entradasVendidasEnPeriodoTiempo(fecha))
+                .orElse(0);
+        return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping ("/getVentas")
+    private ResponseEntity<?> ventasEnPeriodoTiempo(@RequestParam String fechaReal){
+        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+        BigDecimal resultado = Optional.ofNullable(entradaService.ventasEnPeriodoTiempo(fecha))
+                .orElse(BigDecimal.ZERO);
+        return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping("/getDesempenoSemanal")
+    private ResponseEntity<?> getDesempenoSemanal(@RequestParam Long idPelicula, @RequestParam String fechaReal){
+        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+        LinkedList<DiaHoraVentaDTO> resultado = entradaService.getDesempenoSemanal(idPelicula,
+                fecha.toLocalDate().atStartOfDay());
+        return ResponseEntity.ok(resultado);
+    }
+
+    @GetMapping("/getPeliculasConVentas")
+    private ResponseEntity<?> obtenerPeliculasConVentasEnPeriodoTiempo(@RequestParam String fechaReal){
+        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+        List<Pelicula> resultado = peliculaService.obtenerPeliculasConVentasEnPeriodoTiempo(fecha.toLocalDate().atStartOfDay());
+        return ResponseEntity.ok(resultado);
     }
 
 }

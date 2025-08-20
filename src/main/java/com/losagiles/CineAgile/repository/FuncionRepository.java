@@ -78,7 +78,6 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
             @Param("finSemana") LocalDateTime finSemana
     );
 
-
     @Query("""
         SELECT new com.losagiles.CineAgile.dto.FuncionDTO(
             f.id, f.fechaHoraInicio, f.fechaHoraFin, f.dimension, f.precioBase,
@@ -128,6 +127,60 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
             @Param("fechaHoraFin") LocalDateTime fechaHoraFin
     );
 
+    @Query("""
+        SELECT COUNT(f.id)
+        FROM Funcion f
+        WHERE f.fechaHoraInicio BETWEEN :inicio AND :fin
+    """)
+    int funcionesPorProyectarEnPeriodoTiempo(@Param("inicio") LocalDateTime inicio,
+                                             @Param("fin") LocalDateTime fin);
 
+    @Query("""
+        SELECT COUNT(f)
+        FROM Funcion f
+        WHERE f.fechaHoraInicio BETWEEN :inicio AND :fin
+        AND (
+            SELECT COUNT(e)
+            FROM Entrada e
+            WHERE e.funcion = f
+              AND e.estado = 'listo'
+        ) = (
+            SELECT COUNT(b)
+            FROM Butaca b
+            WHERE b.sala = f.sala
+              AND b.activo = true
+        )
+    """)
+    int funcionesAgotadasEnPeriodoTiempo(@Param("inicio") LocalDateTime inicio,
+                                         @Param("fin") LocalDateTime fin);
 
+    /* Auditar
+    //Funciones con entradas en un dia
+    SELECT f.id, count(e.tiempo_registro)
+    FROM "cine-dev".entrada e
+    JOIN "cine-dev".funcion f
+    ON e.id_funcion = f.id
+    WHERE f.fecha_hora_inicio BETWEEN '2025-08-17 00:00:00' AND '2025-08-18 00:00:00'
+    AND e.estado = 'listo'
+    group by f.id
+
+    //Funciones con butacas por vender en un dia
+    SELECT f.id, count(e.tiempo_registro)
+    FROM "cine-dev".entrada e
+    JOIN "cine-dev".funcion f
+    ON e.id_funcion = f.id
+    WHERE f.fecha_hora_inicio BETWEEN '2025-08-17 00:00:00' AND '2025-08-18 00:00:00'
+    AND e.estado = 'listo'
+    group by f.id
+    having count(e.tiempo_registro) =
+    (SELECT count(b.id)
+    FROM "cine-dev".butaca b
+    JOIN "cine-dev".sala s
+    ON b.id_sala = s.id
+    JOIN "cine-dev".funcion f2
+    ON f2.id_sala = s.id
+    WHERE f2.fecha_hora_inicio BETWEEN '2025-08-17 00:00:00' AND '2025-08-18 00:00:00'
+    AND b.activo = true
+    and f.id = f2.id)
+    * */
 }

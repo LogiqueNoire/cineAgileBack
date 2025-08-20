@@ -1,6 +1,5 @@
 package com.losagiles.CineAgile.repository;
 
-import com.losagiles.CineAgile.entidades.Funcion;
 import com.losagiles.CineAgile.entidades.Genero;
 import org.springframework.data.jpa.repository.JpaRepository;
 

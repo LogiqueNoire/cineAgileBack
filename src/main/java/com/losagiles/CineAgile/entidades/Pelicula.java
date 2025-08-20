@@ -52,7 +52,8 @@ public class Pelicula {
     @JsonManagedReference
     private List<Funcion> funcion;
 
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "pelicula_genero",
             joinColumns = @JoinColumn(name = "pelicula_id"),

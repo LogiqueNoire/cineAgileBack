@@ -211,4 +211,16 @@ public class FuncionService {
 
         return false;
     }
+
+    public Integer funcionesPorProyectar(LocalDateTime fecha){
+        LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
+        LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();
+        return funcionRepository.funcionesPorProyectarEnPeriodoTiempo(inicio, fin);
+    }
+
+    public Integer funcionesAgotadasEnPeriodoTiempo(LocalDateTime fecha){
+        LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
+        LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();
+        return funcionRepository.funcionesAgotadasEnPeriodoTiempo(inicio, fin);
+    }
 }
