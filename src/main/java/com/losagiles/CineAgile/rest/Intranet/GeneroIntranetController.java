@@ -37,4 +37,5 @@ public class GeneroIntranetController {
         }
         return ResponseEntity.status(422).body("Error al guardar");
     }
+
 }

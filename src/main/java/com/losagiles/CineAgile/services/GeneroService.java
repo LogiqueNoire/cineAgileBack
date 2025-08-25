@@ -2,7 +2,6 @@ package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.entidades.Genero;
-import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.repository.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,5 +47,9 @@ public class GeneroService {
 
     public List<Genero> findAllById(List<Long> generoIds) {
         return generoRepository.findAllById(generoIds);
+    }
+
+    public List<Genero> findAllByPeliculaId(Long peliculaId) {
+        return generoRepository.findGenerosByPeliculaId(peliculaId);
     }
 }
