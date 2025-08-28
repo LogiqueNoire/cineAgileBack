@@ -10,6 +10,8 @@ import com.losagiles.CineAgile.services.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
+
+import com.losagiles.CineAgile.services.StrategiaPrecioFuncion.FuncionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

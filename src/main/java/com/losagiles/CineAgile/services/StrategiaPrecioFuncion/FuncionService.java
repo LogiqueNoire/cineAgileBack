@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile.services;
+package com.losagiles.CineAgile.services.StrategiaPrecioFuncion;
 
 import com.losagiles.CineAgile.dto.ButacaFuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionDTO;
@@ -14,6 +14,8 @@ import java.time.*;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.otros.Auditable;
+import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import com.losagiles.CineAgile.repository.SalaRepository;
@@ -82,6 +84,7 @@ public class FuncionService {
         return funciones.stream().filter(funcion -> fecha.equals(funcion.getFechaHoraInicio().toLocalDate())).toList();
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Función", detalles = "Consultar funciones de película agrupadas por sede")
     public List<FuncionesPorSedeDTO> mostrarFuncionesAgrupadasPorSede(Long idPelicula, LocalDateTime fecha) {
         List<FuncionDTO> funciones = funcionRepository.getFuncionesByPeliculaId(idPelicula);
 
@@ -104,7 +107,7 @@ public class FuncionService {
 
         return new ArrayList<>(mapa.values());
     }
-    
+
     public Funcion getFuncionPorId(Long idFuncion){
         return funcionRepository.findById(idFuncion).orElse(null);
     }
@@ -115,6 +118,7 @@ public class FuncionService {
         return funcionRepository.getButacaCompuestoByFuncionId(idFuncion, time);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Función", detalles = "Consultar funciones de película en semana")
     public List<FuncionDTO> buscarFuncionesPorSemanaConPelicula(LocalDateTime fecha, Long idPelicula, Long idSede){
         LocalDate fechaBase = fecha.toLocalDate();
         LocalDate inicioSemana = fechaBase.with(DayOfWeek.MONDAY);
@@ -125,6 +129,7 @@ public class FuncionService {
         return funcionRepository.buscarFuncionesPorSemanaConPelicula(idPelicula, idSede, inicioSemanaDateTime, finSemanaDateTime);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Función", detalles = "Consultar funciones de sala en semana")
     public List<FuncionDTO> buscarFuncionesPorSemanaConSala(LocalDateTime fecha, Long idSala, Long idSede){
         LocalDate fechaBase = fecha.toLocalDate();
         LocalDate inicioSemana = fechaBase.with(DayOfWeek.MONDAY);
@@ -135,6 +140,7 @@ public class FuncionService {
         return funcionRepository.buscarFuncionesPorSemanaConSala(idSala, idSede, inicioSemanaDateTime, finSemanaDateTime);
     }
 
+    @Auditable(value = TipoAccion.EDITAR, nombreEntidad = "Función", detalles = "Editar datos de función")
     public Optional<Funcion> actualizarFuncion(FuncionDTO dto){
         Optional<Funcion> optional = funcionRepository.findById(dto.getIdFuncion());
         if (!optional.isPresent()) {
@@ -168,6 +174,7 @@ public class FuncionService {
             return Optional.empty();
     }
 
+    @Auditable(value = TipoAccion.CREAR, nombreEntidad = "Función", detalles = "Crear función")
     public Optional<Funcion> save(FuncionDTO dto){
 
         Funcion funcion = new Funcion();
@@ -212,12 +219,14 @@ public class FuncionService {
         return false;
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Función", detalles = "Consultar cantidad de funciones agotadas")
     public Integer funcionesPorProyectar(LocalDateTime fecha){
         LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
         LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();
         return funcionRepository.funcionesPorProyectarEnPeriodoTiempo(inicio, fin);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Función", detalles = "Consultar cantidad de funciones agotadas")
     public Integer funcionesAgotadasEnPeriodoTiempo(LocalDateTime fecha){
         LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
         LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();

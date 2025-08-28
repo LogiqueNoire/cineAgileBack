@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile.services;
+package com.losagiles.CineAgile.services.StrategiaPrecioFuncion;
 
 import jakarta.persistence.Embeddable;
 
@@ -11,10 +11,10 @@ import jakarta.persistence.Embeddable;
  * @author USUARIO
  */
 @Embeddable
-public class PersonaMayor implements Personeable{
+public class PersonaConadis implements Personeable{
     @Override
-    public float precio(float precioAnterior) {
-        return (float) 0.7*precioAnterior;
+    public float precio(float precioAnterior) { 
+        return (float) 0.3*precioAnterior;
     }
     
 }

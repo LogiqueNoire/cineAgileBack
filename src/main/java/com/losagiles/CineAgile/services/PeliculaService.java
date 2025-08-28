@@ -4,6 +4,8 @@ package com.losagiles.CineAgile.services;
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Genero;
 import com.losagiles.CineAgile.entidades.Pelicula;
+import com.losagiles.CineAgile.otros.Auditable;
+import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,7 @@ public class PeliculaService {
         return peliculaRepository.getPeliculasProximamente(fecha);
     }
 
+    @Auditable(value = TipoAccion.CREAR, nombreEntidad = "Pelicula", detalles = "Agregar película")
     public Pelicula agregarPelicula(Pelicula pelicula) {
         return peliculaRepository.save(pelicula);
     }
@@ -89,6 +92,7 @@ public class PeliculaService {
 
     public List<NombreDTO> getNombresPeliculas(Long idSede) { return peliculaRepository.getNombresPeliculas(idSede); }
 
+    @Auditable(value = TipoAccion.EDITAR, nombreEntidad = "Pelicula", detalles = "Editar datos de película")
     @Transactional
     public PatchPeliculaStatus editarPelicula(PatchPeliculaRequest patchPeliculaRequest) {
         try {
@@ -168,14 +172,17 @@ public class PeliculaService {
 
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Varias", detalles = "Consultar ventas de un mes")
     public List<Object[]> obtenerVentasMensuales(){
         return peliculaRepository.obtenerVentasMensuales();
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Varias", detalles = "Consultar películas más taquilleras")
     public List<Object[]> obtenerPeliculasMasTaquillerasDeMes(int mes){
         return peliculaRepository.obtenerPeliculasMasTaquillerasDeMes(mes);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Entradas", detalles = "Consultar películas y ventas en periodo")
     public List<Pelicula> obtenerPeliculasConVentasEnPeriodoTiempo(LocalDateTime fecha){
         LocalDateTime inicioSemana = fecha.with(DayOfWeek.MONDAY).toLocalDate().atStartOfDay();
         LocalDateTime finSemana = inicioSemana.plusDays(6).toLocalDate().atTime(LocalTime.MAX);

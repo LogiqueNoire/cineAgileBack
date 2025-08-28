@@ -2,6 +2,8 @@ package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.entidades.Genero;
+import com.losagiles.CineAgile.otros.Auditable;
+import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.repository.GeneroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ public class GeneroService {
         return generoRepository.findAll();
     }
 
+    @Auditable(value = TipoAccion.CREAR, nombreEntidad = "Género", detalles = "Crear género")
     public Genero save(String nombre) {
         if(generoRepository.findByNombre(nombre) == null) {
             Genero genero = new Genero();
@@ -27,6 +30,7 @@ public class GeneroService {
         }
     }
 
+    @Auditable(value = TipoAccion.EDITAR, nombreEntidad = "Género", detalles = "Crear género global")
     public Genero editar(NombreDTO dto) {
         List<Genero> otras = generoRepository.findAllByNombre(dto.getNombre());
         System.out.println(dto.getId());

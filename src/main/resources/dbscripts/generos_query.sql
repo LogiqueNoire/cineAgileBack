@@ -1,0 +1,15 @@
+INSERT INTO "cine-dev".genero (id, nombre) VALUES
+(1, 'Acción'),
+(2, 'Aventura'),
+(3, 'Animación'),
+(4, 'Comedia'),
+(5, 'Drama'),
+(6, 'Fantasía'),
+(7, 'Ciencia Ficción'),
+(8, 'Terror'),
+(9, 'Suspense'),
+(10, 'Romance'),
+(11, 'Musical'),
+(12, 'Documental'),
+(13, 'Bélico'),
+(14, 'Historia');

@@ -6,9 +6,8 @@ package com.losagiles.CineAgile.entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.losagiles.CineAgile.services.Categorizable;
-import com.losagiles.CineAgile.services.Dimensionable;
-import com.losagiles.CineAgile.services.Personeable;
+import com.losagiles.CineAgile.services.StrategiaPrecioFuncion.Categorizable;
+import com.losagiles.CineAgile.services.StrategiaPrecioFuncion.Dimensionable;
 import jakarta.persistence.*;
 import lombok.Data;
 

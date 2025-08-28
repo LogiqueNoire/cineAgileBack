@@ -1,26 +1,26 @@
 -- Sedes
 
 INSERT INTO "cine-dev".sede (id, activo, nombre) VALUES
-(1, TRUE, 'CineCentro Lima - San Isidro'),
-(2, TRUE, 'CineCentro Lima - Miraflores'),
-(3, TRUE, 'CineCentro Lima - MegaPlaza'),
-(4, TRUE, 'CineCentro Lima - Jockey Plaza'),
-(5, TRUE, 'CineCentro Arequipa - Yanahuara'),
-(6, TRUE, 'CineCentro Arequipa - Mall Aventura'),
-(7, TRUE, 'CineCentro Trujillo - Real Plaza'),
-(8, TRUE, 'CineCentro Trujillo - Mall Aventura'),
-(9, TRUE, 'CineCentro Cusco - Centro Histórico'),
-(10,TRUE,  'CineCentro Cusco - Real Plaza'),
-(11,TRUE,  'CineCentro Piura - Open Plaza'),
-(12,TRUE,  'CineCentro Chiclayo - Mall Aventura'),
-(13,TRUE,  'CineCentro Iquitos - Plaza 28 de Julio'),
-(14,TRUE,  'CineCentro Huancayo - Real Plaza'),
-(15,TRUE,  'CineCentro Tacna - Centro Cívico'),
-(16,TRUE,  'CineCentro Puno - Plaza Mayor'),
-(17,TRUE,  'CineCentro Juliaca - Plaza San Román'),
-(18,TRUE,  'CineCentro Huaraz - Plaza de Armas'),
-(19,TRUE,  'CineCentro Tarapoto - Centro'),
-(20,TRUE,  'CineCentro Cajamarca - El Quinde');
+(1, TRUE, 'CineAgile Lima - San Isidro'),
+(2, TRUE, 'CineAgile Lima - Miraflores'),
+(3, TRUE, 'CineAgile Lima - MegaPlaza'),
+(4, TRUE, 'CineAgile Lima - Jockey Plaza'),
+(5, TRUE, 'CineAgile Arequipa - Yanahuara'),
+(6, TRUE, 'CineAgile Arequipa - Mall Aventura'),
+(7, TRUE, 'CineAgile Trujillo - Real Plaza'),
+(8, TRUE, 'CineAgile Trujillo - Mall Aventura'),
+(9, TRUE, 'CineAgile Cusco - Centro Histórico'),
+(10,TRUE,  'CineAgile Cusco - Real Plaza'),
+(11,TRUE,  'CineAgile Piura - Open Plaza'),
+(12,TRUE,  'CineAgile Chiclayo - Mall Aventura'),
+(13,TRUE,  'CineAgile Iquitos - Plaza 28 de Julio'),
+(14,TRUE,  'CineAgile Huancayo - Real Plaza'),
+(15,TRUE,  'CineAgile Tacna - Centro Cívico'),
+(16,TRUE,  'CineAgile Puno - Plaza Mayor'),
+(17,TRUE,  'CineAgile Juliaca - Plaza San Román'),
+(18,TRUE,  'CineAgile Huaraz - Plaza de Armas'),
+(19,TRUE,  'CineAgile Tarapoto - Centro'),
+(20,TRUE,  'CineAgile Cajamarca - El Quinde');
 
 -- Salas
 

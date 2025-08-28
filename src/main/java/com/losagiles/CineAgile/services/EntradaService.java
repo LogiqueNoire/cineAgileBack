@@ -6,6 +6,8 @@ package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.*;
+import com.losagiles.CineAgile.otros.Auditable;
+import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.EntradaRepository;
 
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 
 import com.losagiles.CineAgile.repository.SalaRepository;
 import com.losagiles.CineAgile.seguridad.AESCipher;
+import com.losagiles.CineAgile.services.StrategiaPrecioFuncion.FuncionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -258,18 +261,21 @@ public class EntradaService {
         return new ResRegistrarEntrada(null, ResRegEntradaStatusCode.OK_LIBERAR);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Entradas", detalles = "Consultar entradas vendidas en periodo")
     public int entradasVendidasEnPeriodoTiempo(LocalDateTime fecha){
         LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
         LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();
         return entradaRepository.entradasVendidasEnPeriodoTiempo(inicio, fin);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Entradas", detalles = "Consultar ventas en periodo")
     public BigDecimal ventasEnPeriodoTiempo(LocalDateTime fecha) {
         LocalDateTime inicio = fecha.toLocalDate().atStartOfDay();
         LocalDateTime fin = fecha.toLocalDate().plusDays(1).atStartOfDay();
         return entradaRepository.ventasEnPeriodoTiempo(inicio, fin);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Varias", detalles = "Consultar desempeño semanal (ventas) de pelicula en periodo")
     public LinkedList<DiaHoraVentaDTO> getDesempenoSemanal(Long idPelicula, LocalDateTime fecha) {
         LocalDateTime inicioSemana = fecha.with(DayOfWeek.MONDAY).toLocalDate().atStartOfDay();
         LocalDateTime finSemana = inicioSemana.plusDays(6).toLocalDate().atTime(LocalTime.MAX);

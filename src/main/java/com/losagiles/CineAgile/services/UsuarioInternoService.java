@@ -3,6 +3,8 @@ package com.losagiles.CineAgile.services;
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.entidades.Usuario;
+import com.losagiles.CineAgile.otros.Auditable;
+import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.repository.SedeRepository;
 import com.losagiles.CineAgile.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ public class UsuarioInternoService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Auditable(value = TipoAccion.CREAR, nombreEntidad = "Usuario", detalles = "Crear usuario")
     public ResCrearUsuario crearUsuario(SolicitudCrearUsuario solicitudCrearUsuario) {
         Usuario existente = usuarioRepository.findByUsername(solicitudCrearUsuario.username()).orElse(null);
         if (existente != null)
@@ -62,10 +65,12 @@ public class UsuarioInternoService {
         }
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Usuario", detalles = "Consultar usuarios")
     public List<UsuarioTablaDTO> mostrarUsuariosEnTabla() {
         return usuarioRepository.findAllUsuarioTablaDTO();
     }
 
+    @Auditable(value = TipoAccion.EDITAR, nombreEntidad = "Usuario", detalles = "Cambiar contraseña")
     public ResCambiarContraErrorCode cambiarContra(SolicitudCambiarContra solicitudCambiarContra) {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Usuario usuario = usuarioRepository.findByUsername(username).orElse(null);

@@ -4,6 +4,8 @@ import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.otros.Auditable;
+import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.repository.ButacaRepository;
 import com.losagiles.CineAgile.repository.SalaRepository;
 import com.losagiles.CineAgile.repository.SedeRepository;
@@ -27,6 +29,7 @@ public class SalaService {
     @Autowired
     private ButacaRepository butacaRepository;
 
+    @Auditable(value = TipoAccion.CREAR, nombreEntidad = "Sala", detalles = "Crear una nueva sala")
     @Transactional
     public ResCrearSala crearSala(SolicitudCrearSala solicitudCrearSala) {
         try {
@@ -71,6 +74,7 @@ public class SalaService {
         }
     }
 
+    @Auditable(value = TipoAccion.EDITAR, nombreEntidad = "Sala", detalles = "Editar sala")
     @Transactional
     public ResEditarSalaResultCode editarSala(SolicitudEditarSala solicitudEditarSala) {
         String categoria = solicitudEditarSala.categoria().toLowerCase(Locale.ROOT);
@@ -135,6 +139,7 @@ public class SalaService {
         return salaRepository.existsBySedeAndCodigoSala(sede, codigoSala);
     }
 
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Sala", detalles = "Consultar estado de sala")
     public Sala establecerEstadoSala(Long idSala, boolean activo) {
         Sala sala = salaRepository.findById(idSala).orElse(null);
 

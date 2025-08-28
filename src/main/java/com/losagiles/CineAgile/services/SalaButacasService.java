@@ -36,10 +36,6 @@ public class SalaButacasService {
         return butacas;
     }
 
-    public Sala save(Sala sala){
-        return salaRepository.save(sala);
-    }
-
     public List<Sala> getSalasPorSede(Long idSede){
         return salaRepository.findAllBySede_IdAndActivoTrue(idSede);
     }

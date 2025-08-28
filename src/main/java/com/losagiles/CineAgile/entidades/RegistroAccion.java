@@ -19,7 +19,6 @@ public class RegistroAccion {
         private Long idEntidad; //el id de la entidad afectada
         private String ip;
 
-        @Lob
         private String detalles;
 
         @Column(nullable = false, updatable = false)

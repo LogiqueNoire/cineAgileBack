@@ -2,7 +2,7 @@ package com.losagiles.CineAgile.rest.Intranet;
 
 import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
-import com.losagiles.CineAgile.services.FuncionService;
+import com.losagiles.CineAgile.services.StrategiaPrecioFuncion.FuncionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
