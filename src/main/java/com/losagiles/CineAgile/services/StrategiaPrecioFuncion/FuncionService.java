@@ -84,7 +84,6 @@ public class FuncionService {
         return funciones.stream().filter(funcion -> fecha.equals(funcion.getFechaHoraInicio().toLocalDate())).toList();
     }
 
-    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Función", detalles = "Consultar funciones de película agrupadas por sede")
     public List<FuncionesPorSedeDTO> mostrarFuncionesAgrupadasPorSede(Long idPelicula, LocalDateTime fecha) {
         List<FuncionDTO> funciones = funcionRepository.getFuncionesByPeliculaId(idPelicula);
 

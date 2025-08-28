@@ -3,6 +3,8 @@ package com.losagiles.CineAgile.rest.Intranet;
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.otros.Auditable;
+import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.services.SalaButacasService;
 import com.losagiles.CineAgile.services.SalaService;
 import com.losagiles.CineAgile.services.SedeService;
@@ -86,6 +88,7 @@ public class SedeSalaIntranetController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Auditable(value = TipoAccion.ALTERNAR_ESTADO, nombreEntidad = "Sede", detalles = "Alternar estado de sede")
     @PatchMapping("activarDesactivarSede")
     public ResponseEntity<?> activarDesactivar(@RequestBody NombreDTO dto){
         Sede sede = sedeService.findById(dto.getId()).get();

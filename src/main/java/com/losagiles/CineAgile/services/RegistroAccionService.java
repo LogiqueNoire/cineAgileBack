@@ -20,7 +20,7 @@ public class RegistroAccionService {
         return registroAccionRepository.save(accion);
     }
 
-    @Auditable(value = TipoAccion.CREAR, nombreEntidad = "Auditoría", detalles = "Consultar registros de auditoría")
+    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Auditoría", detalles = "Consultar registros de auditoría")
     public List<RegistroAccion> listarAcciones() {
         return registroAccionRepository.findAll();
     }

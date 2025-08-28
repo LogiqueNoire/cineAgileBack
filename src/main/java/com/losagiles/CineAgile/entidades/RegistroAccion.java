@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "auditoria")
@@ -22,6 +24,6 @@ public class RegistroAccion {
         private String detalles;
 
         @Column(nullable = false, updatable = false)
-        private LocalDateTime fecha = LocalDateTime.now();
+        private LocalDateTime fecha = ZonedDateTime.now(ZoneId.of("America/Lima")).toLocalDateTime();
 
 }

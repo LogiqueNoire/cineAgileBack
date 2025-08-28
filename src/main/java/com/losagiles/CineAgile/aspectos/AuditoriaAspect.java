@@ -51,7 +51,7 @@ public class AuditoriaAspect {
         registroAccion.setEntidadAfectada(nombreEntidad);
         registroAccion.setIdEntidad(idEntidad);
         registroAccion.setDetalles(detalles);
-        registroAccion.setIp("127.0.0.1"); // o obtener dinámicamente si tienes HttpServletRequest
+        registroAccion.setIp(""); // o obtener dinámicamente si tienes HttpServletRequest
 
         registroAccionRepository.save(registroAccion);
     }

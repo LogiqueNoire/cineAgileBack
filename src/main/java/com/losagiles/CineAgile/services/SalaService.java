@@ -139,7 +139,7 @@ public class SalaService {
         return salaRepository.existsBySedeAndCodigoSala(sede, codigoSala);
     }
 
-    @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Sala", detalles = "Consultar estado de sala")
+    @Auditable(value = TipoAccion.ALTERNAR_ESTADO, nombreEntidad = "Sala", detalles = "Alternar estado de sala")
     public Sala establecerEstadoSala(Long idSala, boolean activo) {
         Sala sala = salaRepository.findById(idSala).orElse(null);
 
