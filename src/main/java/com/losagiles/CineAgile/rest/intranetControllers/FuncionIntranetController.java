@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.Intranet;
+package com.losagiles.CineAgile.rest.intranetControllers;
 
 import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;

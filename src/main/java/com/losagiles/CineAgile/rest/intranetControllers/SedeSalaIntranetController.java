@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.Intranet;
+package com.losagiles.CineAgile.rest.intranetControllers;
 
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Sala;
@@ -47,7 +47,7 @@ public class SedeSalaIntranetController {
     }
 
     @GetMapping ("/soloSedes")
-    private ResponseEntity<List<NombreDTO>> getNombresSedesActivas(){
+    public ResponseEntity<List<NombreDTO>> getNombresSedesActivas(){
         return ResponseEntity.ok(sedeService.getNombresSedesActivas());
     }
 
@@ -102,7 +102,7 @@ public class SedeSalaIntranetController {
     }
 
     @GetMapping ("/salasPorSede")
-    private ResponseEntity<List<Sala>> getSalasPorSede(@RequestParam Long idSede){
+    public ResponseEntity<List<Sala>> getSalasPorSede(@RequestParam Long idSede){
         return ResponseEntity.ok(salaButacasService.getSalasPorSede(idSede));
     }
 
