@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/intranet/registroaccion")
+@RequestMapping("api/v1/intranet/registrosacciones")
 public class RegistroAccionIntranetController {
     @Autowired
     RegistroAccionService registroAccionService;
 
-    @GetMapping("/get")
+    @GetMapping
     private ResponseEntity<?> getAllRegistroAccion(){
         List<RegistroAccion> result = registroAccionService.listarAcciones();
         if(result != null){

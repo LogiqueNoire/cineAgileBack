@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @author CARDENAS IGLESIAS HUGO AUGUSTO
  */
 @RestController
-@RequestMapping("/sede")
+@RequestMapping("/api/v1/sedes")
 public class SedeREST {
     @Autowired
     private SedeService sedeService;

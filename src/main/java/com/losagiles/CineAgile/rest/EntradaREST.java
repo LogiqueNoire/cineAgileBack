@@ -22,14 +22,23 @@ import org.springframework.web.bind.annotation.*;
  * @author JOSE
  */
 @RestController
-@RequestMapping("/entrada")
+@RequestMapping("/api/v1/entradas")
 public class EntradaREST {
 
     @Autowired
     private EntradaService entradaService;
 
-    @GetMapping("/todas")
-    private ResponseEntity<List<Entrada>> getAllEntradas (){
+    @GetMapping
+    private ResponseEntity<?> getEntradas(@RequestParam String token){
+        if(token!=null){
+            EntradasCompradasDTO entradasCompradasDTO = entradaService.findEntrada(token);
+            if (entradasCompradasDTO == null) {
+                return ResponseEntity
+                        .status(HttpStatus.NOT_FOUND)
+                        .body("No se encontró ninguna entrada con ese token.");
+            }
+            return ResponseEntity.ok(entradasCompradasDTO);
+        }
         return ResponseEntity.ok(entradaService.listarEntradas());
     }
 
@@ -39,18 +48,6 @@ public class EntradaREST {
         return ResponseEntity
                 .status(res.status().getHttpStatus())
                 .body(new ResComprarEntrada(res.entradasCompradas(), res.status().getDescripcion()));
-    }
-
-    @GetMapping
-    public ResponseEntity<?> findEntrada(@RequestParam String token){
-
-        EntradasCompradasDTO entradasCompradasDTO = entradaService.findEntrada(token);
-        if (entradasCompradasDTO == null) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("No se encontró ninguna entrada con ese token.");
-        }
-        return ResponseEntity.ok(entradasCompradasDTO);
     }
 
     @PostMapping("/lock")

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/intranet")
+@RequestMapping("/api/v1/intranet/peliculas")
 public class PeliculaIntranetController {
     @Autowired
     PeliculaService peliculaService;
@@ -30,24 +30,25 @@ public class PeliculaIntranetController {
     @Autowired
     GeneroService generoService;
 
-    @GetMapping("/peliculas")
-    public List<PeliculaDTO> obtenerPeliculasConEstado(@RequestParam String fechaReal) {
-        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
-        System.out.println(fecha);
-        return peliculaService.obtenerPeliculasConEstado(fecha);
+    @GetMapping
+    public ResponseEntity<List<?>> obtenerPeliculasConEstado(@RequestParam String fecha,
+                                                             @RequestParam Long idSede) {
+
+        //Caso 1: devolver con estado usando fecha /peliculas?idSede=
+        if (idSede != null){
+            ResponseEntity.ok(peliculaService.getNombresPeliculas(idSede));
+        }
+        //Caso 2: devolver con estado usando fecha /peliculas?fecha=
+        if(fecha != null) {
+            LocalDateTime fechaReal = LocalDateTime.parse(fecha.replace("Z", ""));
+            System.out.println(fechaReal);
+            return ResponseEntity.ok(peliculaService.obtenerPeliculasConEstado(fechaReal));
+        }
+        //Caso 3: todas las peliculas /peliculas
+        return ResponseEntity.ok(peliculaService.findAll());
     }
 
-    @GetMapping("/soloPeliculas")
-    public List<Pelicula> findAll() {
-        return peliculaService.findAll();
-    }
-
-    @GetMapping ("/peliculasPorSede")
-    private ResponseEntity<List<NombreDTO>> getNombresPeliculas(@RequestParam Long idSede){
-        return ResponseEntity.ok(peliculaService.getNombresPeliculas(idSede));
-    }
-
-    @PostMapping("/peliculas/agregar")
+    @PostMapping
     private ResponseEntity<Pelicula> addPelicula(@RequestBody PeliculaDTO dto) {
         Pelicula pelicula = new Pelicula();
 
@@ -78,13 +79,13 @@ public class PeliculaIntranetController {
         return ResponseEntity.ok(pelicula);
     }
 
-    @PatchMapping("/pelicula")
+    @PatchMapping
     public ResponseEntity<String> patchPelicula(@RequestBody PatchPeliculaRequest patchPeliculaRequest) {
         PatchPeliculaStatus status = peliculaService.editarPelicula(patchPeliculaRequest);
         return ResponseEntity.status(status.getHttpStatus()).body(status.getDescripcion());
     }
 
-    @GetMapping ("/obtenerPeliculasMasTaquillerasDeMes")
+    @GetMapping ("/taquilleras")
     private ResponseEntity<?> obtenerPeliculasMasTaquillerasDeMes(@RequestParam int mes){
         List<Object[]> resultado = peliculaService.obtenerPeliculasMasTaquillerasDeMes(mes);
         if (resultado != null)
@@ -93,20 +94,11 @@ public class PeliculaIntranetController {
             return ResponseEntity.status(404).body("Error");
     }
 
-    @GetMapping("/getPeliculasConVentas")
-    private ResponseEntity<?> obtenerPeliculasConVentasEnPeriodoTiempo(@RequestParam String fechaReal){
-        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
-        List<Pelicula> resultado = peliculaService.obtenerPeliculasConVentasEnPeriodoTiempo(fecha.toLocalDate().atStartOfDay());
+    @GetMapping("/ventas")
+    private ResponseEntity<?> obtenerPeliculasConVentasEnPeriodoTiempo(@RequestParam String fecha){
+        LocalDateTime fechaReal = LocalDateTime.parse(fecha.replace("Z", ""));
+        List<Pelicula> resultado = peliculaService.obtenerPeliculasConVentasEnPeriodoTiempo(fechaReal.toLocalDate().atStartOfDay());
         return ResponseEntity.ok(resultado);
-    }
-
-    @GetMapping ("/obtenerVentasMensuales")
-    private ResponseEntity<?> obtenerVentasMensuales(){
-        List<Object[]> resultado = peliculaService.obtenerVentasMensuales();
-        if (resultado != null)
-            return ResponseEntity.ok(resultado);
-        else
-            return ResponseEntity.status(404).body("Error");
     }
 
 }

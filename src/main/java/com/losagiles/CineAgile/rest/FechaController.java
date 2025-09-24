@@ -19,7 +19,7 @@ public class FechaController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @GetMapping("/fecha-actual")
+    @GetMapping("/api/v1/fecha-actual")
     public String obtenerFechaRealFormateada() {
         try {
             HttpHeaders headers = new HttpHeaders();

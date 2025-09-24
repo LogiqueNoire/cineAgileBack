@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/pelicula")
+@RequestMapping("/api/v1/peliculas")
 public class PeliculaREST {
     @Autowired
     PeliculaService peliculaService;

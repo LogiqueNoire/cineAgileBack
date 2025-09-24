@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/intranet/desarrollador")
+@RequestMapping("/api/v1/intranet/dev")
 public class DesarrolladorIntranetController {
     @Autowired
     private ScriptService scriptService;

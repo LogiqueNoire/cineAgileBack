@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/intranet")
+@RequestMapping("/api/v1/intranet/usuarios")
 public class UsuarioInternoIntranetController {
     @Autowired
     UsuarioInternoService usuarioInternoService;
 
-    @GetMapping("/user")
+    @GetMapping("/perfil")
     public ResponseEntity<String> getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -26,12 +26,12 @@ public class UsuarioInternoIntranetController {
         return ResponseEntity.ok((String) auth.getPrincipal());
     }
 
-    @GetMapping("/usuario")
+    @GetMapping
     public ResponseEntity<List<UsuarioTablaDTO>> getUsuarios() {
         return ResponseEntity.ok(usuarioInternoService.mostrarUsuariosEnTabla());
     }
 
-    @PostMapping("/usuario")
+    @PostMapping
     public ResponseEntity<String> crearUsuario(@RequestBody SolicitudCrearUsuario solicitudCrearUsuario) {
         ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
 
@@ -49,7 +49,7 @@ public class UsuarioInternoIntranetController {
         return ResponseEntity.status(201).body("¡Usuario creado con exito!");
     }
 
-    @PutMapping("/nuevacontra")
+    @PatchMapping("/nuevacontra")
     public ResponseEntity<String> setNuevaContra(@RequestBody SolicitudCambiarContra solicitudCambiarContra) {
         ResCambiarContraErrorCode res = usuarioInternoService.cambiarContra(solicitudCambiarContra);
 

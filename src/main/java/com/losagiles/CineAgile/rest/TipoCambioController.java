@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/tipocambio")
+@RequestMapping("/api/v1/tipo-cambio")
 public class TipoCambioController {
     @Value("${sunat.token}")
     private String sunatToken;

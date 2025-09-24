@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  * @author USUARIO
  */
 @RestController
-@RequestMapping("/funcion")
+@RequestMapping("/api/v1/funciones")
 public class FuncionREST {
 
     @Autowired
@@ -45,7 +45,7 @@ public class FuncionREST {
         return ResponseEntity.ok(funcionService.mostrarFuncionesDePelicula(idPelicula));
     }
      */
-    @GetMapping("/pelicula/{idPelicula}")
+    @GetMapping("/{idPelicula}")
     private ResponseEntity<List<FuncionesPorSedeDTO>> getFuncionesAgrupadasPelicula(
             @PathVariable Long idPelicula,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha) {
@@ -53,9 +53,9 @@ public class FuncionREST {
         return ResponseEntity.ok(funcionService.mostrarFuncionesAgrupadasPorSede(idPelicula, fecha));
     }
 
-    @GetMapping("/butacas/{idFuncion}")
-    private ResponseEntity<List<ButacaFuncionDTO>> getButacasDeFuncion(@PathVariable Long idFuncion) {
-        return ResponseEntity.ok(funcionService.mostrarButacasDeUnaFuncion(idFuncion));
+    @GetMapping("/{funcion}/butacas")
+    private ResponseEntity<List<ButacaFuncionDTO>> getButacasDeFuncion(@PathVariable Long funcion) {
+        return ResponseEntity.ok(funcionService.mostrarButacasDeUnaFuncion(funcion));
     }
     
     @GetMapping("/precios")
@@ -63,17 +63,17 @@ public class FuncionREST {
         return funcionService.precio(funcionService.getFuncionPorId(idFuncion), persona);
     }
 
-    @GetMapping("/cantidadButacasDisponibles")
-    private int consultarCantidadButacasDisponibles(@RequestParam Long idFuncion){
-        return salaButacasService.consultarCantidadButacasDisponibles(idFuncion);
+    @GetMapping("/cantidad-butacas-disponibles")
+    private int consultarCantidadButacasDisponibles(@RequestParam Long funcion){
+        return salaButacasService.consultarCantidadButacasDisponibles(funcion);
     }
 
-    @GetMapping("/disponibilidad/{id}")
-    public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable Long id) {
-        boolean res = funcionService.estaDisponible(id);
+    @GetMapping("/{funcion}/disponibilidad")
+    public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable Long funcion) {
+        boolean res = funcionService.estaDisponible(funcion);
         if (!res)
             return ResponseEntity.status(423).body(false);
-        return ResponseEntity.ok(funcionService.estaDisponible(id));
+        return ResponseEntity.ok(funcionService.estaDisponible(funcion));
     }
     
     

@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/genero")
+@RequestMapping("/api/v1/generos")
 public class GeneroController {
     @Autowired
     GeneroService generoService;
 
-    @GetMapping("/pelicula")
-    public ResponseEntity<List<Genero>> getGenerosDePelicula(@RequestParam Long peliculaId){
-        return ResponseEntity.ok(generoService.findAllByPeliculaId(peliculaId));
+    @GetMapping
+    public ResponseEntity<List<Genero>> getGenerosDePelicula(@RequestParam Long pelicula){
+        return ResponseEntity.ok(generoService.findAllByPeliculaId(pelicula));
     }
 }

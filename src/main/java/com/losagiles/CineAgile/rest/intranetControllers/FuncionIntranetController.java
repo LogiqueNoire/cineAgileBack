@@ -14,31 +14,13 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/intranet")
+@RequestMapping("/api/v1/intranet/funciones")
 public class FuncionIntranetController {
     @Autowired
     FuncionService funcionService;
 
-    @GetMapping("/buscarFuncionesPorSemanaConPelicula")
-    private ResponseEntity<List<FuncionDTO>>
-    buscarFuncionesPorSemanaConPelicula(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha,
-            @RequestParam Long idPelicula,
-            @RequestParam Long idSede) {
-        return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConPelicula(fecha, idPelicula, idSede));
-    }
-
-    @GetMapping ("/buscarFuncionesPorSemanaConSala")
-    private ResponseEntity<List<FuncionDTO>>
-    buscarFuncionesPorSemanaConSala(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha,
-            @RequestParam Long idSala,
-            @RequestParam Long idSede){
-        return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConSala(fecha, idSala, idSede));
-    }
-
-    @PatchMapping("/actualizarFuncion")
-    public ResponseEntity<?> actualizarFuncion(@RequestBody FuncionDTO funcionDTO){
+    @PatchMapping
+    public ResponseEntity<?> patchFuncion(@RequestBody FuncionDTO funcionDTO){
         if(funcionDTO.getIdFuncion() == null ||
                 funcionDTO.getFechaHoraInicio() == null ||
                 funcionDTO.getDimension () == null ||
@@ -52,8 +34,8 @@ public class FuncionIntranetController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Función no encontrada"));
     }
 
-    @PostMapping("/crearFuncion")
-    public ResponseEntity<?> save(@RequestBody FuncionDTO funcionDTO){
+    @PostMapping
+    public ResponseEntity<?> postFuncion(@RequestBody FuncionDTO funcionDTO){
         if(funcionDTO.getFechaHoraInicio() == null ||
                 funcionDTO.getDimension () == null ||
                 funcionDTO.getPrecioBase() == 0 ||
@@ -66,23 +48,38 @@ public class FuncionIntranetController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping ("/getFuncionesPorProyectar")
-    private ResponseEntity<?> getFuncionesPorProyectar(@RequestParam String fechaReal){
-        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
-        Integer resultado = funcionService.funcionesPorProyectar(fecha);
-        if (resultado != null)
-            return ResponseEntity.ok(resultado);
-        else
-            return ResponseEntity.status(404).body("Error");
+    @GetMapping
+    private ResponseEntity<?> getFunciones(@RequestParam String fecha,
+                                           @RequestParam String estado){
+        LocalDateTime fechaReal = LocalDateTime.parse(fecha.replace("Z", ""));
+        if(estado.compareToIgnoreCase("por_proyectar") == 0) {
+            Integer resultado = funcionService.funcionesPorProyectar(fechaReal);
+            if (resultado != null)
+                return ResponseEntity.ok(resultado);
+            else
+                return ResponseEntity.status(404).body("Error");
+        }
+        if(estado.compareToIgnoreCase("agotadas") == 0) {
+            Integer resultado = funcionService.funcionesAgotadasEnPeriodoTiempo(fechaReal);
+            if (resultado != null)
+                return ResponseEntity.ok(resultado);
+            else
+                return ResponseEntity.status(404).body("Error");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Datos incompletos");
     }
 
-    @GetMapping ("/getFuncionesAgotadas")
-    private ResponseEntity<?> getFuncionesAgotadas(@RequestParam String fechaReal){
-        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
-        Integer resultado = funcionService.funcionesAgotadasEnPeriodoTiempo(fecha);
-        if (resultado != null)
-            return ResponseEntity.ok(resultado);
-        else
-            return ResponseEntity.status(404).body("Error");
+    @GetMapping("/porSemana")
+    private ResponseEntity<?> buscarFuncionesPorSemanaConPelicula(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha,
+            @RequestParam Long idSede,
+            @RequestParam Long pelicula,
+            @RequestParam Long sala) {
+        if(pelicula!=null)
+            return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConPelicula(fecha, pelicula, idSede));
+        if(sala!=null)
+            return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConSala(fecha, sala, idSede));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Faltan parámetros");
+
     }
 }

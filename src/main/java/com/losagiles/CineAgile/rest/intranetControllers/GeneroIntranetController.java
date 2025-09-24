@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/intranet")
+@RequestMapping("/api/v1/intranet/generos")
 public class GeneroIntranetController {
     @Autowired
     GeneroService generoService;
 
-    @GetMapping("/generos")
+    @GetMapping
     public ResponseEntity<List<Genero>> getGeneros(){
         return ResponseEntity.ok(generoService.findAll());
     }
 
-    @PostMapping("/generos/agregar")
+    @PostMapping
     public ResponseEntity<?> saveGenero(@RequestBody String nombre){
         Genero g = generoService.save(nombre);
         if(g != null){
@@ -29,7 +29,7 @@ public class GeneroIntranetController {
         return ResponseEntity.status(422).body("Error al guardar");
     }
 
-    @PatchMapping("/generos/editar")
+    @PatchMapping
     public ResponseEntity<?> editarGenero(@RequestBody NombreDTO dto){
         Genero g = generoService.editar(dto);
         if(g != null){
