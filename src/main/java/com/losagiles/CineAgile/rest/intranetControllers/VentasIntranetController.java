@@ -2,6 +2,7 @@ package com.losagiles.CineAgile.rest.intranetControllers;
 
 import com.losagiles.CineAgile.dto.DiaHoraVentaDTO;
 import com.losagiles.CineAgile.services.EntradaService;
+import com.losagiles.CineAgile.services.PeliculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,9 @@ import java.util.Optional;
 public class VentasIntranetController {
     @Autowired
     EntradaService entradaService;
+
+    @Autowired
+    PeliculaService peliculaService;
 
     @GetMapping("/entradas-vendidas")
     private ResponseEntity<?> entradasVendidasEnPeriodoTiempo(@RequestParam String fechaReal){
