@@ -31,12 +31,12 @@ public class PeliculaIntranetController {
     GeneroService generoService;
 
     @GetMapping
-    public ResponseEntity<List<?>> obtenerPeliculasConEstado(@RequestParam String fecha,
-                                                             @RequestParam Long idSede) {
+    public ResponseEntity<List<?>> obtenerPeliculasConEstado(@RequestParam(required = false) String fecha,
+                                                             @RequestParam(required = false) Long idSede) {
 
         //Caso 1: devolver con estado usando fecha /peliculas?idSede=
         if (idSede != null){
-            ResponseEntity.ok(peliculaService.getNombresPeliculas(idSede));
+            return ResponseEntity.ok(peliculaService.getNombresPeliculas(idSede));
         }
         //Caso 2: devolver con estado usando fecha /peliculas?fecha=
         if(fecha != null) {
