@@ -73,8 +73,8 @@ public class FuncionIntranetController {
     private ResponseEntity<?> buscarFuncionesPorSemanaConPelicula(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime fecha,
             @RequestParam Long idSede,
-            @RequestParam Long pelicula,
-            @RequestParam Long sala) {
+            @RequestParam(required = false) Long pelicula,
+            @RequestParam(required = false) Long sala) {
         if(pelicula!=null)
             return ResponseEntity.ok(funcionService.buscarFuncionesPorSemanaConPelicula(fecha, pelicula, idSede));
         if(sala!=null)
