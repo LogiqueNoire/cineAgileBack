@@ -53,28 +53,26 @@ public class FuncionREST {
         return ResponseEntity.ok(funcionService.mostrarFuncionesAgrupadasPorSede(idPelicula, fecha));
     }
 
-    @GetMapping("/{funcion}/butacas")
-    private ResponseEntity<List<ButacaFuncionDTO>> getButacasDeFuncion(@PathVariable Long funcion) {
-        return ResponseEntity.ok(funcionService.mostrarButacasDeUnaFuncion(funcion));
+    @GetMapping("/{idFuncion}/butacas")
+    private ResponseEntity<List<ButacaFuncionDTO>> getButacasDeFuncion(@PathVariable Long idFuncion) {
+        return ResponseEntity.ok(funcionService.mostrarButacasDeUnaFuncion(idFuncion));
     }
-    
+
+    @GetMapping("/{idFuncion}/butacas/disponibles")
+    private int consultarCantidadButacasDisponibles(@RequestParam Long idFuncion){
+        return salaButacasService.consultarCantidadButacasDisponibles(idFuncion);
+    }
+
+    @GetMapping("/{idFuncion}/disponibilidad")
+    public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable Long idFuncion) {
+        boolean res = funcionService.estaDisponible(idFuncion);
+        if (!res)
+            return ResponseEntity.status(423).body(false);
+        return ResponseEntity.ok(funcionService.estaDisponible(idFuncion));
+    }
+
     @GetMapping("/precios")
     private float getPrecio(@RequestParam(required = false) Long idFuncion, @RequestParam(required = false) String persona) {
         return funcionService.precio(funcionService.getFuncionPorId(idFuncion), persona);
     }
-
-    @GetMapping("/cantidad-butacas-disponibles")
-    private int consultarCantidadButacasDisponibles(@RequestParam Long funcion){
-        return salaButacasService.consultarCantidadButacasDisponibles(funcion);
-    }
-
-    @GetMapping("/{funcion}/disponibilidad")
-    public ResponseEntity<Boolean> verificarDisponibilidad(@PathVariable Long funcion) {
-        boolean res = funcionService.estaDisponible(funcion);
-        if (!res)
-            return ResponseEntity.status(423).body(false);
-        return ResponseEntity.ok(funcionService.estaDisponible(funcion));
-    }
-    
-    
 }

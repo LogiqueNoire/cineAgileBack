@@ -17,7 +17,7 @@ public class RegistroAccionService {
     private RegistroAccionRepository registroAccionRepository;
 
     public RegistroAccion registrarAccion(RegistroAccion accion) {
-        return registroAccionRepository.save(accion);
+        return registroAccionRepository.saveAndFlush(accion);
     }
 
     @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Auditoría", detalles = "Consultar registros de auditoría")
