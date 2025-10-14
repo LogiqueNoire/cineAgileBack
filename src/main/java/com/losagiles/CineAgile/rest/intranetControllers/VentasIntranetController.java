@@ -26,26 +26,26 @@ public class VentasIntranetController {
     PeliculaService peliculaService;
 
     @GetMapping("/entradas-vendidas")
-    private ResponseEntity<?> entradasVendidasEnPeriodoTiempo(@RequestParam String fechaReal){
-        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
-        Integer resultado = Optional.ofNullable(entradaService.entradasVendidasEnPeriodoTiempo(fecha))
+    private ResponseEntity<?> entradasVendidasEnPeriodoTiempo(@RequestParam String fecha){
+        LocalDateTime fechaReal = LocalDateTime.parse(fecha.replace("Z", ""));
+        Integer resultado = Optional.ofNullable(entradaService.entradasVendidasEnPeriodoTiempo(fechaReal))
                 .orElse(0);
         return ResponseEntity.ok(resultado);
     }
 
     @GetMapping ("/totales-periodo")
-    private ResponseEntity<?> ventasEnPeriodoTiempo(@RequestParam String fechaReal){
-        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
-        BigDecimal resultado = Optional.ofNullable(entradaService.ventasEnPeriodoTiempo(fecha))
+    private ResponseEntity<?> ventasEnPeriodoTiempo(@RequestParam String fecha){
+        LocalDateTime fechaReal = LocalDateTime.parse(fecha.replace("Z", ""));
+        BigDecimal resultado = Optional.ofNullable(entradaService.ventasEnPeriodoTiempo(fechaReal))
                 .orElse(BigDecimal.ZERO);
         return ResponseEntity.ok(resultado);
     }
 
     @GetMapping("/desempeno-semanal")
-    private ResponseEntity<?> getDesempenoSemanal(@RequestParam Long idPelicula, @RequestParam String fechaReal){
-        LocalDateTime fecha = LocalDateTime.parse(fechaReal.replace("Z", ""));
+    private ResponseEntity<?> getDesempenoSemanal(@RequestParam Long idPelicula, @RequestParam String fecha){
+        LocalDateTime fechaReal = LocalDateTime.parse(fecha.replace("Z", ""));
         LinkedList<DiaHoraVentaDTO> resultado = entradaService.getDesempenoSemanal(idPelicula,
-                fecha.toLocalDate().atStartOfDay());
+                fechaReal.toLocalDate().atStartOfDay());
         return ResponseEntity.ok(resultado);
     }
 
