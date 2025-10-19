@@ -59,7 +59,7 @@ public class FuncionREST {
     }
 
     @GetMapping("/{idFuncion}/butacas/disponibles")
-    private int consultarCantidadButacasDisponibles(@RequestParam Long idFuncion){
+    private int consultarCantidadButacasDisponibles(@PathVariable Long idFuncion){
         return salaButacasService.consultarCantidadButacasDisponibles(idFuncion);
     }
 
