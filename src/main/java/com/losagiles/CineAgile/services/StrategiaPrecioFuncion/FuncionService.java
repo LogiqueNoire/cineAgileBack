@@ -91,7 +91,10 @@ public class FuncionService {
         System.out.println("Solicitud recibida para la fecha: " + fecha);
 
         List<FuncionDTO> funcionesFiltradas = funciones.stream()
-                    .filter(funcion -> funcion.getFechaHoraInicio().isAfter(fecha) && funcion.getFechaHoraInicio().getDayOfYear() == fecha.getDayOfYear())
+                    .filter(funcion -> funcion.getFechaHoraInicio().isAfter(fecha) &&
+                            funcion.getFechaHoraInicio().getDayOfYear() == fecha.getDayOfYear() &&
+                            funcion.getFechaHoraInicio().getYear() == fecha.getYear()
+                    )
                 .collect(Collectors.toList());
 
         Map<Long, FuncionesPorSedeDTO> mapa = new LinkedHashMap<>();

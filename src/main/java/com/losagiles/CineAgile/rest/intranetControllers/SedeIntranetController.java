@@ -4,8 +4,6 @@ import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.otros.Auditable;
 import com.losagiles.CineAgile.otros.TipoAccion;
-import com.losagiles.CineAgile.services.SalaButacasService;
-import com.losagiles.CineAgile.services.SalaService;
 import com.losagiles.CineAgile.services.SedeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +18,8 @@ public class SedeIntranetController {
     @Autowired
     SedeService sedeService;
 
-    @Autowired
-    SalaService salaService;
-
-    @Autowired
-    SalaButacasService salaButacasService;
-
     @PostMapping
-    private ResponseEntity<?> addSede(@RequestBody SedeDTO dto) {
+    public ResponseEntity<?> addSede(@RequestBody SedeDTO dto) {
         if (sedeService.existsByNombre(dto.getNombre())) {
             return ResponseEntity.status(409).body("Sede repetida");
         } else {
