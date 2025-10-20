@@ -111,6 +111,7 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
         JOIN "cine-dev".funcion as f on p.id_pelicula = f.id_pelicula
         JOIN "cine-dev".entrada as e on f.id = e.id_funcion
         WHERE EXTRACT(MONTH FROM f.fecha_hora_inicio) = :mes
+        AND EXTRACT(YEAR FROM f.fecha_hora_inicio) = EXTRACT(YEAR FROM CURRENT_DATE)
         GROUP by 2
         ORDER by 1 DESC
         LIMIT 7
