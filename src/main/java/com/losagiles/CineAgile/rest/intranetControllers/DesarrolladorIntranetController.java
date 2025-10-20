@@ -14,7 +14,7 @@ public class DesarrolladorIntranetController {
     private ScriptService scriptService;
 
     @PostMapping("/poblarBD")
-    public ResponseEntity<String> ejecutarScript() {
+    public ResponseEntity<String> poblarBD() {
         try {
             scriptService.poblarBD();
             return ResponseEntity.ok("Script ejecutado correctamente");
