@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
 import com.losagiles.CineAgile.entidades.Genero;
 import com.losagiles.CineAgile.services.GeneroService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/generos")
+@RequestMapping("/api/venta/v1/generos")
 public class GeneroController {
     @Autowired
     GeneroService generoService;

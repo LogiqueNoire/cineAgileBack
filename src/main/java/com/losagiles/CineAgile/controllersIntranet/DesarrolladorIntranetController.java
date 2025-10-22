@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.services.ScriptService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/intranet/dev")
+@RequestMapping("/api/intranet/v1/dev")
 public class DesarrolladorIntranetController {
     @Autowired
     private ScriptService scriptService;

@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
-@RequestMapping("/api/v1/tipo-cambio")
+@RequestMapping("/api/venta/v1/tipo-cambio")
 public class TipoCambioController {
     @Value("${sunat.token}")
     private String sunatToken;

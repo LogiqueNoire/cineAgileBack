@@ -2,16 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
-import com.losagiles.CineAgile.dto.NombreDTO;
-import com.losagiles.CineAgile.dto.SedeDTO;
-import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.entidades.Sala;
-import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.services.SedeService;
 
-import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/v1/sedes")
-public class SedeREST {
+public class SedeController {
     @Autowired
     private SedeService sedeService;
 

@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.entidades.RegistroAccion;
 import com.losagiles.CineAgile.services.RegistroAccionService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/intranet/registrosacciones")
+@RequestMapping("api/intranet/v1/registrosacciones")
 public class RegistroAccionIntranetController {
     @Autowired
     RegistroAccionService registroAccionService;

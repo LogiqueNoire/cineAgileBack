@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
 import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
@@ -11,13 +11,11 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/api/v1/peliculas")
-public class PeliculaREST {
+@RequestMapping("/api/venta/v1/peliculas")
+public class PeliculaController {
     @Autowired
     PeliculaService peliculaService;
 

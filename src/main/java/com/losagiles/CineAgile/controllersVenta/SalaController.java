@@ -1,6 +1,5 @@
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
-import com.losagiles.CineAgile.dto.SolicitudCrearSala;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.services.SalaButacasService;
@@ -11,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping ("/api/v1/salas")
-public class SalaREST {
+@RequestMapping ("/api/venta/v1/salas")
+public class SalaController {
     @Autowired
     SalaButacasService salaService;
 

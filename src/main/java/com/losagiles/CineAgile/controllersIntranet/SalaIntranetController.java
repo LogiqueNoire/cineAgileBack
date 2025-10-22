@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Sala;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/intranet/salas")
+@RequestMapping("/api/intranet/v1/salas")
 public class SalaIntranetController {
     @Autowired
     SalaService salaService;

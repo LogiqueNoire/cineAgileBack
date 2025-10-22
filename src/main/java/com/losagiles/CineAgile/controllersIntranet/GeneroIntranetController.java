@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.entidades.Genero;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/intranet/generos")
+@RequestMapping("/api/intranet/v1/generos")
 public class GeneroIntranetController {
     @Autowired
     GeneroService generoService;

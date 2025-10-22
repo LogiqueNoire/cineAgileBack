@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.Sede;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/intranet/sedes")
+@RequestMapping("/api/intranet/v1/sedes")
 public class SedeIntranetController {
     @Autowired
     SedeService sedeService;

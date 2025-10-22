@@ -2,16 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
 import com.losagiles.CineAgile.dto.*;
-import com.losagiles.CineAgile.entidades.Entrada;
 import com.losagiles.CineAgile.services.EntradaService;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
  * @author JOSE
  */
 @RestController
-@RequestMapping("/api/v1/entradas")
-public class EntradaREST {
+@RequestMapping("/api/venta/v1/entradas")
+public class EntradaController {
 
     @Autowired
     private EntradaService entradaService;

@@ -1,6 +1,5 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
-import com.losagiles.CineAgile.dto.NombreDTO;
 import com.losagiles.CineAgile.dto.PatchPeliculaRequest;
 import com.losagiles.CineAgile.dto.PatchPeliculaStatus;
 import com.losagiles.CineAgile.dto.PeliculaDTO;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/intranet/peliculas")
+@RequestMapping("/api/intranet/v1/peliculas")
 public class PeliculaIntranetController {
     @Autowired
     PeliculaService peliculaService;

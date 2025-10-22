@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.dto.DiaHoraVentaDTO;
 import com.losagiles.CineAgile.services.EntradaService;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/intranet/ventas")
+@RequestMapping("/api/intranet/v1/ventas")
 public class VentasIntranetController {
     @Autowired
     EntradaService entradaService;

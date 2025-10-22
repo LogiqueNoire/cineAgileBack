@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest.intranetControllers;
+package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.dto.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
@@ -10,11 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/intranet/funciones")
+@RequestMapping("/api/intranet/v1/funciones")
 public class FuncionIntranetController {
     @Autowired
     FuncionService funcionService;

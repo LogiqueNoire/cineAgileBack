@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
 import com.losagiles.CineAgile.dto.RespuestaLogin;
 import com.losagiles.CineAgile.dto.SolicitudLogin;
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/venta/v1/auth")
 public class AuthController {
     @Autowired
     AuthService authService;

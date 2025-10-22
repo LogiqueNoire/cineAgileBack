@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersVenta;
 
 import com.losagiles.CineAgile.dto.*;
 import com.losagiles.CineAgile.entidades.*;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.*;
  * @author USUARIO
  */
 @RestController
-@RequestMapping("/api/v1/funciones")
-public class FuncionREST {
+@RequestMapping("/api/venta/v1/funciones")
+public class FuncionController {
 
     @Autowired
     private FuncionService funcionService;

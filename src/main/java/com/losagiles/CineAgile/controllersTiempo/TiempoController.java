@@ -1,25 +1,26 @@
-package com.losagiles.CineAgile.rest;
+package com.losagiles.CineAgile.controllersTiempo;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import org.springframework.http.HttpHeaders;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.json.JSONObject;
 
 @RestController
-public class FechaController {
+@RequestMapping("/api/tiempo/v1")
+public class TiempoController {
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    @GetMapping("/api/v1/fecha-actual")
+    @GetMapping
     public String obtenerFechaRealFormateada() {
         try {
             HttpHeaders headers = new HttpHeaders();
