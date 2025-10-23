@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/intranet/v1/wakeup")
-public class WakeUpController {
+@RequestMapping("/api/intranet/v1/health")
+public class HealthCheckIntranetController {
 
     @GetMapping
     public ResponseEntity<String> ping() {
