@@ -1,213 +1,210 @@
 package com.losagiles.CineAgile.usuario;
 
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.losagiles.CineAgile.dto.ResCrearUsuario;
 import com.losagiles.CineAgile.dto.ResUsuarioErrorCode;
 import com.losagiles.CineAgile.dto.SolicitudCrearUsuario;
 import com.losagiles.CineAgile.entidades.Sede;
+import com.losagiles.CineAgile.entidades.Usuario;
 import com.losagiles.CineAgile.repository.SedeRepository;
+import com.losagiles.CineAgile.repository.UsuarioRepository;
 import com.losagiles.CineAgile.services.UsuarioInternoService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.InvalidAttributeValueException;
-
-@SpringBootTest
-@Transactional
+@ExtendWith(MockitoExtension.class)
 public class UsuarioTests {
 
-    @Autowired
+    @Mock
+    private UsuarioRepository usuarioRepository;
+
+    @Mock
     private SedeRepository sedeRepository;
 
-    @Autowired
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    @InjectMocks
     private UsuarioInternoService usuarioInternoService;
 
+    private Sede sedeA;
+
+    @BeforeEach
+    void setUp() {
+        sedeA = Sede.builder().id(1L).nombre("__SedeA__").activo(true).build();
+    }
+
     @Test
-    public void noSePuedecrearUsuarioConSedeInvalida() throws Exception {
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+    void crearUsuario_conSedeInvalida_debeDevolverError() {
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("spiderdoggyeronny")
                 .password("holacomoestas12345")
                 .sedeId(51512521L)
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        when(usuarioRepository.findByUsername(eq(solicitud.username()))).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(51512521L))).thenReturn(Optional.empty());
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.SEDE_NO_EXISTE)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
+
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.SEDE_NO_EXISTE, res.error());
     }
 
     @Test
-    public void noSePuedecrearUsuarioConNombreCorto() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_conNombreCorto_debeDevolverError() {
+        when(usuarioRepository.findByUsername(any())).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(sedeA.getId()))).thenReturn(Optional.of(sedeA));
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("c")
                 .password("holacomoestas12345")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.NOMBRE_USUARIO_INVALIDO)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.NOMBRE_USUARIO_INVALIDO, res.error());
     }
 
     @Test
-    public void noSePuedecrearUsuarioCortoConEspacios() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_conNombreConEspacios_debeDevolverError() {
+        when(usuarioRepository.findByUsername(any())).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(sedeA.getId()))).thenReturn(Optional.of(sedeA));
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("c               s")
                 .password("holacomoestas12345")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.NOMBRE_USUARIO_INVALIDO)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.NOMBRE_USUARIO_INVALIDO, res.error());
     }
 
     @Test
-    public void noSePuedecrearUsuarioConCaracteresEspeciales() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_usuarioYaExistente_debeDevolverError() {
+        when(usuarioRepository.findByUsername(eq("spiderdog")))
+                .thenReturn(Optional.of(Usuario.builder().id(2L).username("spiderdog").build()));
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
-                .username("sc#_SDA22%1")
-                .password("holaComoestas12345")
-                .sedeId(sedeA.getId())
-                .build();
-
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
-
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.NOMBRE_USUARIO_INVALIDO)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
-    }
-
-    @Test
-    public void noSePuedecrearUsuarioYaExistente() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
-
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("spiderdog")
                 .password("holaComoestas12345")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.USUARIO_YA_EXISTE)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.USUARIO_YA_EXISTE, res.error());
     }
 
     @Test
-    public void noAceptaContrasenaMenorA8Digitos() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_contrasenaMenorDe8_debeDevolverError() {
+        when(usuarioRepository.findByUsername(any())).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(sedeA.getId()))).thenReturn(Optional.of(sedeA));
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("spiderdoggyeronny")
                 .password("ho13A")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.CONTRASENA_INVALIDA)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.CONTRASENA_INVALIDA, res.error());
     }
 
     @Test
-    public void noAceptaContrasenaSinMayusculas() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_contrasenaSinMayusculas_debeDevolverError() {
+        when(usuarioRepository.findByUsername(any())).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(sedeA.getId()))).thenReturn(Optional.of(sedeA));
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("spiderdoggyeronny")
                 .password("dska1212d12j12jd21")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.CONTRASENA_INVALIDA)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.CONTRASENA_INVALIDA, res.error());
     }
 
     @Test
-    public void noAceptaContrasenaSinNumeros() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_contrasenaSinNumeros_debeDevolverError() {
+        when(usuarioRepository.findByUsername(any())).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(sedeA.getId()))).thenReturn(Optional.of(sedeA));
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("spiderdoggyeronny")
                 .password("saasddjAJKJSdjASdkj")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.CONTRASENA_INVALIDA)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.CONTRASENA_INVALIDA, res.error());
     }
 
     @Test
-    public void noAceptaContrasenaSinMinusculas() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_contrasenaSinMinusculas_debeDevolverError() {
+        when(usuarioRepository.findByUsername(any())).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(sedeA.getId()))).thenReturn(Optional.of(sedeA));
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("spiderdoggyeronny")
                 .password("SF12NJ12F1JF1")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.CONTRASENA_INVALIDA)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNotNull(res.error());
+        assertEquals(ResUsuarioErrorCode.CONTRASENA_INVALIDA, res.error());
     }
 
-
     @Test
-    public void aceptaContrasenaCorrecta() throws Exception {
-        Sede sedeA = Sede.builder().nombre("__SedeA__").build();
-        sedeA = sedeRepository.save(sedeA);
+    void crearUsuario_contrasenaValida_debeCrearUsuario() {
+        when(usuarioRepository.findByUsername(any())).thenReturn(Optional.empty());
+        when(sedeRepository.findById(eq(sedeA.getId()))).thenReturn(Optional.of(sedeA));
+        when(passwordEncoder.encode(any())).thenReturn("encoded");
+        when(usuarioRepository.save(any())).thenAnswer(invocation -> {
+            Usuario u = invocation.getArgument(0);
+            u.setId(99L);
+            return u;
+        });
 
-        SolicitudCrearUsuario solicitudCrearUsuario = SolicitudCrearUsuario.builder()
+        SolicitudCrearUsuario solicitud = SolicitudCrearUsuario.builder()
                 .username("spiderdoggyeronny")
                 .password("ojAsdjasj5adj")
                 .sedeId(sedeA.getId())
                 .build();
 
-        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitudCrearUsuario);
+        ResCrearUsuario res = usuarioInternoService.crearUsuario(solicitud);
 
-        if ((res.error() != null && res.error() != ResUsuarioErrorCode.CONTRASENA_INVALIDA)) {
-            System.out.println(res.error().getDescripcion());
-            throw new IllegalArgumentException();
-        }
+        assertNull(res.error());
+        assertNotNull(res.usuario());
+        assertEquals("spiderdoggyeronny", res.usuario().getUsername());
     }
+
 }
