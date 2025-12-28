@@ -45,4 +45,16 @@ public class ScriptService {
             }
         }
     }
+
+    public void reiniciarBD() throws Exception {
+        try (Connection connection = dataSource.getConnection()) {
+            try {
+                ScriptUtils.executeSqlScript(connection, new ClassPathResource("/dbscripts/" + "truncateTables.sql"));
+                System.out.println("Script ejecutado correctamente: " + "truncateTables.sql");
+            } catch (Exception e) {
+                System.err.println("Error en script " + "truncateTables.sql" + ": " + e.getMessage());
+                throw e;
+            }
+        }
+    }
 }
