@@ -29,6 +29,11 @@ public class SalaIntranetController {
         return ResponseEntity.ok(salaButacasService.getSalasPorSede(idSede));
     }
 
+    @GetMapping("/activas")
+    public ResponseEntity<List<Sala>> getSalasActivasPorSede(@RequestParam Long idSede){
+        return ResponseEntity.ok(salaButacasService.getSalasActivasPorSede(idSede));
+    }
+
     @PatchMapping
     public ResponseEntity<String> patchSala(@RequestBody SolicitudEditarSala solicitudEditarSala) {
         ResEditarSalaResultCode res = salaService.editarSala(solicitudEditarSala);
