@@ -1,6 +1,11 @@
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.responses.ResCrearSala;
+import com.losagiles.CineAgile.dto.responses.ResEditarSalaResultCode;
+import com.losagiles.CineAgile.dto.responses.ResSalaErrorCode;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudButacaAccion;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudCrearSala;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudEditarSala;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;

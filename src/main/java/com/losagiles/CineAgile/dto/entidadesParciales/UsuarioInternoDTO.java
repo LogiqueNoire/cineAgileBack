@@ -1,9 +1,9 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.entidadesParciales;
 
 import lombok.Builder;
 
 @Builder
-public record UsuarioTablaDTO(
+public record UsuarioInternoDTO(
         String username,
         String nombreSede
 ) {

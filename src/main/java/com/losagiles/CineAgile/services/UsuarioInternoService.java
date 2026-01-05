@@ -1,6 +1,11 @@
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.responses.ResCambiarContraErrorCode;
+import com.losagiles.CineAgile.dto.responses.ResCrearUsuario;
+import com.losagiles.CineAgile.dto.responses.ResUsuarioErrorCode;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudCambiarContra;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudCrearUsuario;
+import com.losagiles.CineAgile.dto.entidadesParciales.UsuarioInternoDTO;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.entidades.Usuario;
 import com.losagiles.CineAgile.otros.Auditable;
@@ -13,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,8 +70,8 @@ public class UsuarioInternoService {
     }
 
     @Auditable(value = TipoAccion.CONSULTAR, nombreEntidad = "Usuario", detalles = "Consultar usuarios")
-    public List<UsuarioTablaDTO> mostrarUsuariosEnTabla() {
-        return usuarioRepository.findAllUsuarioTablaDTO();
+    public List<UsuarioInternoDTO> mostrarUsuariosEnTabla() {
+        return usuarioRepository.findAllUsuarioInternoDTO();
     }
 
     @Auditable(value = TipoAccion.EDITAR, nombreEntidad = "Usuario", detalles = "Cambiar contraseña")

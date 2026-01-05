@@ -2,7 +2,7 @@ package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.dto.PatchPeliculaRequest;
 import com.losagiles.CineAgile.dto.PatchPeliculaStatus;
-import com.losagiles.CineAgile.dto.PeliculaDTO;
+import com.losagiles.CineAgile.dto.entidadesParciales.PeliculaDTO;
 import com.losagiles.CineAgile.entidades.Genero;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.repository.PeliculaRepository;

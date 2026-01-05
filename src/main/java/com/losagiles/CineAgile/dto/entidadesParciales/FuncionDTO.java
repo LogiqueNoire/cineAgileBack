@@ -1,7 +1,6 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.entidadesParciales;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

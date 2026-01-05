@@ -2,6 +2,8 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.entidadesParciales.PeliculaCarteleraDTO;
+import com.losagiles.CineAgile.dto.entidadesParciales.PeliculaDTO;
 import com.losagiles.CineAgile.entidades.Genero;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.otros.Auditable;

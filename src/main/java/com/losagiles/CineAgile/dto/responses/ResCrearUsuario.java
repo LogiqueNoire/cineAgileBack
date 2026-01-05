@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.responses;
 
 import com.losagiles.CineAgile.entidades.Usuario;
 import lombok.Builder;

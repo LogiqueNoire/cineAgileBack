@@ -11,7 +11,7 @@
 package com.losagiles.CineAgile.repository;
 
 import com.losagiles.CineAgile.dto.ButacaFuncionDTO;
-import com.losagiles.CineAgile.dto.FuncionDTO;
+import com.losagiles.CineAgile.dto.entidadesParciales.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -24,7 +24,7 @@ import java.util.List;
 @Repository
 public interface FuncionRepository extends JpaRepository<Funcion, Long>{
     @Query("""
-            SELECT new com.losagiles.CineAgile.dto.FuncionDTO(
+            SELECT new com.losagiles.CineAgile.dto.entidadesParciales.FuncionDTO(
                 f.id,
                 f.fechaHoraInicio,
                 f.fechaHoraFin,
@@ -58,7 +58,7 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
     public List<ButacaFuncionDTO> getButacaCompuestoByFuncionId(@Param("idFuncion") Long idFuncion, @Param("cincoMinAntes") LocalDateTime cincoMinAntes);
 
     @Query("""
-        SELECT new com.losagiles.CineAgile.dto.FuncionDTO(
+        SELECT new com.losagiles.CineAgile.dto.entidadesParciales.FuncionDTO(
             f.id, f.fechaHoraInicio, f.fechaHoraFin, f.dimension, f.precioBase,
             se.id, se.nombre,
             sa.id, sa.categoria, sa.codigoSala,
@@ -79,7 +79,7 @@ public interface FuncionRepository extends JpaRepository<Funcion, Long>{
     );
 
     @Query("""
-        SELECT new com.losagiles.CineAgile.dto.FuncionDTO(
+        SELECT new com.losagiles.CineAgile.dto.entidadesParciales.FuncionDTO(
             f.id, f.fechaHoraInicio, f.fechaHoraFin, f.dimension, f.precioBase,
             se.id, se.nombre,
             sa.id, sa.categoria, sa.codigoSala,

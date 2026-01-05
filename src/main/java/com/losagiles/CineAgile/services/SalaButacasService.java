@@ -1,6 +1,5 @@
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.dto.SalaDTO;
 import com.losagiles.CineAgile.entidades.Butaca;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.repository.ButacaRepository;
@@ -10,9 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SalaButacasService {

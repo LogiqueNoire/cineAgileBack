@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.responses;
 
 public record RespuestaLogin(
         String token,

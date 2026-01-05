@@ -5,7 +5,7 @@
 package com.losagiles.CineAgile.services.StrategiaPrecioFuncion;
 
 import com.losagiles.CineAgile.dto.ButacaFuncionDTO;
-import com.losagiles.CineAgile.dto.FuncionDTO;
+import com.losagiles.CineAgile.dto.entidadesParciales.FuncionDTO;
 import com.losagiles.CineAgile.dto.FuncionesPorSedeDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 
@@ -91,7 +91,7 @@ public class FuncionService {
         System.out.println("Solicitud recibida para la fecha: " + fecha);
 
         List<FuncionDTO> funcionesFiltradas = funciones.stream()
-                    .filter(funcion -> funcion.getFechaHoraInicio().isAfter(fecha) &&
+                    .filter(funcion -> funcion.getFechaHoraInicio().isAfter(fecha.minusMinutes(10)) &&
                             funcion.getFechaHoraInicio().getDayOfYear() == fecha.getDayOfYear() &&
                             funcion.getFechaHoraInicio().getYear() == fecha.getYear()
                     )

@@ -1,6 +1,11 @@
 package com.losagiles.CineAgile.controllersIntranet;
 
-import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.responses.ResCambiarContraErrorCode;
+import com.losagiles.CineAgile.dto.responses.ResCrearUsuario;
+import com.losagiles.CineAgile.dto.responses.ResUsuarioErrorCode;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudCambiarContra;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudCrearUsuario;
+import com.losagiles.CineAgile.dto.entidadesParciales.UsuarioInternoDTO;
 import com.losagiles.CineAgile.services.UsuarioInternoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +32,7 @@ public class UsuarioInternoIntranetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioTablaDTO>> getUsuarios() {
+    public ResponseEntity<List<UsuarioInternoDTO>> getUsuarios() {
         return ResponseEntity.ok(usuarioInternoService.mostrarUsuariosEnTabla());
     }
 

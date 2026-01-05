@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.entidadesParciales;
 
 import com.losagiles.CineAgile.entidades.Genero;
 import lombok.Data;

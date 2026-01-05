@@ -4,6 +4,8 @@
  */
 package com.losagiles.CineAgile.dto;
 
+import com.losagiles.CineAgile.dto.entidadesParciales.FuncionDTO;
+
 import java.util.*;
 
 /**

@@ -1,6 +1,7 @@
 package com.losagiles.CineAgile.controllersIntranet;
 
 import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.entidadesParciales.SedeDTO;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.otros.Auditable;
 import com.losagiles.CineAgile.otros.TipoAccion;

@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.responses;
 
 public enum ResSalaErrorCode {
     MAX_FILA_SOBREPASADA("La fila máxima debe ser Z."),

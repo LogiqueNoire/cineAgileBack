@@ -5,6 +5,8 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.responses.ResRegEntradaStatusCode;
+import com.losagiles.CineAgile.dto.responses.ResRegistrarEntrada;
 import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.otros.Auditable;
 import com.losagiles.CineAgile.otros.TipoAccion;

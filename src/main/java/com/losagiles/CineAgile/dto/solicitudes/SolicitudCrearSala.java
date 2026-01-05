@@ -1,4 +1,4 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.solicitudes;
 
 import com.losagiles.CineAgile.entidades.Butaca;
 import lombok.Builder;

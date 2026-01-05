@@ -5,6 +5,8 @@
 package com.losagiles.CineAgile.controllersVenta;
 
 import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.responses.ResComprarEntrada;
+import com.losagiles.CineAgile.dto.responses.ResRegistrarEntrada;
 import com.losagiles.CineAgile.services.EntradaService;
 
 import org.springframework.beans.factory.annotation.Autowired;

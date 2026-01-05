@@ -1,10 +1,9 @@
 package com.losagiles.CineAgile.services;
 
-import com.losagiles.CineAgile.dto.RespuestaLogin;
-import com.losagiles.CineAgile.dto.SolicitudLogin;
+import com.losagiles.CineAgile.dto.responses.RespuestaLogin;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudLogin;
 import com.losagiles.CineAgile.entidades.RegistroAccion;
 import com.losagiles.CineAgile.entidades.Usuario;
-import com.losagiles.CineAgile.otros.Auditable;
 import com.losagiles.CineAgile.otros.TipoAccion;
 import com.losagiles.CineAgile.repository.UsuarioRepository;
 import com.losagiles.CineAgile.utils.JwtUtil;

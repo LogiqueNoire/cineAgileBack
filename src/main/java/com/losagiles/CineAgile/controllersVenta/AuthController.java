@@ -1,7 +1,7 @@
 package com.losagiles.CineAgile.controllersVenta;
 
-import com.losagiles.CineAgile.dto.RespuestaLogin;
-import com.losagiles.CineAgile.dto.SolicitudLogin;
+import com.losagiles.CineAgile.dto.responses.RespuestaLogin;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudLogin;
 import com.losagiles.CineAgile.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

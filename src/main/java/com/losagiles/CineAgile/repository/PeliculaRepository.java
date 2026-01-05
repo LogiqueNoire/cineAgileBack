@@ -2,7 +2,7 @@
 package com.losagiles.CineAgile.repository;
 
 import com.losagiles.CineAgile.dto.NombreDTO;
-import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
+import com.losagiles.CineAgile.dto.entidadesParciales.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -20,7 +20,7 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
     Optional<Pelicula> findByNombreIgnoreCase(String nombre);
 
     @Query("""
-        SELECT new com.losagiles.CineAgile.dto.PeliculaCarteleraDTO(
+        SELECT new com.losagiles.CineAgile.dto.entidadesParciales.PeliculaCarteleraDTO(
             p.idPelicula,
             p.nombre,
             p.imageUrl,
@@ -40,7 +40,7 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
     );
 
     /*
-    SELECT new com.losagiles.CineAgile.dto.PeliculaCarteleraDTO(
+    SELECT new com.losagiles.CineAgile.dto.entidadesParciales.PeliculaCarteleraDTO(
             p.idPelicula,
             p.nombre,
             p.imageUrl,
@@ -56,7 +56,7 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
 
 
     @Query("""
-            SELECT new com.losagiles.CineAgile.dto.PeliculaCarteleraDTO(
+            SELECT new com.losagiles.CineAgile.dto.entidadesParciales.PeliculaCarteleraDTO(
                     p.idPelicula,
                     p.nombre,
                     p.imageUrl,

@@ -1,10 +1,6 @@
-package com.losagiles.CineAgile.dto;
+package com.losagiles.CineAgile.dto.responses;
 
-import com.losagiles.CineAgile.entidades.Entrada;
-import com.losagiles.CineAgile.entidades.Funcion;
-
-import java.time.LocalDateTime;
-import java.util.List;
+import com.losagiles.CineAgile.dto.EntradasCompradasDTO;
 
 public record ResRegistrarEntrada(
         EntradasCompradasDTO entradasCompradas,

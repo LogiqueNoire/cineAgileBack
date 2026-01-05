@@ -1,6 +1,6 @@
 package com.losagiles.CineAgile.controllersVenta;
 
-import com.losagiles.CineAgile.dto.PeliculaCarteleraDTO;
+import com.losagiles.CineAgile.dto.entidadesParciales.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.Pelicula;
 import com.losagiles.CineAgile.services.PeliculaService;
 

@@ -16,9 +16,9 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.losagiles.CineAgile.dto.ResCrearUsuario;
-import com.losagiles.CineAgile.dto.ResUsuarioErrorCode;
-import com.losagiles.CineAgile.dto.SolicitudCrearUsuario;
+import com.losagiles.CineAgile.dto.responses.ResCrearUsuario;
+import com.losagiles.CineAgile.dto.responses.ResUsuarioErrorCode;
+import com.losagiles.CineAgile.dto.solicitudes.SolicitudCrearUsuario;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.entidades.Usuario;
 import com.losagiles.CineAgile.repository.SedeRepository;

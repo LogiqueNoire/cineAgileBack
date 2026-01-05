@@ -5,7 +5,6 @@
 package com.losagiles.CineAgile.services;
 
 import com.losagiles.CineAgile.dto.NombreDTO;
-import com.losagiles.CineAgile.dto.SedeDTO;
 import com.losagiles.CineAgile.entidades.Sala;
 import com.losagiles.CineAgile.entidades.Sede;
 import com.losagiles.CineAgile.otros.Auditable;

@@ -1,6 +1,6 @@
 package com.losagiles.CineAgile.controllersIntranet;
 
-import com.losagiles.CineAgile.dto.FuncionDTO;
+import com.losagiles.CineAgile.dto.entidadesParciales.FuncionDTO;
 import com.losagiles.CineAgile.entidades.Funcion;
 import com.losagiles.CineAgile.services.StrategiaPrecioFuncion.FuncionService;
 import org.springframework.beans.factory.annotation.Autowired;
