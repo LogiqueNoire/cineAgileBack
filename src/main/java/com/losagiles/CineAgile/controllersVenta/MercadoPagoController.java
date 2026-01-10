@@ -49,8 +49,6 @@ public class MercadoPagoController {
         System.out.println(request.getIssuerId());
         System.out.println(request.getEmail());
 
-        PaymentClient client = new PaymentClient();
-
         PaymentCreateRequest paymentCreateRequest = PaymentCreateRequest.builder()
                 .transactionAmount(new BigDecimal(request.getMonto()).setScale(2, RoundingMode.HALF_UP))
                 .token(request.getToken())
