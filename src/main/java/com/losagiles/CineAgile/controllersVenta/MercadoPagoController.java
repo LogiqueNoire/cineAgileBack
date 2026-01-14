@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -36,6 +33,7 @@ public class MercadoPagoController {
 
     @Autowired
     private EntradaService entradaService;
+
 
     @PostMapping
     public ResponseEntity<?> procesarPago(@RequestBody PagoRequest request) {
@@ -78,7 +76,7 @@ public class MercadoPagoController {
                         .items(listItems)
                         .build())
                 .externalReference(request.getIdOperacion())
-                .statementDescriptor("CINEAGILE VENTA ONLINE")
+                .statementDescriptor("CINEAGILE")
                 .build();
         try {
             // Respuesta completa del pago (incluye status, id, etc.)
@@ -126,4 +124,21 @@ public class MercadoPagoController {
 
 
     }
+
+    @PostMapping("/webhook")
+    public ResponseEntity<Void> recibirWebhook(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String topic
+    ) {
+        if (id == null || topic == null) {
+            return ResponseEntity.ok().build();
+        }
+/*
+        if ("payment".equals(topic)) {
+            mercadoPagoService.procesarPagoWebhook(id);
+        }
+*/
+        return ResponseEntity.ok().build();
+    }
+
 }
