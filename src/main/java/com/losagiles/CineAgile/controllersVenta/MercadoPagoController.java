@@ -31,6 +31,9 @@ public class MercadoPagoController {
     @Value("${mercado.pago.access.token}")
     private String mercadoPagoToken;
 
+    @Value("${url.backend}")
+    private String urlBackend;
+
     @Autowired
     private EntradaService entradaService;
 
@@ -76,6 +79,7 @@ public class MercadoPagoController {
                         .items(listItems)
                         .build())
                 .externalReference(request.getIdOperacion())
+                .notificationUrl(urlBackend+"/api/venta/v1/pagos/webhook")
                 .statementDescriptor("CINEAGILE")
                 .build();
         try {
