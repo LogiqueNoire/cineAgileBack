@@ -128,4 +128,15 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
     """)
     List<Pelicula> obtenerPeliculasConVentasEnPeriodoTiempo(@Param("inicioSem") LocalDateTime inicioSem,
                                                             @Param("finSem") LocalDateTime finSem);
+    @Query(value = """
+        SELECT date(f.fecha_hora_inicio)
+        FROM "cine-dev".funcion as f
+        JOIN "cine-dev".pelicula as p
+        ON f.id_pelicula = p.id_pelicula
+        AND f.fecha_hora_inicio >= :hoy
+        AND f.fecha_hora_inicio < :fin
+    """, nativeQuery = true)
+    List<Object[]> getFechasFunciones(@Param("hoy") LocalDate hoy,
+                                      @Param("fin") LocalDate fin,
+                                      @Param("idPelicula") Long idPelicula);
 }

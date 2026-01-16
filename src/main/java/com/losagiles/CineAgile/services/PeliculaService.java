@@ -190,4 +190,10 @@ public class PeliculaService {
         LocalDateTime finSemana = inicioSemana.plusDays(6).toLocalDate().atTime(LocalTime.MAX);
         return peliculaRepository.obtenerPeliculasConVentasEnPeriodoTiempo(inicioSemana, finSemana);
     }
+
+    public List<Object[]> getFechasFunciones(LocalDateTime ahora, Long idPelicula) {
+        return peliculaRepository.getFechasFunciones(ahora.toLocalDate(),
+                ahora.toLocalDate().plusMonths(3),
+                idPelicula);
+    }
 }

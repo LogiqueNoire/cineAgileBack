@@ -48,6 +48,14 @@ public class PeliculaController {
         List<PeliculaCarteleraDTO> peliculas = peliculaService.mostrarPeliculasProximamente(fechaParseada);
         return ResponseEntity.ok(peliculas);
     }
+
+    @GetMapping("/{idPelicula}/fechas")
+    private ResponseEntity<List<Object[]>> getFechasFunciones(@PathVariable Long idPelicula, @RequestParam String fecha){
+        LocalDateTime fechaParseada = LocalDateTime.parse(fecha.replace("Z", ""));
+        System.out.println("Fecha ajustada: " + fechaParseada);
+        List<Object[]> fechas = peliculaService.getFechasFunciones(fechaParseada, idPelicula);
+        return ResponseEntity.ok(fechas);
+    }
     /*
     @GetMapping ("/todas")
     private ResponseEntity <List<PeliculaCarteleraDTO>> getALl(){

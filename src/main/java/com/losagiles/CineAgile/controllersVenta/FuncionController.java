@@ -5,13 +5,16 @@
 package com.losagiles.CineAgile.controllersVenta;
 
 import com.losagiles.CineAgile.dto.*;
+import com.losagiles.CineAgile.dto.entidadesParciales.PeliculaCarteleraDTO;
 import com.losagiles.CineAgile.entidades.*;
 import com.losagiles.CineAgile.services.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import com.losagiles.CineAgile.services.StrategiaPrecioFuncion.FuncionService;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
