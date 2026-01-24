@@ -135,6 +135,7 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
         ON f.id_pelicula = p.id_pelicula
         AND f.fecha_hora_inicio >= :hoy
         AND f.fecha_hora_inicio < :fin
+        AND p.id_pelicula = :idPelicula
     """, nativeQuery = true)
     List<Object[]> getFechasFunciones(@Param("hoy") LocalDate hoy,
                                       @Param("fin") LocalDate fin,
